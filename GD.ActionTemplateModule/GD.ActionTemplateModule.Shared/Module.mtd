@@ -1,0 +1,101 @@
+{
+  "$type": "Sungero.Metadata.ModuleMetadata, Sungero.Metadata",
+  "NameGuid": "36f524e6-e4d9-4fdd-a5f0-4bbb37392c99",
+  "Name": "ActionTemplateModule",
+  "AsyncHandlers": [],
+  "ClientAssemblyName": "GD.ActionTemplateModule.Client",
+  "ClientBaseAssemblyName": "GD.ActionTemplateModule.ClientBase",
+  "ClientBaseNamespace": "GD.ActionTemplateModule.ClientBase",
+  "ClientNamespace": "GD.ActionTemplateModule.Client",
+  "Code": "ActTemp",
+  "CompanyCode": "GD",
+  "Cover": {
+    "NameGuid": "cab814ae-1bcf-43e8-a2e3-6f2c289a4073",
+    "Actions": [],
+    "Background": null,
+    "Footer": {
+      "NameGuid": "21857227-8cbd-4c17-a006-2c2287b41baf",
+      "BackgroundPosition": "Stretch"
+    },
+    "Groups": [],
+    "Header": {
+      "NameGuid": "78631e10-b8da-460e-a292-ac27423a160d",
+      "BackgroundPosition": "Stretch"
+    }
+  },
+  "Dependencies": [
+    {
+      "Id": "63d35b56-82cd-4748-bc51-2b86e0a46e4d",
+      "IsSolutionModule": true,
+      "MaxVersion": "",
+      "MinVersion": ""
+    },
+    {
+      "Id": "92491aa6-c4df-4f46-a807-ebdd337bda74",
+      "MaxVersion": "",
+      "MinVersion": "1.1.0.0"
+    }
+  ],
+  "ExplorerTreeOrder": [
+    {
+      "ItemId": "b0934d88-8b6c-4dd1-b480-35333f7a8a49"
+    }
+  ],
+  "IconResourcesKeys": [],
+  "Importance": "Medium",
+  "InterfaceAssemblyName": "Sungero.Domain.Interfaces",
+  "InterfaceNamespace": "GD.ActionTemplateModule",
+  "IsVisible": false,
+  "Overridden": [
+    "IsVisible"
+  ],
+  "PublicFunctions": [
+    {
+      "Name": "FromTamplate",
+      "Parameters": [
+        {
+          "Name": "task",
+          "ParameterType": "global::Sungero.RecordManagement.IActionItemExecutionTask",
+          "ParameterTypeFullName": "Sungero.RecordManagement.IActionItemExecutionTask, Sungero.Domain.Interfaces"
+        }
+      ],
+      "Placement": "Client",
+      "ReturnType": "void",
+      "ReturnTypeFullName": "System.Void"
+    },
+    {
+      "Name": "ToTamplate",
+      "Parameters": [
+        {
+          "Name": "task",
+          "ParameterType": "global::Sungero.RecordManagement.IActionItemExecutionTask",
+          "ParameterTypeFullName": "Sungero.RecordManagement.IActionItemExecutionTask, Sungero.Domain.Interfaces"
+        }
+      ],
+      "Placement": "Client",
+      "ReturnType": "void",
+      "ReturnTypeFullName": "System.Void"
+    }
+  ],
+  "PublicStructures": [],
+  "ResourceInterfaceAssemblyName": "Sungero.Domain.Interfaces",
+  "ResourceInterfaceNamespace": "GD.ActionTemplateModule",
+  "ResourcesKeys": [],
+  "ServerAssemblyName": "GD.ActionTemplateModule.Server",
+  "ServerNamespace": "GD.ActionTemplateModule.Server",
+  "SharedAssemblyName": "GD.ActionTemplateModule.Shared",
+  "SharedNamespace": "GD.ActionTemplateModule.Shared",
+  "SpecialFolders": [],
+  "Version": "0.0.1.0",
+  "Widgets": [],
+  "Versions": [
+    {
+      "Type": "ModuleMetadata",
+      "Number": 6
+    },
+    {
+      "Type": "DomainApi",
+      "Number": 3
+    }
+  ]
+}

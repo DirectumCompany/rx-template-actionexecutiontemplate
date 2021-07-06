@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <ViewName>Default</ViewName>
+  <Collection FormGuid="cddd4c25-da1e-45d4-ab4b-0250a22ce940">
+    <XtraSerializer version="1.0" application="GridControl">
+      <property name="#LayoutVersion" isnull="true" />
+      <property name="$GridControl" iskey="true" value="GridControl">
+        <property name="GroupSummary" iskey="true" value="0" />
+        <property name="View" isnull="true" iskey="true">
+          <property name="ColumnChooserState" isnull="true" iskey="true">
+            <property name="Location">688,-194</property>
+            <property name="Size">220,250</property>
+          </property>
+          <property name="AllowGrouping">true</property>
+          <property name="AllowSorting">true</property>
+          <property name="LinesPerRowMode">OneLineMode</property>
+          <property name="IsRowCellMenuEnabled">false</property>
+        </property>
+        <property name="TotalSummary" iskey="true" value="0" />
+        <property name="GroupCount">0</property>
+        <property name="Columns" iskey="true" value="14">
+          <property name="Item1" isnull="true" iskey="true">
+            <property name="MinWidth">32</property>
+            <property name="FieldName">T</property>
+            <property name="FixedWidth">true</property>
+            <property name="Visible">true</property>
+            <property name="ExtendedVisibleIndex">9</property>
+            <property name="VisibleIndex">0</property>
+            <property name="Width">32</property>
+            <property name="ActualWidth">4*</property>
+          </property>
+          <property name="Item2" isnull="true" iskey="true">
+            <property name="FieldName">Id</property>
+            <property name="Visible">false</property>
+            <property name="Name">AssignmentsTemplate_Id</property>
+            <property name="ExtendedVisibleIndex">10</property>
+            <property name="VisibleIndex">1</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+          <property name="Item3" isnull="true" iskey="true">
+            <property name="FieldName">Name</property>
+            <property name="Visible">true</property>
+            <property name="Name">AssignmentsTemplate_Name</property>
+            <property name="ExtendedVisibleIndex">11</property>
+            <property name="VisibleIndex">1</property>
+            <property name="ActualWidth">57*</property>
+          </property>
+          <property name="Item4" isnull="true" iskey="true">
+            <property name="FieldName">AssignedBy.DisplayValue</property>
+            <property name="Visible">false</property>
+            <property name="Name">AssignmentsTemplate_AssignedBy</property>
+            <property name="ExtendedVisibleIndex">0</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+          <property name="Item5" isnull="true" iskey="true">
+            <property name="FieldName">IsUnderControl</property>
+            <property name="Visible">false</property>
+            <property name="Name">AssignmentsTemplate_IsUnderControl</property>
+            <property name="ExtendedVisibleIndex">1</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+          <property name="Item6" isnull="true" iskey="true">
+            <property name="FieldName">Supervisor.DisplayValue</property>
+            <property name="Visible">false</property>
+            <property name="Name">AssignmentsTemplate_Supervisor</property>
+            <property name="ExtendedVisibleIndex">2</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+          <property name="Item7" isnull="true" iskey="true">
+            <property name="FieldName">Assignee.DisplayValue</property>
+            <property name="Visible">false</property>
+            <property name="Name">AssignmentsTemplate_Assignee</property>
+            <property name="ExtendedVisibleIndex">3</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+          <property name="Item8" isnull="true" iskey="true">
+            <property name="FieldName">Count</property>
+            <property name="Visible">false</property>
+            <property name="Name">AssignmentsTemplate_Count</property>
+            <property name="ExtendedVisibleIndex">4</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+          <property name="Item9" isnull="true" iskey="true">
+            <property name="FieldName">DaysOrHours</property>
+            <property name="Visible">false</property>
+            <property name="Name">AssignmentsTemplate_DaysOrHours</property>
+            <property name="ExtendedVisibleIndex">5</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+          <property name="Item10" isnull="true" iskey="true">
+            <property name="FieldName">CoAssCount</property>
+            <property name="Visible">false</property>
+            <property name="Name">AssignmentsTemplate_CoAssCount</property>
+            <property name="ExtendedVisibleIndex">6</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+          <property name="Item11" isnull="true" iskey="true">
+            <property name="FieldName">CoAssDaysOrHours</property>
+            <property name="Visible">false</property>
+            <property name="Name">AssignmentsTemplate_CoAssDaysOrHours</property>
+            <property name="ExtendedVisibleIndex">7</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+          <property name="Item12" isnull="true" iskey="true">
+            <property name="FieldName">Text</property>
+            <property name="Visible">false</property>
+            <property name="Name">AssignmentsTemplate_Text</property>
+            <property name="ExtendedVisibleIndex">8</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+          <property name="Item13" isnull="true" iskey="true">
+            <property name="FieldName">BusinessUnit.DisplayValue</property>
+            <property name="Visible">true</property>
+            <property name="Name">AssignmentsTemplate_BusinessUnit</property>
+            <property name="ExtendedVisibleIndex">12</property>
+            <property name="VisibleIndex">2</property>
+            <property name="ActualWidth">22*</property>
+          </property>
+          <property name="Item14" isnull="true" iskey="true">
+            <property name="FieldName">Department.DisplayValue</property>
+            <property name="Visible">true</property>
+            <property name="Name">AssignmentsTemplate_Department</property>
+            <property name="ExtendedVisibleIndex">13</property>
+            <property name="VisibleIndex">3</property>
+            <property name="ActualWidth">NaN</property>
+          </property>
+        </property>
+        <property name="SortInfo" iskey="true" value="1">
+          <property name="Item1" isnull="true" iskey="true">
+            <property name="FieldName">Name</property>
+            <property name="SortOrder">Ascending</property>
+          </property>
+        </property>
+        <property name="GroupSummarySortInfo" iskey="true" value="0" />
+      </property>
+    </XtraSerializer>
+  </Collection>
+</settings>
