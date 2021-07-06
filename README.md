@@ -14,10 +14,15 @@
 
 ## Варианты расширения функциональности на проектах
 1. Перекрыть задачу по исполнению поручений для добавления кнопок "Из шаблона" и "В шаблон".
+
    Пример вызова FromTamplate:
+
    GD.ActionTemplateModule.PublicFunctions.Module.FromTamplate(_obj);
+
    Пример вызова ToTamplate:
+
    GD.ActionTemplateModule.PublicFunctions.Module.ToTamplate(_obj);
+
 2. Добавление реквизитов в справочник "Шаблоны поручений".
 
 ## Порядок установки
