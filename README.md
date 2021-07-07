@@ -34,7 +34,7 @@ GD.ActionTemplateModule.PublicFunctions.Module.ToTamplate(_obj);
   <repository folderName="Base" solutionType="Base" url="" />
   <repository folderName="RX" solutionType="Base" url="<адрес локального репозитория>" />
   <repository folderName="<Папка из п.1>" solutionType="Work" 
-     url="https://customdevtfs.directum.ru/tfs/GovernmentDepartmentsRX/GovernmentStSol/_git/Reports" />
+     url="https://github.com/DirectumCompany/rx-template-actionexecutiontemplate" />
 </block>
 ```
 
@@ -64,7 +64,7 @@ GD.ActionTemplateModule.PublicFunctions.Module.ToTamplate(_obj);
   <repository folderName="<Папка из п.1>" solutionType="Base" 
      url="<Адрес репозитория gitHub>" />
   <repository folderName="<Папка для рабочего слоя>" solutionType="Work" 
-     url="https://customdevtfs.directum.ru/tfs/GovernmentDepartmentsRX/GovernmentStSol/_git/Reports" />
+     url="https://github.com/DirectumCompany/rx-template-actionexecutiontemplate" />
 </block>
 ```
 
