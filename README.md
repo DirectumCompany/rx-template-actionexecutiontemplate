@@ -16,11 +16,11 @@
 1. Перекрыть задачу по исполнению поручений для добавления кнопок "Из шаблона" и "В шаблон":  
 * Пример вызова FromTamplate в кнопке "Из шаблона":
 ```
-GD.ActionTemplateModule.PublicFunctions.Module.FromTamplate(_obj);
+GD.ActionTemplateModule.PublicFunctions.Module.FromTemplate(_obj);
 ```  
 * Пример вызова ToTamplate в кнопке "В шаблон":
 ```
-GD.ActionTemplateModule.PublicFunctions.Module.ToTamplate(_obj);
+GD.ActionTemplateModule.PublicFunctions.Module.ToTemplate(_obj);
 ```
 2. Добавление реквизитов в справочник "Шаблоны поручений".
 
