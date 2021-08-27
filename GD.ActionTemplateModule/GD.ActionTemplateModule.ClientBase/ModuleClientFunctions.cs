@@ -16,7 +16,7 @@ namespace GD.ActionTemplateModule.Client
     /// Сохрнаить данные поручения в шаблон
     /// </summary>
     [Public]
-    public void ToTamplate(IActionItemExecutionTask task)
+    public void ToTemplate(IActionItemExecutionTask task)
     {
       var template = ActionTemplateModule.PublicFunctions.AssignmentsTemplate.Remote.CreateTemplate();
       template.Text = task.ActionItem;
@@ -36,7 +36,7 @@ namespace GD.ActionTemplateModule.Client
     /// Получить список доступных шаблонов поручений и заполнить данные по выбранному шаблону.
     /// </summary>
     [Public]
-    public void FromTamplate(IActionItemExecutionTask task)
+    public void FromTemplate(IActionItemExecutionTask task)
     {
       var template = ActionTemplateModule.PublicFunctions.AssignmentsTemplate.Remote.GetAvailableTemplates().ShowSelect();
       if (template != null)
