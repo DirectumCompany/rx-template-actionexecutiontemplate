@@ -58,22 +58,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CoAssigneesDeadlineError" xml:space="preserve">
-    <value>Срок соисполнителей не может быть больше срока ответственного исполнителя.</value>
+  <data name="Property_ActionItemPart" xml:space="preserve">
+    <value>Part of action item</value>
   </data>
-  <data name="EmptyFinalDeadline" xml:space="preserve">
-    <value>Заполните общий срок или срок в табличной части.</value>
+  <data name="Property_Assignee" xml:space="preserve">
+    <value>Assignee</value>
   </data>
-  <data name="EmptyActionItemPartDeadline" xml:space="preserve">
-    <value>Не заполнен срок исполнителя в табличной части.</value>
+  <data name="Property_Count" xml:space="preserve">
+    <value>Deadline</value>
   </data>
-  <data name="EmptyAssigneeDaysOrHours" xml:space="preserve">
-    <value>Не заполнен тип срока у исполнителей (Дней/Часов)</value>
+  <data name="Property_CoAssignees" xml:space="preserve">
+    <value>Co-assignees</value>
   </data>
-  <data name="EmptyCoAssigneesDaysOrHours" xml:space="preserve">
-    <value>Не заполнен тип срока у соисполнителей (Дней/Часов)</value>
+  <data name="Property_CoAssigneesCount" xml:space="preserve">
+    <value>Deadline (co-assign.)</value>
   </data>
-  <data name="EmptyActionItemPartCoAssigneesDeadline" xml:space="preserve">
-    <value>Не заполнен срок соисполнителей в табличной части.</value>
+  <data name="Property_Supervisor" xml:space="preserve">
+    <value>Supervisor</value>
+  </data>
+  <data name="Property_PartGuid" xml:space="preserve">
+    <value>Action item part ID</value>
+  </data>
+  <data name="Property_DaysOrHours" xml:space="preserve">
+    <value>Days/Hours</value>
+  </data>
+  <data name="Enum_DaysOrHours_Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="Enum_DaysOrHours_Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="Property_CoAssigneesDaysOrHours" xml:space="preserve">
+    <value>Days/Hours</value>
+  </data>
+  <data name="Enum_CoAssigneesDaysOrHours_Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="Enum_CoAssigneesDaysOrHours_Hours" xml:space="preserve">
+    <value>Hours</value>
   </data>
 </root>

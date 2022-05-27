@@ -51,7 +51,7 @@
   ],
   "PublicFunctions": [
     {
-      "Name": "FromTamplate",
+      "Name": "FromTemplate",
       "Parameters": [
         {
           "Name": "task",
@@ -64,7 +64,7 @@
       "ReturnTypeFullName": "System.Void"
     },
     {
-      "Name": "ToTamplate",
+      "Name": "ToTemplate",
       "Parameters": [
         {
           "Name": "task",

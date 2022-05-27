@@ -58,22 +58,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CoAssigneesDeadlineError" xml:space="preserve">
-    <value>Срок соисполнителей не может быть больше срока ответственного исполнителя.</value>
+  <data name="Property_CoAssignee" xml:space="preserve">
+    <value>Co-assignee</value>
   </data>
-  <data name="EmptyFinalDeadline" xml:space="preserve">
-    <value>Заполните общий срок или срок в табличной части.</value>
-  </data>
-  <data name="EmptyActionItemPartDeadline" xml:space="preserve">
-    <value>Не заполнен срок исполнителя в табличной части.</value>
-  </data>
-  <data name="EmptyAssigneeDaysOrHours" xml:space="preserve">
-    <value>Не заполнен тип срока у исполнителей (Дней/Часов)</value>
-  </data>
-  <data name="EmptyCoAssigneesDaysOrHours" xml:space="preserve">
-    <value>Не заполнен тип срока у соисполнителей (Дней/Часов)</value>
-  </data>
-  <data name="EmptyActionItemPartCoAssigneesDeadline" xml:space="preserve">
-    <value>Не заполнен срок соисполнителей в табличной части.</value>
+  <data name="Property_PartGuid" xml:space="preserve">
+    <value>Action item part ID</value>
   </data>
 </root>

@@ -12,12 +12,37 @@ namespace GD.ActionTemplateModule
 
     public override void Refresh(Sungero.Presentation.FormRefreshEventArgs e)
     {
-      _obj.State.Properties.Count.IsRequired = _obj.CoAssCount.HasValue;
-    }
-
-    public virtual void CoAssCountValueInput(Sungero.Presentation.IntegerValueInputEventArgs e)
-    {
-        _obj.State.Properties.CoAssDaysOrHours.IsRequired = e.NewValue != null;      
+      var properties = _obj.State.Properties;
+      var isComponentResolution = _obj.IsCompoundActionItem ?? false;
+      var hasNotIndefiniteDeadline = _obj.HasIndefiniteDeadline != true;
+      var isUnderControl = _obj.IsUnderControl == true;
+      var anyCoAssignees = _obj.CoAssignees.Any();
+      
+      properties.Count.IsEnabled = hasNotIndefiniteDeadline;
+      properties.DaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
+      properties.CoAssigneesCount.IsEnabled = hasNotIndefiniteDeadline && anyCoAssignees;
+      properties.CoAssigneesDaysOrHours.IsEnabled = hasNotIndefiniteDeadline && anyCoAssignees;
+      
+      properties.ActionItemParts.IsVisible = isComponentResolution;
+      properties.FinalCount.IsVisible = isComponentResolution;
+      properties.FinalDaysOrHours.IsVisible = isComponentResolution;
+      
+      properties.Assignee.IsVisible = !isComponentResolution;
+      properties.Count.IsVisible = !isComponentResolution;
+      properties.DaysOrHours.IsVisible = !isComponentResolution;
+      properties.CoAssignees.IsVisible = !isComponentResolution;
+      properties.CoAssigneesCount.IsVisible = !isComponentResolution;
+      properties.CoAssigneesDaysOrHours.IsVisible = !isComponentResolution;
+      
+      properties.Assignee.IsRequired = !isComponentResolution;
+      
+      properties.Supervisor.IsEnabled = isUnderControl;
+      properties.ActionItemParts.Properties.Supervisor.IsEnabled = isUnderControl;
+      
+      properties.ActionItemParts.Properties.Count.IsEnabled = hasNotIndefiniteDeadline;
+      properties.ActionItemParts.Properties.DaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
+      properties.ActionItemParts.Properties.CoAssigneesCount.IsEnabled = hasNotIndefiniteDeadline;
+      properties.ActionItemParts.Properties.CoAssigneesDaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
     }
 
   }
