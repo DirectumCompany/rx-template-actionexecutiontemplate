@@ -15,7 +15,7 @@ namespace GD.ActionTemplateModule.Server
     [Public, Remote(PackResultEntityEagerly = true)]
     public static IAssignmentsTemplate CreateTemplate()
     {
-      return  AssignmentsTemplates.Create();
+      return AssignmentsTemplates.Create();
     }
     
     /// <summary>
@@ -25,7 +25,7 @@ namespace GD.ActionTemplateModule.Server
     [Public, Remote(IsPure = true)]
     public static IQueryable<IAssignmentsTemplate> GetAvailableTemplates()
     {
-      return AssignmentsTemplates.GetAll();
+      return AssignmentsTemplates.GetAll(t => t.Status == Status.Active);
     }
   }
 }
