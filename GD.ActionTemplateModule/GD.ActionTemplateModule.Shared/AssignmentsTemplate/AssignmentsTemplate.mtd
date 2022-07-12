@@ -279,7 +279,8 @@
     "CreatedServer",
     "BeforeSaveServer",
     "FilteringServer",
-    "RefreshClient"
+    "RefreshClient",
+    "ShowingClient"
   ],
   "IconResourcesKeys": [],
   "IsStatusEnabled": true,

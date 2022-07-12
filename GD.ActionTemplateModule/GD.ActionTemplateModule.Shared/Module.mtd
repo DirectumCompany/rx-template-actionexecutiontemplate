@@ -41,6 +41,9 @@
       "ItemId": "b0934d88-8b6c-4dd1-b480-35333f7a8a49"
     }
   ],
+  "HandledEvents": [
+    "InitializingServer"
+  ],
   "IconResourcesKeys": [],
   "Importance": "Medium",
   "InterfaceAssemblyName": "Sungero.Domain.Interfaces",

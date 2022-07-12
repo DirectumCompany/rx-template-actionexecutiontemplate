@@ -10,6 +10,13 @@ namespace GD.ActionTemplateModule
   partial class AssignmentsTemplateClientHandlers
   {
 
+    public override void Showing(Sungero.Presentation.FormShowingEventArgs e)
+    {      
+      if (!e.Params.Contains(ActionTemplateModule.Constants.AssignmentsTemplate.HasIndefiniteDeadline))
+        e.Params.AddOrUpdate(ActionTemplateModule.Constants.AssignmentsTemplate.HasIndefiniteDeadline,
+                             Sungero.RecordManagement.PublicFunctions.Module.AllowActionItemsWithIndefiniteDeadline() || _obj.HasIndefiniteDeadline == true);
+    }
+
     public override void Refresh(Sungero.Presentation.FormRefreshEventArgs e)
     {
       var properties = _obj.State.Properties;
@@ -43,7 +50,18 @@ namespace GD.ActionTemplateModule
       properties.ActionItemParts.Properties.DaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
       properties.ActionItemParts.Properties.CoAssigneesCount.IsEnabled = hasNotIndefiniteDeadline;
       properties.ActionItemParts.Properties.CoAssigneesDaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
+      
+      var hasIndefiniteDeadline = false;
+      var indefiniteDeadlineParamExists = e.Params.Contains(ActionTemplateModule.Constants.AssignmentsTemplate.HasIndefiniteDeadline);
+      e.Params.TryGetValue(ActionTemplateModule.Constants.AssignmentsTemplate.HasIndefiniteDeadline, out hasIndefiniteDeadline);
+      properties.HasIndefiniteDeadline.IsVisible = indefiniteDeadlineParamExists
+        ? hasIndefiniteDeadline
+        : Sungero.RecordManagement.PublicFunctions.Module.AllowActionItemsWithIndefiniteDeadline() || _obj.HasIndefiniteDeadline == true;
+      
+      _obj.State.Properties.Count.IsRequired = (_obj.Info.Properties.Count.IsRequired || !isComponentResolution)
+        && _obj.HasIndefiniteDeadline != true;
+      _obj.State.Properties.CoAssigneesCount.IsRequired = _obj.CoAssignees.Any() && !isComponentResolution
+        && _obj.HasIndefiniteDeadline != true;
     }
-
   }
 }
