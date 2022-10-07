@@ -16,7 +16,7 @@
 1. Перекрыть задачу по исполнению поручений для добавления кнопок "Из шаблона" и "В шаблон":  
 * Пример вызова FromTemplate в кнопке "Из шаблона":
 ```
-GD.ActionTemplateModule.PublicFunctions.Module.FromTemplate(_obj);
+GD.ActionTemplateModule.PublicFunctions.Module.FromTemplate(_obj, e);
 ```  
 * Пример вызова ToTemplate в кнопке "В шаблон":
 ```
