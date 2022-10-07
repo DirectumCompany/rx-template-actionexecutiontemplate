@@ -21,7 +21,8 @@
     "Header": {
       "NameGuid": "683ba46a-6948-4ca0-a463-ba1712505229",
       "BackgroundPosition": "Stretch"
-    }
+    },
+    "Tabs": []
   },
   "DesktopViews": [],
   "IconResourcesKeys": [],
@@ -38,16 +39,16 @@
   "SharedAssemblyName": "GD.ActionTemplate.Shared",
   "SharedNamespace": "GD.ActionTemplate.Shared",
   "SpecialFolders": [],
-  "Version": "0.0.1.0",
+  "Version": "0.0.1.1",
   "Widgets": [],
   "Versions": [
     {
       "Type": "SolutionMetadata",
-      "Number": 6
+      "Number": 8
     },
     {
       "Type": "ModuleMetadata",
-      "Number": 6
+      "Number": 8
     },
     {
       "Type": "DomainApi",

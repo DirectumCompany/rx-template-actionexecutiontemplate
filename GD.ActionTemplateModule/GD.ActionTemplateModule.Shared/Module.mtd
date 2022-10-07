@@ -21,7 +21,8 @@
     "Header": {
       "NameGuid": "78631e10-b8da-460e-a292-ac27423a160d",
       "BackgroundPosition": "Stretch"
-    }
+    },
+    "Tabs": []
   },
   "Dependencies": [
     {
@@ -57,6 +58,10 @@
           "Name": "task",
           "ParameterType": "global::Sungero.RecordManagement.IActionItemExecutionTask",
           "ParameterTypeFullName": "Sungero.RecordManagement.IActionItemExecutionTask, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "e",
+          "ParameterType": "Sungero.Core.IValidationArgs"
         }
       ],
       "Placement": "Client",
@@ -86,12 +91,12 @@
   "SharedAssemblyName": "GD.ActionTemplateModule.Shared",
   "SharedNamespace": "GD.ActionTemplateModule.Shared",
   "SpecialFolders": [],
-  "Version": "0.0.1.0",
+  "Version": "0.0.1.1",
   "Widgets": [],
   "Versions": [
     {
       "Type": "ModuleMetadata",
-      "Number": 6
+      "Number": 8
     },
     {
       "Type": "DomainApi",

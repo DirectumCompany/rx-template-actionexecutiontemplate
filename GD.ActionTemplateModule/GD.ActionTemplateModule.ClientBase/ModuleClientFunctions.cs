@@ -51,11 +51,17 @@ namespace GD.ActionTemplateModule.Client
     /// Получить список доступных шаблонов поручений и заполнить данные по выбранному шаблону.
     /// </summary>
     [Public]
-    public void FromTemplate(IActionItemExecutionTask task)
+    public void FromTemplate(IActionItemExecutionTask task, Sungero.Core.IValidationArgs e)
     {
       var template = ActionTemplateModule.PublicFunctions.AssignmentsTemplate.Remote.GetAvailableTemplates().ShowSelect();
       if (template != null)
       {
+        if (template.HasIndefiniteDeadline == true && !Sungero.RecordManagement.PublicFunctions.Module.AllowActionItemsWithIndefiniteDeadline())
+        {
+          e.AddError(ActionItemExecutionTasks.Resources.ActionItemWithoutDeadlineDenied);
+          return;
+        }
+        
         task.IsCompoundActionItem = template.IsCompoundActionItem;
         task.ActiveText = template.Text;
         task.AssignedBy = template.AssignedBy;
