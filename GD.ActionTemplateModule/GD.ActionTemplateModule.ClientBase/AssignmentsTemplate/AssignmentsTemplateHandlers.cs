@@ -20,7 +20,7 @@ namespace GD.ActionTemplateModule
     public override void Refresh(Sungero.Presentation.FormRefreshEventArgs e)
     {
       var properties = _obj.State.Properties;
-      var isComponentResolution = _obj.IsCompoundActionItem ?? false;
+      var isComponentResolution = _obj.IsCompoundActionItem ?? false; 
       var hasNotIndefiniteDeadline = _obj.HasIndefiniteDeadline != true;
       var isUnderControl = _obj.IsUnderControl == true;
       var anyCoAssignees = _obj.CoAssignees.Any();
