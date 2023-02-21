@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Property_Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="DisplayName" xml:space="preserve">
+    <value>График периодического поручения</value>
+  </data>
+  <data name="AccusativeDisplayName" xml:space="preserve">
+    <value>График периодического поручения</value>
+  </data>
+  <data name="CollectionDisplayName" xml:space="preserve">
+    <value>Графики периодического поручения</value>
+  </data>
+  <data name="Property_ActionItemExecutionTask" xml:space="preserve">
+    <value>Поручение-основание</value>
+  </data>
+  <data name="Property_Document" xml:space="preserve">
+    <value>Документ</value>
+  </data>
+  <data name="Property_AITemplate" xml:space="preserve">
+    <value>Шаблон поручения</value>
+  </data>
+  <data name="Enum_Type_Year" xml:space="preserve">
+    <value>Ежегодно</value>
+  </data>
+  <data name="Enum_Type_Month" xml:space="preserve">
+    <value>Ежемесячно</value>
+  </data>
+  <data name="Enum_Type_Week" xml:space="preserve">
+    <value>Еженедельно</value>
+  </data>
+  <data name="Enum_Type_Day" xml:space="preserve">
+    <value>Ежедневно</value>
+  </data>
+  <data name="Property_RepeatValue" xml:space="preserve">
+    <value>Повторять каждый</value>
+  </data>
+  <data name="Property_Type" xml:space="preserve">
+    <value>Тип периода</value>
+  </data>
+  <data name="Property_BeginningDate" xml:space="preserve">
+    <value>Начало</value>
+  </data>
+  <data name="Property_EndDate" xml:space="preserve">
+    <value>Окончание</value>
+  </data>
+  <data name="Property_CreationDays" xml:space="preserve">
+    <value>Создать за</value>
+  </data>
+  <data name="Property_YearTypeMonth" xml:space="preserve">
+    <value>Месяц</value>
+  </data>
+  <data name="Property_YearTypeDay" xml:space="preserve">
+    <value>День</value>
+  </data>
+  <data name="Property_YearTypeDayValue" xml:space="preserve">
+    <value>Когда</value>
+  </data>
+  <data name="Property_YearTypeDayOfWeek" xml:space="preserve">
+    <value>День недели</value>
+  </data>
+  <data name="Property_YearTypeDayOfWeekNumber" xml:space="preserve">
+    <value>Когда</value>
+  </data>
+  <data name="Property_MonthTypeDay" xml:space="preserve">
+    <value>День</value>
+  </data>
+  <data name="Property_MonthTypeDayOfWeekNumber" xml:space="preserve">
+    <value>Когда</value>
+  </data>
+  <data name="Property_MonthTypeDayOfWeek" xml:space="preserve">
+    <value>День недели</value>
+  </data>
+  <data name="Property_MonthTypeDayValue" xml:space="preserve">
+    <value>Когда</value>
+  </data>
+  <data name="Property_LabelType" xml:space="preserve">
+    <value>месяц</value>
+  </data>
+  <data name="Property_LabelCreationsDays" xml:space="preserve">
+    <value>раб. д. до наступления срока</value>
+  </data>
+  <data name="Property_LabelDayValue" xml:space="preserve">
+    <value>числа</value>
+  </data>
+  <data name="ControlGroup_3180153e850b49ecaad4f178f8062393" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Property_BeginningYear" xml:space="preserve">
+    <value>Начало</value>
+  </data>
+  <data name="Property_EndMonth" xml:space="preserve">
+    <value>Окончание</value>
+  </data>
+  <data name="Property_EndYear" xml:space="preserve">
+    <value>Окончание</value>
+  </data>
+  <data name="Property_BeginningMonth" xml:space="preserve">
+    <value>Начало</value>
+  </data>
+  <data name="ControlGroup_fd0d343cc4034a79bf8148819dd1fbca" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Property_WeekTypeMonday" xml:space="preserve">
+    <value>понедельник</value>
+  </data>
+  <data name="Property_WeekTypeTuesday" xml:space="preserve">
+    <value>вторник</value>
+  </data>
+  <data name="Property_WeekTypeWednesday" xml:space="preserve">
+    <value>среда</value>
+  </data>
+  <data name="Property_WeekTypeThursday" xml:space="preserve">
+    <value>четверг</value>
+  </data>
+  <data name="Property_WeekTypeFriday" xml:space="preserve">
+    <value>пятница</value>
+  </data>
+  <data name="Form_f96141b0135e4f62a13e559be39f9e3b" xml:space="preserve">
+    <value>График</value>
+  </data>
+  <data name="Property_Author" xml:space="preserve">
+    <value>Автор</value>
+  </data>
+  <data name="Property_Schedule" xml:space="preserve">
+    <value>График</value>
+  </data>
+  <data name="Property_Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="Enum_Status_Active" xml:space="preserve">
+    <value>В работе</value>
+  </data>
+  <data name="Enum_Status_Closed" xml:space="preserve">
+    <value>Прекращено</value>
+  </data>
+  <data name="Enum_Status_Draft" xml:space="preserve">
+    <value>В подготовке</value>
+  </data>
+  <data name="Enum_Status_Completed" xml:space="preserve">
+    <value>Завершено</value>
+  </data>
+  <data name="Action_Start" xml:space="preserve">
+    <value>Стартовать</value>
+  </data>
+  <data name="Action_StartHint" xml:space="preserve">
+    <value>Стартовать</value>
+  </data>
+  <data name="Action_StartDescription" xml:space="preserve">
+    <value>Стартовать</value>
+  </data>
+  <data name="Action_ShowTasksList" xml:space="preserve">
+    <value>Список поручений</value>
+  </data>
+  <data name="Action_ShowTasksListHint" xml:space="preserve">
+    <value>Список поручений</value>
+  </data>
+  <data name="Action_ShowTasksListDescription" xml:space="preserve">
+    <value>Список поручений</value>
+  </data>
+</root>
