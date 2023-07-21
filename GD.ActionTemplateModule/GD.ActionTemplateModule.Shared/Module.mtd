@@ -46,6 +46,8 @@
   "Importance": "Medium",
   "InterfaceAssemblyName": "Sungero.Domain.Interfaces",
   "InterfaceNamespace": "GD.ActionTemplateModule",
+  "IsolatedAssemblyName": "GD.ActionTemplateModule.Isolated",
+  "IsolatedNamespace": "GD.ActionTemplateModule.Isolated",
   "IsVisible": false,
   "Overridden": [
     "IsVisible"
