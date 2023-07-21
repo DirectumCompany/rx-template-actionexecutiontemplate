@@ -29,6 +29,8 @@
   "Importance": "Medium",
   "InterfaceAssemblyName": "Sungero.Domain.Interfaces",
   "InterfaceNamespace": "GD.ActionTemplate",
+  "IsolatedAssemblyName": "GD.ActionTemplate.Isolated",
+  "IsolatedNamespace": "GD.ActionTemplate.Isolated",
   "OrderedSpecialFolders": [],
   "PublicStructures": [],
   "ResourceInterfaceAssemblyName": "Sungero.Domain.Interfaces",
