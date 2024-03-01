@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sungero.Core;
@@ -7,6 +7,39 @@ using GD.ActionTemplateModule.AssignmentsTemplate;
 
 namespace GD.ActionTemplateModule
 {
+  partial class AssignmentsTemplateActionItemPartsSharedCollectionHandlers
+  {
+
+    public virtual void ActionItemPartsDeleted(Sungero.Domain.Shared.CollectionPropertyDeletedEventArgs e)
+    {
+      Functions.AssignmentsTemplate.DeletePartsCoAssignees(_obj, _deleted);
+    }
+
+    public virtual void ActionItemPartsAdded(Sungero.Domain.Shared.CollectionPropertyAddedEventArgs e)
+    {
+      _added.PartGuid = Guid.NewGuid().ToString();
+      
+      if (_added.State.IsCopied)
+      {
+        var coAssigneesCopy = Functions.AssignmentsTemplate.GetPartCoAssignees(_obj, _source.PartGuid);
+        Functions.AssignmentsTemplate.AddPartsCoAssignees(_obj, _added, coAssigneesCopy);
+      }
+    }
+  }
+
+  partial class AssignmentsTemplateActionItemPartsSharedHandlers
+  {
+
+    public virtual void ActionItemPartsAssigneeChanged(GD.ActionTemplateModule.Shared.AssignmentsTemplateActionItemPartsAssigneeChangedEventArgs e)
+    {
+      if (e.NewValue == null)
+        _obj.Assignee.Department.BusinessUnit = null;
+      
+      if (e.NewValue != null && e.NewValue.Department != null)
+        _obj.Assignee.Department.BusinessUnit = e.NewValue.Department.BusinessUnit;
+    }
+  }
+
   partial class AssignmentsTemplateSharedHandlers
   {
 

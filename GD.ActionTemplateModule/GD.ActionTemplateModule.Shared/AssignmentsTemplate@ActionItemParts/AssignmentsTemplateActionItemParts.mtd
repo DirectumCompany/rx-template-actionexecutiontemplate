@@ -35,6 +35,9 @@
       "CanBeSearch": false,
       "Code": "Assignee",
       "EntityGuid": "b7905516-2be5-4931-961c-cb38d5677565",
+      "HandledEvents": [
+        "ChangedShared"
+      ],
       "IsRequired": true,
       "ListDataBinderTypeName": "Sungero.Presentation.CommonDataBinders.DropDownEditorToNavigationBinder",
       "PreviousPropertyGuid": "70e8543e-6c6d-496f-8d87-cbaec7a833c5"

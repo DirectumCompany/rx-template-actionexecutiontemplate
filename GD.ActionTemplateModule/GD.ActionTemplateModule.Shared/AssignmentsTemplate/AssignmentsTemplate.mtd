@@ -448,6 +448,10 @@
       "Name": "ActionItemParts",
       "Code": "Parts",
       "EntityGuid": "4236e4e5-f31c-4f6c-aa50-f72eb95473f7",
+      "HandledEvents": [
+        "DeletedShared",
+        "AddedShared"
+      ],
       "IsShowedInList": false,
       "IsVisibility": false,
       "PreviousPropertyGuid": "5a26b1ab-8d5c-4b01-b6c3-bbf3a01e662e"
@@ -508,11 +512,52 @@
   ],
   "PublicFunctions": [
     {
+      "Name": "AddPartsCoAssignees",
+      "Parameters": [
+        {
+          "Name": "assignmentsTemplate",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "actionItemPart",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "coAssignees",
+          "ParameterType": "global::System.Collections.Generic.List<global::Sungero.Company.IEmployee>",
+          "ParameterTypeFullName": "System.Collections.Generic.List"
+        }
+      ],
+      "Placement": "Shared",
+      "ReturnType": "void",
+      "ReturnTypeFullName": "System.Void"
+    },
+    {
       "Name": "CreateTemplate",
       "IsRemote": true,
       "Placement": "Shared",
       "ReturnType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
       "ReturnTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+    },
+    {
+      "Name": "DeletePartsCoAssignees",
+      "Parameters": [
+        {
+          "Name": "assignmentsTemplate",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "actionItemPart",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts, Sungero.Domain.Interfaces"
+        }
+      ],
+      "Placement": "Shared",
+      "ReturnType": "void",
+      "ReturnTypeFullName": "System.Void"
     },
     {
       "Name": "GetAvailableTemplates",
