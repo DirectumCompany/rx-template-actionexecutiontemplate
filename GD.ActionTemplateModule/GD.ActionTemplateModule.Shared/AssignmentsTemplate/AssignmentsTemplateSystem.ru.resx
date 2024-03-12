@@ -145,4 +145,22 @@
   <data name="Enum_FinalDaysOrHours_Hours" xml:space="preserve">
     <value>Часов</value>
   </data>
+  <data name="Action_ChangeCompoundActionItemPartDescription" xml:space="preserve">
+    <value>Изменение пункта поручения.</value>
+  </data>
+  <data name="Action_ChangeCompoundActionItemPartHint" xml:space="preserve">
+    <value>Скорректировать пункт поручения</value>
+  </data>
+  <data name="Action_ChangeCompoundActionItemPart" xml:space="preserve">
+    <value>Скорректировать пункт</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPart" xml:space="preserve">
+    <value>Добавить пункт</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPartHint" xml:space="preserve">
+    <value>Добавить пункт поручения</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPartDescription" xml:space="preserve">
+    <value>Добавление пункта поручения.</value>
+  </data>
 </root>

@@ -136,4 +136,34 @@
   <data name="Enum_FinalDaysOrHours_Hours" xml:space="preserve">
     <value>Hours</value>
   </data>
+  <data name="Action_ChangeCompoundActionItemPartConfirmationDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Action_ChangeCompoundActionItemPartHint" xml:space="preserve">
+    <value>Edit Part of Action Item</value>
+  </data>
+  <data name="Action_ChangeCompoundActionItemPartConfirmationMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Action_ChangeCompoundActionItemPartDescription" xml:space="preserve">
+    <value>Change action item part.</value>
+  </data>
+  <data name="Action_ChangeCompoundActionItemPart" xml:space="preserve">
+    <value>Edit Part</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPart" xml:space="preserve">
+    <value>Add Part</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPartDescription" xml:space="preserve">
+    <value>Add an action item part.</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPartHint" xml:space="preserve">
+    <value>Add Action Item Part</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPartConfirmationMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Action_AddCompoundActionItemPartConfirmationDescription" xml:space="preserve">
+    <value />
+  </data>
 </root>

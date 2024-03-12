@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sungero.Core;
@@ -11,7 +11,6 @@ namespace GD.ActionTemplateModule.Client
 {
   public class ModuleFunctions
   {
-
     /// <summary>
     /// Сохранить данные поручения в шаблон
     /// </summary>
