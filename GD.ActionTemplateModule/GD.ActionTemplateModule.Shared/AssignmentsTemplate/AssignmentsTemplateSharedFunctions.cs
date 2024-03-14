@@ -11,51 +11,69 @@ namespace GD.ActionTemplateModule.Shared
   {
 
     /// <summary>
+    /// Установить обязательность свойств в зависимости от заполненных данных.
+    /// </summary>
+    public virtual void SetRequiredProperties()
+    {
+      var isComponentResolution = _obj.IsCompoundActionItem ?? false;
+      
+      _obj.State.Properties.Count.IsRequired = (_obj.Info.Properties.Count.IsRequired || !isComponentResolution)
+        && _obj.HasIndefiniteDeadline != true;
+      _obj.State.Properties.Assignee.IsRequired = _obj.Info.Properties.Assignee.IsRequired || !isComponentResolution;
+      _obj.State.Properties.CoAssigneesCount.IsRequired = _obj.CoAssignees.Any() && !isComponentResolution
+        && _obj.HasIndefiniteDeadline != true;
+      
+      // Проверить заполненность контролера, если поручение на контроле.
+      _obj.State.Properties.Supervisor.IsRequired = (_obj.Info.Properties.Supervisor.IsRequired || _obj.IsUnderControl == true) && !isComponentResolution;
+    }
+
+    /// <summary>
     /// Получить тему поручения.
     /// </summary>
     /// <param name="task">Поручение.</param>
     /// <param name="beginningSubject">Изначальная тема.</param>
     /// <returns>Сформированная тема поручения.</returns>
-    public static string GetActionItemExecutionSubject(IAssignmentsTemplate template, CommonLibrary.LocalizedString beginningSubject)
-    {
-      var autoSubject = Docflow.Resources.AutoformatTaskSubject.ToString();
-      
-      using (TenantInfo.Culture.SwitchTo())
-      {
-        var subject = beginningSubject.ToString();
-        var actionItem = template.ActionItem;
-        
-        // Добавить резолюцию в тему.
-        if (!string.IsNullOrWhiteSpace(actionItem))
-        {
-          var hasDocument = task.DocumentsGroup.OfficialDocuments.Any();
-          var formattedResolution = Functions.ActionItemExecutionTask.FormatActionItemForSubject(actionItem, hasDocument);
-
-          // Конкретно у уведомления о старте составного поручения - всегда рисуем с кавычками.
-          if (!hasDocument && subject == ActionItemExecutionTasks.Resources.WorkFromActionItemIsCreatedCompound.ToString())
-            formattedResolution = string.Format("\"{0}\"", formattedResolution);
-
-          subject += string.Format(" {0}", formattedResolution);
-        }
-        
-        // Добавить ">> " для тем подзадач.
-        var isNotMainTask = task.ActionItemType != Sungero.RecordManagement.ActionItemExecutionTask.ActionItemType.Main;
-        if (isNotMainTask)
-          subject = string.Format(">> {0}", subject);
-        
-        // Добавить имя документа, если поручение с документом.
-        var document = task.DocumentsGroup.OfficialDocuments.FirstOrDefault();
-        if (document != null)
-          subject += ActionItemExecutionTasks.Resources.SubjectWithDocumentFormat(document.Name);
-        
-        subject = Docflow.PublicFunctions.Module.TrimSpecialSymbols(subject);
-        
-        if (subject != beginningSubject)
-          return subject;
-      }
-      
-      return autoSubject;
-    }
+    //TODO Zaytsev: Стоит ли вообще делать это?
+//    public static string GetActionItemExecutionSubject(IAssignmentsTemplate template, CommonLibrary.LocalizedString beginningSubject)
+//    {
+//      var autoSubject = Sungero.Docflow.Resources.AutoformatTaskSubject.ToString();
+//
+//      using (TenantInfo.Culture.SwitchTo())
+//      {
+//        var subject = beginningSubject.ToString();
+//        var actionItem = template.Text;
+//
+//        // Добавить резолюцию в тему.
+//        if (!string.IsNullOrWhiteSpace(actionItem))
+//        {
+//          var hasDocument = task.DocumentsGroup.OfficialDocuments.Any();
+//          var formattedResolution = Sungero.RecordManagement.PublicFunctions.ActionItemExecutionTask.FormatActionItemForSubject(actionItem, hasDocument);
+//
+//          // Конкретно у уведомления о старте составного поручения - всегда рисуем с кавычками.
+//          if (!hasDocument && subject == Sungero.RecordManagement.ActionItemExecutionTasks.Resources.WorkFromActionItemIsCreatedCompound.ToString())
+//            formattedResolution = string.Format("\"{0}\"", formattedResolution);
+//
+//          subject += string.Format(" {0}", formattedResolution);
+//        }
+//        
+//        // Добавить ">> " для тем подзадач.
+//        var isNotMainTask = task.ActionItemType != Sungero.RecordManagement.ActionItemExecutionTask.ActionItemType.Main;
+//        if (isNotMainTask)
+//          subject = string.Format(">> {0}", subject);
+//        
+//        // Добавить имя документа, если поручение с документом.
+//        var document = task.DocumentsGroup.OfficialDocuments.FirstOrDefault();
+//        if (document != null)
+//          subject += Sungero.RecordManagement.ActionItemExecutionTasks.Resources.SubjectWithDocumentFormat(document.Name);
+//
+//        subject = Sungero.Docflow.Docflow.PublicFunctions.Module.TrimSpecialSymbols(subject);
+//
+//        if (subject != beginningSubject)
+//          return subject;
+//      }
+//      
+//      return autoSubject;
+//    }
 
     /// <summary>
     /// Синхронизировать первые 1000 символов текста поручения в прикладное поле.
@@ -63,12 +81,12 @@ namespace GD.ActionTemplateModule.Shared
     /// <remarks>Нужно для корректного отображения поручения в списках и папках.</remarks>
     public virtual void SynchronizeActiveText()
     {
-      var actionItemPropertyMaxLength = _obj.Info.Properties.Text.Length;
+      var actionItemPropertyMaxLength = _obj.Text.Length;
       var cutActiveText = _obj.Text != null && _obj.Text.Length > actionItemPropertyMaxLength
         ? _obj.Text.Substring(0, actionItemPropertyMaxLength)
         : _obj.Text;
       
-      if (_obj.ActionItem != cutActiveText)
+      if (_obj.Text != cutActiveText)
         _obj.Text = cutActiveText;
     }
     

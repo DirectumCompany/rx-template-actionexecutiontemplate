@@ -105,14 +105,14 @@ namespace GD.ActionTemplateModule
           _obj.ActionItemParts.Clear();
         }
         
-        // Установить тему.
-        var subjectTemplate = _obj.IsCompoundActionItem == true ?
-          Sungero.RecordManagement.ActionItemExecutionTasks.Resources.ComponentActionItemExecutionSubject :
-          Sungero.RecordManagement.ActionItemExecutionTasks.Resources.TaskSubject;
-        _obj.Subject = Functions.ActionItemExecutionTask.GetActionItemExecutionSubject(_obj, subjectTemplate);
+        //TODO Zaytsev: Установить тему.
+        //        var subjectTemplate = _obj.IsCompoundActionItem == true ?
+        //          Sungero.RecordManagement.ActionItemExecutionTasks.Resources.ComponentActionItemExecutionSubject :
+        //          Sungero.RecordManagement.ActionItemExecutionTasks.Resources.TaskSubject;
+        //        _obj.Subject = Functions.AssignmentsTemplate.GetActionItemExecutionSubject(_obj, subjectTemplate);
       }
-      Functions.ActionItemExecutionTask.SetRequiredProperties(_obj);
-      _obj.State.Controls.Control.Refresh();
+      Functions.AssignmentsTemplate.SetRequiredProperties(_obj);
+      // _obj.State.Controls.Control.Refresh();
     }
 
     public virtual void CoAssigneesChanged(Sungero.Domain.Shared.CollectionPropertyChangedEventArgs e)

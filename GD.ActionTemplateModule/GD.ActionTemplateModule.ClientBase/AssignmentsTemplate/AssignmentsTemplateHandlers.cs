@@ -18,6 +18,7 @@ namespace GD.ActionTemplateModule
     }
   }
 
+
   partial class AssignmentsTemplateClientHandlers
   {
 

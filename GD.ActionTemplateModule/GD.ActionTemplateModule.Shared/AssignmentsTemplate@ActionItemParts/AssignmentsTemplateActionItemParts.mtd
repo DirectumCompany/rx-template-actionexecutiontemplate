@@ -137,7 +137,7 @@
     },
     {
       "$type": "Sungero.Metadata.IntegerPropertyMetadata, Sungero.Metadata",
-      "NameGuid": "15e252c7-62a4-4d75-87e9-a0e805bbd00f",
+      "NameGuid": "63cb5016-9a38-4286-ac1a-81029cfa0afe",
       "Name": "Number",
       "CanBeSearch": false,
       "Code": "Number",
@@ -146,7 +146,8 @@
       ],
       "IsRequired": true,
       "ListDataBinderTypeName": "Sungero.Presentation.CommonDataBinders.NumericEditorToIntAndDoubleBinder",
-      "PreviousPropertyGuid": "5149b735-5f58-4df2-97e5-974eddef8361"
+      "PreviousPropertyGuid": "5149b735-5f58-4df2-97e5-974eddef8361",
+      "Versions": []
     }
   ],
   "PublicStructures": [],
