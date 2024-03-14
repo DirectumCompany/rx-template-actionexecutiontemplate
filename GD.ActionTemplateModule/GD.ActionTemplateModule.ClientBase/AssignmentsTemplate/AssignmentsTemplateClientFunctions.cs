@@ -16,6 +16,7 @@ namespace GD.ActionTemplateModule.Client
     /// <param name="actionItemPart">Пункт составного поручения.</param>
     public void FillCompoundActionItemPart(IAssignmentsTemplateActionItemParts itemPart)
     {
+      //TODO Zaytsev по умолчания в диалоговом окне ставить Дней/Часов = null.
       var settings = Sungero.RecordManagement.PublicFunctions.Module.GetSettings();
       var isSupervisorChanges = false;
       var isAssigneeChanges = false;
@@ -24,6 +25,13 @@ namespace GD.ActionTemplateModule.Client
       var isCoAssigneesDeadlineChanges = false;
       var isActionItemTextChanges = false;
       var isAddItemPart = itemPart == null;
+      
+      #region Табличная часть
+      
+      var isAssigneeDaysOrHoursChanges = false;
+      var isCoAssigneesDaysOrHoursChanges = false;
+      #endregion
+      
       var title = isAddItemPart ? Sungero.RecordManagement.ActionItemExecutionTasks.Resources.AddCompoundActionItemPart :
         Sungero.RecordManagement.ActionItemExecutionTasks.Resources.EditCompoundActionItemPartFormat(itemPart.ActionItemPart);
       var supervisorDefault = isAddItemPart ? _obj.Supervisor : itemPart.Supervisor ?? _obj.Supervisor;
@@ -58,14 +66,23 @@ namespace GD.ActionTemplateModule.Client
       deadline.IsEnabled = _obj.HasIndefiniteDeadline != true;
       deadline.IsRequired = deadline.IsEnabled;
       
-      var deadlineDaysOrHourse = dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false, "Дней").From("Дней", "Часов");
+      var deadlineDaysOrHourse = _obj.ActionItemParts.Any() && itemPart.DaysOrHours != null ?
+        dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false,
+                         _obj.Info.Properties.FinalDaysOrHours
+                         .GetLocalizedValue(itemPart.DaysOrHours.Value))
+        .From(_obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days),
+              _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours)) :
+        dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false,
+                         _obj.Info.Properties.FinalDaysOrHours
+                         .GetLocalizedValue(_obj.FinalDaysOrHours.Value))
+        .From(_obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days),
+              _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours));
       
       var coAssignees = dialog.AddSelectMany(_obj.Info.Properties.CoAssignees.LocalizedName, false, coAssigneesDefault.ToArray());
       coAssignees.IsEnabled = false;
       coAssignees.IsVisible = false;
       var coAssigneesText = dialog
-        .AddMultilineString(_obj.Info.Properties.CoAssignees.LocalizedName,
-                            false,
+        .AddMultilineString(_obj.Info.Properties.CoAssignees.LocalizedName, false,
                             Sungero.Docflow.PublicFunctions.Module.GetCoAssigneesNames(coAssigneesDefault, false))
         .WithRowsCount(Sungero.RecordManagement.PublicConstants.Module.CoAssigneesTextRowsCount);
       coAssigneesText.IsEnabled = false;
@@ -73,12 +90,22 @@ namespace GD.ActionTemplateModule.Client
       var addCoAssignees = dialog.AddHyperlink(ActionItemExecutionTasks.Resources.AddCoAssignees);
       var deleteCoAssignees = dialog.AddHyperlink(ActionItemExecutionTasks.Resources.RemoveCoAssignees);
       var coAssigneesDeadline = dialog.AddInteger(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneesDeadlineDialog,
-                                                  false,
-                                                  coAssigneesDeadlineDefault);
+                                                  false, coAssigneesDeadlineDefault);
       coAssigneesDeadline.IsEnabled = coAssigneesDefault.Any();
       coAssigneesDeadline.IsRequired = coAssigneesDefault.Any() && _obj.HasIndefiniteDeadline != true;
       
-      var coAssigneesDeadlineDaysOrHourse = dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false, "Дней").From("Дней", "Часов");
+      var coAssigneesDeadlineDaysOrHourse = _obj.ActionItemParts.Any() && itemPart.CoAssigneesDaysOrHours != null ?
+        dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false,
+                         _obj.Info.Properties.FinalDaysOrHours
+                         .GetLocalizedValue(itemPart.CoAssigneesDaysOrHours.Value))
+        .From(_obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days),
+              _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours)) :
+        dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName,
+                         false, _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(_obj.FinalDaysOrHours.Value))
+        .From(_obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days),
+              _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours));
+      coAssigneesDeadlineDaysOrHourse.IsEnabled = coAssigneesDefault.Any();
+      coAssigneesDeadlineDaysOrHourse.IsRequired = coAssigneesDefault.Any() && _obj.HasIndefiniteDeadline != true;
       
       var actionItemPartText = dialog
         .AddMultilineString(_obj.Info.Properties.ActionItemParts.Properties.ActionItemPart.LocalizedName, false, itemPartDefault)
@@ -90,21 +117,38 @@ namespace GD.ActionTemplateModule.Client
       dialog.SetOnRefresh(
         (args) =>
         {
-          if (!deadline.Value.HasValue || deadline.Value.Value <= 0)
-            args.AddError(ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday, deadline);
-          
-          //TODO Zaytsev: В окне при загрузке всплывет окно если сделать <= 0.
-          if (coAssigneesDeadline.Value.HasValue && coAssigneesDeadline.Value.Value < 0)
-            args.AddError(ActionItemExecutionTasks.Resources.CoAssigneeDeadlineLessThanToday);
+          if (deadline.Value.HasValue)
+            if (deadline.Value.Value <= 0)
+              args.AddError(ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday, deadline);
           
           var assigneeDeadline = deadline.Value.HasValue ? deadline.Value : _obj.FinalCount;
           
-          if (assigneeDeadline != null && coAssigneesDeadline != null && assigneeDeadline.Value < coAssigneesDeadline.Value)
-            args.AddError(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneesDeadlineError);
+          if (coAssigneesDeadline.Value.HasValue)
+          {
+            if (coAssigneesDeadline.Value.Value >= 0)
+            {
+              if (coAssigneesDeadlineDaysOrHourse.Value == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days))
+              {
+                if (coAssigneesDeadline.Value.Value > deadline.Value.Value)
+                  args.AddError(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneesDeadlineError);
+              }
+              else
+              {
+                if (coAssigneesDeadline.Value.Value > deadline.Value.Value * 24)
+                  args.AddError(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneesDeadlineError);
+              }
+            }
+            else
+              args.AddError(ActionItemExecutionTasks.Resources.CoAssigneeDeadlineLessThanToday);
+          }
+          
+          if (assigneeDeadline != null && coAssigneesDeadline.Value.HasValue && assigneeDeadline.Value <= 0)
+            args.AddError(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday);
           
           fillButton.IsEnabled = isSupervisorChanges || isAssigneeChanges ||
             isDeadlineChanges || isCoAssigneesChanges ||
-            isCoAssigneesDeadlineChanges || isActionItemTextChanges;
+            isCoAssigneesDeadlineChanges || isActionItemTextChanges ||
+            isCoAssigneesDaysOrHoursChanges || isAssigneeDaysOrHoursChanges;
         });
       
       // Контролер.
@@ -160,6 +204,20 @@ namespace GD.ActionTemplateModule.Client
           isActionItemTextChanges = !Equals(args.NewValue, itemPartDefault ?? string.Empty);
         });
       
+      // Дней/Часов исполнителя в диалоговом окне.
+      deadlineDaysOrHourse.SetOnValueChanged(
+        (args) =>
+        {
+          isAssigneeDaysOrHoursChanges = !Equals(args.NewValue, itemPart.DaysOrHours.Value.Value);
+        });
+      
+      // Дней/Часов соисполнителей в диалоговом окне.
+      coAssigneesDeadlineDaysOrHourse.SetOnValueChanged(
+        (args) =>
+        {
+          isCoAssigneesDaysOrHoursChanges = !Equals(args.NewValue, coAssigneesDeadlineDaysOrHourse.Value);
+        });
+      
       #region Гиперссылки на добавление и удаление соисполнителей
 
       addCoAssignees.SetOnExecute(
@@ -210,18 +268,33 @@ namespace GD.ActionTemplateModule.Client
               return;
             }
 
-            if (coAssigneesDeadline.Value.HasValue && coAssigneesDeadline.Value.Value <= 0)
+            if (coAssigneesDeadline.Value.HasValue)
             {
-              args.AddError(ActionItemExecutionTasks.Resources.CoAssigneeDeadlineLessThanToday);
-              return;
+              if (coAssigneesDeadline.Value.Value <= 0)
+              {
+                args.AddError(ActionItemExecutionTasks.Resources.CoAssigneeDeadlineLessThanToday);
+                return;
+              }
+              if (deadlineDaysOrHourse.Value == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) &&
+                  coAssigneesDeadlineDaysOrHourse.Value == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours) &&
+                  coAssigneesDeadline.Value.Value > deadline.Value.Value * 24)
+              {
+                args.AddError(ActionItemExecutionTasks.Resources.CoAssigneeDeadlineLessThanToday);
+                return;
+              }
             }
-
+            
             var assigneeDeadline = deadline.Value.HasValue ? deadline.Value : _obj.FinalCount;
 
-            if (assigneeDeadline != null && coAssigneesDeadline.Value.HasValue && deadline.Value.Value < coAssigneesDeadline.Value.Value)
+            if (assigneeDeadline != null && coAssigneesDeadline.Value.HasValue)
             {
-              args.AddError(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneesDeadlineError);
-              return;
+              if (deadlineDaysOrHourse.Value == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) &&
+                  coAssigneesDeadlineDaysOrHourse.Value == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours) &&
+                  coAssigneesDeadline.Value.Value > assigneeDeadline.Value * 24)
+              {
+                args.AddError(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneesDeadlineError);
+                return;
+              }
             }
 
             if (args.IsValid)
@@ -251,7 +324,6 @@ namespace GD.ActionTemplateModule.Client
       dialog.Show();
       
       #endregion
-      
     }
     
     /// <summary>
@@ -277,8 +349,8 @@ namespace GD.ActionTemplateModule.Client
       // Корректировать можно только поручения, созданные вручную, либо пункты составного поручения.
       // Простые поручения соисполнителям корректировать нельзя.
       //TODO Zaytsev: Надо будет доделать при добавлении кнопки "равноправные исполнители".
-      // if (_obj. != ActionItemType.Main && _obj.ActionItemType != ActionItemType.Component)
-      // return false;
+      //      if (_obj. != ActionItemType.Main && _obj.ActionItemType != ActionItemType.Component)
+      //        return false;
       
       // Корректировать можно, только если есть права на изменение поручения.
       if (!_obj.AccessRights.CanUpdate())

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sungero.Core;
@@ -31,7 +31,7 @@ namespace GD.ActionTemplateModule
   {
 
     public override void BeforeSave(Sungero.Domain.BeforeSaveEventArgs e)
-    {      
+    {
       // Проверить корректность сроков соисполнителей для простого поручения.
       if (_obj.CoAssigneesCount != null)
       {
@@ -62,6 +62,12 @@ namespace GD.ActionTemplateModule
         e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours);
       
       if (_obj.ActionItemParts.Any(p => p.CoAssigneesCount != null && p.CoAssigneesDaysOrHours == null))
+        e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours);
+      
+      if (_obj.ActionItemParts.Any(p => p.Count != null && p.DaysOrHours == null))
+        e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours);
+      
+      if (_obj.ActionItemParts.Any(p => p.Count != null && p.CoAssigneesDaysOrHours == null))
         e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours);
       
       if (e.IsValid && Sungero.Company.Employees.Current != null)

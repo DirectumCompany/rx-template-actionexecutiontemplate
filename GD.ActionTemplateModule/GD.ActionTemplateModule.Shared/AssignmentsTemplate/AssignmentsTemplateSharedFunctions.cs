@@ -9,6 +9,69 @@ namespace GD.ActionTemplateModule.Shared
 {
   partial class AssignmentsTemplateFunctions
   {
+
+    /// <summary>
+    /// Получить тему поручения.
+    /// </summary>
+    /// <param name="task">Поручение.</param>
+    /// <param name="beginningSubject">Изначальная тема.</param>
+    /// <returns>Сформированная тема поручения.</returns>
+    public static string GetActionItemExecutionSubject(IAssignmentsTemplate template, CommonLibrary.LocalizedString beginningSubject)
+    {
+      var autoSubject = Docflow.Resources.AutoformatTaskSubject.ToString();
+      
+      using (TenantInfo.Culture.SwitchTo())
+      {
+        var subject = beginningSubject.ToString();
+        var actionItem = template.ActionItem;
+        
+        // Добавить резолюцию в тему.
+        if (!string.IsNullOrWhiteSpace(actionItem))
+        {
+          var hasDocument = task.DocumentsGroup.OfficialDocuments.Any();
+          var formattedResolution = Functions.ActionItemExecutionTask.FormatActionItemForSubject(actionItem, hasDocument);
+
+          // Конкретно у уведомления о старте составного поручения - всегда рисуем с кавычками.
+          if (!hasDocument && subject == ActionItemExecutionTasks.Resources.WorkFromActionItemIsCreatedCompound.ToString())
+            formattedResolution = string.Format("\"{0}\"", formattedResolution);
+
+          subject += string.Format(" {0}", formattedResolution);
+        }
+        
+        // Добавить ">> " для тем подзадач.
+        var isNotMainTask = task.ActionItemType != Sungero.RecordManagement.ActionItemExecutionTask.ActionItemType.Main;
+        if (isNotMainTask)
+          subject = string.Format(">> {0}", subject);
+        
+        // Добавить имя документа, если поручение с документом.
+        var document = task.DocumentsGroup.OfficialDocuments.FirstOrDefault();
+        if (document != null)
+          subject += ActionItemExecutionTasks.Resources.SubjectWithDocumentFormat(document.Name);
+        
+        subject = Docflow.PublicFunctions.Module.TrimSpecialSymbols(subject);
+        
+        if (subject != beginningSubject)
+          return subject;
+      }
+      
+      return autoSubject;
+    }
+
+    /// <summary>
+    /// Синхронизировать первые 1000 символов текста поручения в прикладное поле.
+    /// </summary>
+    /// <remarks>Нужно для корректного отображения поручения в списках и папках.</remarks>
+    public virtual void SynchronizeActiveText()
+    {
+      var actionItemPropertyMaxLength = _obj.Info.Properties.Text.Length;
+      var cutActiveText = _obj.Text != null && _obj.Text.Length > actionItemPropertyMaxLength
+        ? _obj.Text.Substring(0, actionItemPropertyMaxLength)
+        : _obj.Text;
+      
+      if (_obj.ActionItem != cutActiveText)
+        _obj.Text = cutActiveText;
+    }
+    
     /// <summary>
     /// Добавить пункт поручения.
     /// </summary>
@@ -25,9 +88,11 @@ namespace GD.ActionTemplateModule.Shared
       actionItem.ActionItemPart = actionItemPart;
       actionItem.Assignee = assignee;
       actionItem.Count = deadline.Value;
-      actionItem.DaysOrHours = coAssigneesDeadlineDaysOrHourse == "Дней" ? DaysOrHours.Days : DaysOrHours.Hours;
+      actionItem.DaysOrHours = deadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ? DaysOrHours.Days :
+        DaysOrHours.Hours;
       actionItem.CoAssigneesCount = coAssigneesDeadline;
-      actionItem.CoAssigneesDaysOrHours = coAssigneesDeadlineDaysOrHourse == "Дней" ? DaysOrHours.Days : DaysOrHours.Hours;
+      actionItem.CoAssigneesDaysOrHours = coAssigneesDeadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ?
+        DaysOrHours.Days : DaysOrHours.Hours;
       actionItem.Supervisor = supervisor;
       AddPartsCoAssignees(actionItem, coAssignees);
     }
@@ -87,9 +152,9 @@ namespace GD.ActionTemplateModule.Shared
       actionItemPart.ActionItemPart = actionItemPartText;
       actionItemPart.Assignee = assignee;
       actionItemPart.Count = deadline;
-      actionItemPart.DaysOrHours = coAssigneesDeadlineDaysOrHourse == "Дней" ? DaysOrHours.Days : DaysOrHours.Hours;
+      actionItemPart.DaysOrHours = deadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ? DaysOrHours.Days : DaysOrHours.Hours;
       actionItemPart.CoAssigneesCount = coAssigneesDeadline.Value;
-      actionItemPart.CoAssigneesDaysOrHours = coAssigneesDeadlineDaysOrHourse == "Дней" ? DaysOrHours.Days : DaysOrHours.Hours;
+      actionItemPart.CoAssigneesDaysOrHours = coAssigneesDeadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ? DaysOrHours.Days : DaysOrHours.Hours;
       actionItemPart.Supervisor = supervisor;
       DeletePartsCoAssignees(actionItemPart);
       AddPartsCoAssignees(actionItemPart, coAssignees);

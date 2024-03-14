@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sungero.Core;
@@ -7,6 +7,17 @@ using GD.ActionTemplateModule.AssignmentsTemplate;
 
 namespace GD.ActionTemplateModule
 {
+  partial class AssignmentsTemplateActionItemPartsClientHandlers
+  {
+
+    public virtual void ActionItemPartsNumberValueInput(Sungero.Presentation.IntegerValueInputEventArgs e)
+    {
+      // Проверить число на положительность.
+      if (e.NewValue < 1)
+        e.AddError(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.NumberIsNotPositive);
+    }
+  }
+
   partial class AssignmentsTemplateClientHandlers
   {
 
