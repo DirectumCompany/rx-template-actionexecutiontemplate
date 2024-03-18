@@ -16,7 +16,6 @@ namespace GD.ActionTemplateModule.Client
     /// <param name="actionItemPart">Пункт составного поручения.</param>
     public void FillCompoundActionItemPart(IAssignmentsTemplateActionItemParts itemPart)
     {
-      //TODO Zaytsev по умолчания в диалоговом окне ставить Дней/Часов = null.
       var settings = Sungero.RecordManagement.PublicFunctions.Module.GetSettings();
       var isSupervisorChanges = false;
       var isAssigneeChanges = false;

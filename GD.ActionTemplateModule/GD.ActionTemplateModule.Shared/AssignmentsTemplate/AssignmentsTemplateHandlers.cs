@@ -111,12 +111,6 @@ namespace GD.ActionTemplateModule
           // Чистим грид в составном, чтобы не мешать валидации.
           _obj.ActionItemParts.Clear();
         }
-        
-        //TODO Zaytsev: Установить тему.
-        //        var subjectTemplate = _obj.IsCompoundActionItem == true ?
-        //          Sungero.RecordManagement.ActionItemExecutionTasks.Resources.ComponentActionItemExecutionSubject :
-        //          Sungero.RecordManagement.ActionItemExecutionTasks.Resources.TaskSubject;
-        //        _obj.Subject = Functions.AssignmentsTemplate.GetActionItemExecutionSubject(_obj, subjectTemplate);
       }
       Functions.AssignmentsTemplate.SetRequiredProperties(_obj);
       // _obj.State.Controls.Control.Refresh();

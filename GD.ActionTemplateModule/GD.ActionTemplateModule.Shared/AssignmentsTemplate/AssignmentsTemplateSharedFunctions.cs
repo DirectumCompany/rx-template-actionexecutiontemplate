@@ -26,55 +26,7 @@ namespace GD.ActionTemplateModule.Shared
       // Проверить заполненность контролера, если поручение на контроле.
       _obj.State.Properties.Supervisor.IsRequired = (_obj.Info.Properties.Supervisor.IsRequired || _obj.IsUnderControl == true) && !isComponentResolution;
     }
-
-    /// <summary>
-    /// Получить тему поручения.
-    /// </summary>
-    /// <param name="task">Поручение.</param>
-    /// <param name="beginningSubject">Изначальная тема.</param>
-    /// <returns>Сформированная тема поручения.</returns>
-    //TODO Zaytsev: Стоит ли вообще делать это?
-//    public static string GetActionItemExecutionSubject(IAssignmentsTemplate template, CommonLibrary.LocalizedString beginningSubject)
-//    {
-//      var autoSubject = Sungero.Docflow.Resources.AutoformatTaskSubject.ToString();
-//
-//      using (TenantInfo.Culture.SwitchTo())
-//      {
-//        var subject = beginningSubject.ToString();
-//        var actionItem = template.Text;
-//
-//        // Добавить резолюцию в тему.
-//        if (!string.IsNullOrWhiteSpace(actionItem))
-//        {
-//          var hasDocument = task.DocumentsGroup.OfficialDocuments.Any();
-//          var formattedResolution = Sungero.RecordManagement.PublicFunctions.ActionItemExecutionTask.FormatActionItemForSubject(actionItem, hasDocument);
-//
-//          // Конкретно у уведомления о старте составного поручения - всегда рисуем с кавычками.
-//          if (!hasDocument && subject == Sungero.RecordManagement.ActionItemExecutionTasks.Resources.WorkFromActionItemIsCreatedCompound.ToString())
-//            formattedResolution = string.Format("\"{0}\"", formattedResolution);
-//
-//          subject += string.Format(" {0}", formattedResolution);
-//        }
-//        
-//        // Добавить ">> " для тем подзадач.
-//        var isNotMainTask = task.ActionItemType != Sungero.RecordManagement.ActionItemExecutionTask.ActionItemType.Main;
-//        if (isNotMainTask)
-//          subject = string.Format(">> {0}", subject);
-//        
-//        // Добавить имя документа, если поручение с документом.
-//        var document = task.DocumentsGroup.OfficialDocuments.FirstOrDefault();
-//        if (document != null)
-//          subject += Sungero.RecordManagement.ActionItemExecutionTasks.Resources.SubjectWithDocumentFormat(document.Name);
-//
-//        subject = Sungero.Docflow.Docflow.PublicFunctions.Module.TrimSpecialSymbols(subject);
-//
-//        if (subject != beginningSubject)
-//          return subject;
-//      }
-//      
-//      return autoSubject;
-//    }
-
+    
     /// <summary>
     /// Синхронизировать первые 1000 символов текста поручения в прикладное поле.
     /// </summary>
