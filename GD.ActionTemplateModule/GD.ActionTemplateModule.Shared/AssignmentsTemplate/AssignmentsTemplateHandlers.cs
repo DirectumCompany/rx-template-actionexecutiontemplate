@@ -19,6 +19,13 @@ namespace GD.ActionTemplateModule
     {
       _added.PartGuid = Guid.NewGuid().ToString();
       
+      // Задать порядковый номер для пункта поручения.
+      var lastNumber = _obj.ActionItemParts.OrderBy(j => j.Number).LastOrDefault();
+      if (lastNumber.Number.HasValue)
+        _added.Number = lastNumber.Number + 1;
+      else
+        _added.Number = 1;
+      
       if (_added.State.IsCopied)
       {
         var coAssigneesCopy = Functions.AssignmentsTemplate.GetPartCoAssignees(_obj, _source.PartGuid);

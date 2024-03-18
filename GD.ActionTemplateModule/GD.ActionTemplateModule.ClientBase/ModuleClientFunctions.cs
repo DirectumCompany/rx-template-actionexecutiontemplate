@@ -30,7 +30,7 @@ namespace GD.ActionTemplateModule.Client
         foreach (var actionItemPart in task.ActionItemParts)
         {
           var coAssignees = task.PartsCoAssignees.Where(p => p.PartGuid == actionItemPart.PartGuid).Select(p => p.CoAssignee).ToList();
-          AddActionItemPart(template, actionItemPart.Assignee, actionItemPart.ActionItemPart, coAssignees, actionItemPart.Supervisor);
+          AddActionItemPart(template, actionItemPart.Number.Value, actionItemPart.Assignee, actionItemPart.ActionItemPart, coAssignees, actionItemPart.Supervisor);
         }
       }
       else
@@ -164,10 +164,11 @@ namespace GD.ActionTemplateModule.Client
     /// <param name="actionItemPart">Пункт поручения.</param>
     /// <param name="coAssignees">Соисполнители.</param>
     /// <param name="supervisor">Контролер.</param>
-    public void AddActionItemPart(IAssignmentsTemplate template, Sungero.Company.IEmployee assignee, string actionItemPart,
+    public void AddActionItemPart(IAssignmentsTemplate template, int number, Sungero.Company.IEmployee assignee, string actionItemPart,
                                   List<Sungero.Company.IEmployee> coAssignees, Sungero.Company.IEmployee supervisor)
     {
       var actionItem = template.ActionItemParts.AddNew();
+      actionItem.Number = number;
       actionItem.ActionItemPart = actionItemPart;
       actionItem.Assignee = assignee;
       actionItem.Supervisor = supervisor;

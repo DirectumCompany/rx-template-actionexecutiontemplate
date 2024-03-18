@@ -66,15 +66,9 @@ namespace GD.ActionTemplateModule.Client
       deadline.IsEnabled = _obj.HasIndefiniteDeadline != true;
       deadline.IsRequired = deadline.IsEnabled;
       
-      var deadlineDaysOrHourse = _obj.ActionItemParts.Any() && itemPart.DaysOrHours != null ?
-        dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false,
-                         _obj.Info.Properties.FinalDaysOrHours
-                         .GetLocalizedValue(itemPart.DaysOrHours.Value))
-        .From(_obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days),
-              _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours)) :
-        dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false,
-                         _obj.Info.Properties.FinalDaysOrHours
-                         .GetLocalizedValue(_obj.FinalDaysOrHours.Value))
+      var deadlineDaysOrHourse = dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false,
+                                                  _obj.Info.Properties.FinalDaysOrHours
+                                                  .GetLocalizedValue(_obj.FinalDaysOrHours.Value))
         .From(_obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days),
               _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours));
       
@@ -91,17 +85,11 @@ namespace GD.ActionTemplateModule.Client
       var deleteCoAssignees = dialog.AddHyperlink(ActionItemExecutionTasks.Resources.RemoveCoAssignees);
       var coAssigneesDeadline = dialog.AddInteger(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneesDeadlineDialog,
                                                   false, coAssigneesDeadlineDefault);
-      coAssigneesDeadline.IsEnabled = coAssigneesDefault.Any();
-      coAssigneesDeadline.IsRequired = coAssigneesDefault.Any() && _obj.HasIndefiniteDeadline != true;
+      coAssigneesDeadline.IsEnabled = coAssignees.Value.Any();
+      coAssigneesDeadline.IsRequired = coAssignees.Value.Any() && _obj.HasIndefiniteDeadline != true;
       
-      var coAssigneesDeadlineDaysOrHourse = _obj.ActionItemParts.Any() && itemPart.CoAssigneesDaysOrHours != null ?
-        dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false,
-                         _obj.Info.Properties.FinalDaysOrHours
-                         .GetLocalizedValue(itemPart.CoAssigneesDaysOrHours.Value))
-        .From(_obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days),
-              _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours)) :
-        dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName,
-                         false, _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(_obj.FinalDaysOrHours.Value))
+      var coAssigneesDeadlineDaysOrHourse =dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false,
+                                                            _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(_obj.FinalDaysOrHours.Value))
         .From(_obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days),
               _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours));
       coAssigneesDeadlineDaysOrHourse.IsEnabled = coAssigneesDefault.Any();

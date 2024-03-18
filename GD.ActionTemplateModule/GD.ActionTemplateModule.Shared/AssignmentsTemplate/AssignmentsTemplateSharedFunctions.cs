@@ -171,7 +171,7 @@ namespace GD.ActionTemplateModule.Shared
       actionItemPart.Assignee = assignee;
       actionItemPart.Count = deadline;
       actionItemPart.DaysOrHours = deadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ? DaysOrHours.Days : DaysOrHours.Hours;
-      actionItemPart.CoAssigneesCount = coAssigneesDeadline.Value;
+      actionItemPart.CoAssigneesCount = coAssigneesDeadline;
       actionItemPart.CoAssigneesDaysOrHours = coAssigneesDeadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ? DaysOrHours.Days : DaysOrHours.Hours;
       actionItemPart.Supervisor = supervisor;
       DeletePartsCoAssignees(actionItemPart);

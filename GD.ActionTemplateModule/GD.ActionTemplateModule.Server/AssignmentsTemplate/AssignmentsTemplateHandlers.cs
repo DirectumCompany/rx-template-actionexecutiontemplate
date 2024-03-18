@@ -51,7 +51,8 @@ namespace GD.ActionTemplateModule
       {
         e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.CoAssigneesDeadlineError);
       }
-      
+      #region Старое
+      /*
       if (_obj.ActionItemParts.Any(p => p.Count == null && p.CoAssigneesCount != null))
         e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyActionItemPartDeadline);
       
@@ -72,6 +73,67 @@ namespace GD.ActionTemplateModule
       
       if (e.IsValid && Sungero.Company.Employees.Current != null)
         _obj.AccessRights.Grant(Sungero.Company.Employees.Current.Department, DefaultAccessRightsTypes.Read);
+       */
+      #endregion
+      
+      #region Простое поручение
+      
+      if (_obj.IsCompoundActionItem == false)
+      {
+        if (_obj.ActionItemParts.Any(p => p.Count == null && p.CoAssigneesCount != null))
+          e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyActionItemPartDeadline);
+        
+        if (_obj.ActionItemParts.Any(p => p.Count != null && p.DaysOrHours == null))
+          e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours);
+        
+        if (_obj.ActionItemParts.Any(p => p.CoAssigneesCount != null && p.CoAssigneesDaysOrHours == null))
+          e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours);
+        
+        if (_obj.ActionItemParts.Any(p => p.Count != null && p.DaysOrHours == null))
+          e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours);
+        
+        if (_obj.ActionItemParts.Any(p => p.Count != null && p.CoAssigneesDaysOrHours == null))
+          e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours);
+        
+        if (e.IsValid && Sungero.Company.Employees.Current != null)
+          _obj.AccessRights.Grant(Sungero.Company.Employees.Current.Department, DefaultAccessRightsTypes.Read);
+        
+        if (_obj.ActionItemParts.Any(p => p.Count != null && p.CoAssigneesCount == null))
+          e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyActionItemPartCoAssigneesDeadline);
+      }
+      
+      #endregion
+      
+      #region Сотсавное поручение
+      
+      if (_obj.IsCompoundActionItem == true)
+      {
+        if (_obj.ActionItemParts.Any(p => string.IsNullOrEmpty(p.CoAssignees) && p.CoAssigneesCount != null && p.CoAssigneesDaysOrHours == null))
+          e.AddError(AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours);
+        
+        if (_obj.ActionItemParts.Any(p => p.Count != null && p.DaysOrHours == null))
+          e.AddError(AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours);
+        
+        if (_obj.FinalCount != null)
+        {
+          if (_obj.ActionItemParts.Any(p => p.Assignee != null && p.DaysOrHours.Value == DaysOrHours.Days && _obj.FinalDaysOrHours.Value == DaysOrHours.Days &&
+                                       p.Count > _obj.FinalCount))
+            e.AddError(AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours);
+          
+          else if (_obj.ActionItemParts.Any(p => p.Assignee != null && p.DaysOrHours.Value == DaysOrHours.Hours && _obj.FinalDaysOrHours.Value == DaysOrHours.Days &&
+                                            p.Count * 24 > _obj.FinalCount))
+            e.AddError(AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours);
+          
+          if (_obj.ActionItemParts.Any(p => p.Assignee != null && p.DaysOrHours.Value == DaysOrHours.Hours && _obj.FinalDaysOrHours.Value == DaysOrHours.Hours &&
+                                       p.Count > _obj.FinalCount))
+            e.AddError(AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours);
+          
+          else if (_obj.ActionItemParts.Any(p => p.Assignee != null && p.DaysOrHours.Value == DaysOrHours.Days && _obj.FinalDaysOrHours.Value == DaysOrHours.Hours &&
+                                            p.Count * 24 > _obj.FinalCount))
+            e.AddError(AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours);
+        }
+      }
+      #endregion
     }
 
     public override void Created(Sungero.Domain.CreatedEventArgs e)

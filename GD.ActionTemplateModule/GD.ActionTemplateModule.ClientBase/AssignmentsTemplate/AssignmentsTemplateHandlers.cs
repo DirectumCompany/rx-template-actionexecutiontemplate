@@ -53,8 +53,10 @@ namespace GD.ActionTemplateModule
       
       properties.ActionItemParts.Properties.Count.IsEnabled = hasNotIndefiniteDeadline;
       properties.ActionItemParts.Properties.DaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
-      properties.ActionItemParts.Properties.CoAssigneesCount.IsEnabled = hasNotIndefiniteDeadline;
-      properties.ActionItemParts.Properties.CoAssigneesDaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
+      properties.ActionItemParts.Properties.CoAssigneesCount.IsEnabled = hasNotIndefiniteDeadline && isComponentResolution && 
+        _obj.ActionItemParts.Any(p => !string.IsNullOrEmpty(p.CoAssignees));
+      properties.ActionItemParts.Properties.CoAssigneesDaysOrHours.IsEnabled = hasNotIndefiniteDeadline && isComponentResolution && 
+        _obj.ActionItemParts.Any(p => !string.IsNullOrEmpty(p.CoAssignees));
     }
 
   }

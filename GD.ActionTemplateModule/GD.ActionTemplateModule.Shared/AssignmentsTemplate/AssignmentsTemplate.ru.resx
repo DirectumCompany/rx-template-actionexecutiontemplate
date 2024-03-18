@@ -76,4 +76,7 @@
   <data name="EmptyActionItemPartCoAssigneesDeadline" xml:space="preserve">
     <value>Не заполнен срок соисполнителей в табличной части.</value>
   </data>
+  <data name="AssigneeFinalDaysOrHours" xml:space="preserve">
+    <value>Cрок исполнителя в табличной части не может быть больше конечного срока.</value>
+  </data>
 </root>
