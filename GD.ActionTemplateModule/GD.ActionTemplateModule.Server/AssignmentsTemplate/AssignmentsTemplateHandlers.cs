@@ -51,30 +51,6 @@ namespace GD.ActionTemplateModule
       {
         e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.CoAssigneesDeadlineError);
       }
-      #region Старое
-      /*
-      if (_obj.ActionItemParts.Any(p => p.Count == null && p.CoAssigneesCount != null))
-        e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyActionItemPartDeadline);
-      
-      if (_obj.ActionItemParts.Any(p => p.Count != null && p.CoAssigneesCount == null))
-        e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyActionItemPartCoAssigneesDeadline);
-      
-      if (_obj.ActionItemParts.Any(p => p.Count != null && p.DaysOrHours == null))
-        e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours);
-      
-      if (_obj.ActionItemParts.Any(p => p.CoAssigneesCount != null && p.CoAssigneesDaysOrHours == null))
-        e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours);
-      
-      if (_obj.ActionItemParts.Any(p => p.Count != null && p.DaysOrHours == null))
-        e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours);
-      
-      if (_obj.ActionItemParts.Any(p => p.Count != null && p.CoAssigneesDaysOrHours == null))
-        e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours);
-      
-      if (e.IsValid && Sungero.Company.Employees.Current != null)
-        _obj.AccessRights.Grant(Sungero.Company.Employees.Current.Department, DefaultAccessRightsTypes.Read);
-       */
-      #endregion
       
       #region Простое поручение
       

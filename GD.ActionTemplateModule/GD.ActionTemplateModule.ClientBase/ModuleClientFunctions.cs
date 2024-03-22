@@ -12,7 +12,7 @@ namespace GD.ActionTemplateModule.Client
   public class ModuleFunctions
   {
     /// <summary>
-    /// Сохранить данные поручения в шаблон
+    /// Сохранить данные поручения в шаблон.
     /// </summary>
     [Public]
     public void ToTemplate(IActionItemExecutionTask task)

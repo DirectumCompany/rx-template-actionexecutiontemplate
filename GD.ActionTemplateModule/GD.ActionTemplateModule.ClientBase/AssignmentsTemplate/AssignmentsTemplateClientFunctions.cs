@@ -29,6 +29,7 @@ namespace GD.ActionTemplateModule.Client
       
       var isAssigneeDaysOrHoursChanges = false;
       var isCoAssigneesDaysOrHoursChanges = false;
+      
       #endregion
       
       var title = isAddItemPart ? Sungero.RecordManagement.ActionItemExecutionTasks.Resources.AddCompoundActionItemPart :
@@ -314,7 +315,7 @@ namespace GD.ActionTemplateModule.Client
     }
     
     /// <summary>
-    /// Проверка, что хотя бы одно доступное свойство пункта составного поручения заполнено.
+    /// Проверка, что хотя бы одно доступное свойство пункта составного шаблона поручения заполнено.
     /// </summary>
     /// <param name="itemPart">Пункт составного поручения.</param>
     /// <returns>True - корректировка возможна, иначе - false.</returns>
@@ -327,7 +328,7 @@ namespace GD.ActionTemplateModule.Client
     }
 
     /// <summary>
-    /// Проверить возможность корректировки поручения.
+    /// Проверить возможность корректировки шаблона поручения.
     /// </summary>
     /// <returns>True - корректировка возможна, иначе - false.</returns>
     [Public]
@@ -335,7 +336,6 @@ namespace GD.ActionTemplateModule.Client
     {
       // Корректировать можно только поручения, созданные вручную, либо пункты составного поручения.
       // Простые поручения соисполнителям корректировать нельзя.
-      //TODO Zaytsev: Надо будет доделать при добавлении кнопки "равноправные исполнители".
       //      if (_obj. != ActionItemType.Main && _obj.ActionItemType != ActionItemType.Component)
       //        return false;
       

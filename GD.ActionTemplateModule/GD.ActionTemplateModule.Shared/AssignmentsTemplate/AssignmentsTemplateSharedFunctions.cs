@@ -43,13 +43,15 @@ namespace GD.ActionTemplateModule.Shared
     }
     
     /// <summary>
-    /// Добавить пункт поручения.
+    /// Добавить пункт шаблона поручения.
     /// </summary>
     /// <param name="assignee">Исполнитель.</param>
     /// <param name="deadline">Срок исполнителя.</param>
+    /// <param name="deadlineDaysOrHourse">Дни/Часы исполнителя.</param>
     /// <param name="actionItemPart">Пункт поручения.</param>
     /// <param name="coAssignees">Соисполнители.</param>
     /// <param name="coAssigneesDeadline">Срок соисполнителей.</param>
+    /// <param name="coAssigneesDeadlineDaysOrHourse">Днич/Часы соисполнителей.</param>
     /// <param name="supervisor">Контролер.</param>
     [Public]
     public void AddActionItemPart(Sungero.Company.IEmployee assignee, int? deadline, string deadlineDaysOrHourse, string actionItemPart, List<Sungero.Company.IEmployee> coAssignees, int? coAssigneesDeadline, string coAssigneesDeadlineDaysOrHourse, Sungero.Company.IEmployee supervisor)
@@ -103,13 +105,15 @@ namespace GD.ActionTemplateModule.Shared
     }
 
     /// <summary>
-    /// Редактировать пункт поручения.
+    /// Редактировать пункт шаблона поручения.
     /// </summary>
     /// <param name="actionItemPart">Пункт поручения.</param>
     /// <param name="assignee">Исполнитель.</param>
+    /// <param name="deadlineDaysOrHourse">Дни/Часы исполнителя.</param>
     /// <param name="deadline">Срок исполнителя.</param>
     /// <param name="actionItemPartText">Текст поручения.</param>
     /// <param name="coAssignees">Соисполнители.</param>
+    /// <param name="coAssigneesDeadlineDaysOrHourse">Днич/Часы соисполнителей.</param>
     /// <param name="coAssigneesDeadline">Срок соисполнителей.</param>
     /// <param name="supervisor">Контролер.</param>
     [Public]
