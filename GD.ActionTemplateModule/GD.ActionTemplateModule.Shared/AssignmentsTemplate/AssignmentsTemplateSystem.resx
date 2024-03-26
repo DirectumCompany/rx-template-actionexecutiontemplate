@@ -136,4 +136,69 @@
   <data name="Enum_FinalDaysOrHours_Hours" xml:space="preserve">
     <value>Hours</value>
   </data>
+  <data name="Action_ChangeCompoundActionItemPartConfirmationDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Action_ChangeCompoundActionItemPartHint" xml:space="preserve">
+    <value>Edit Part of Action Item</value>
+  </data>
+  <data name="Action_ChangeCompoundActionItemPartConfirmationMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Action_ChangeCompoundActionItemPartDescription" xml:space="preserve">
+    <value>Change action item part.</value>
+  </data>
+  <data name="Action_ChangeCompoundActionItemPart" xml:space="preserve">
+    <value>Edit Part</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPart" xml:space="preserve">
+    <value>Add Part</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPartDescription" xml:space="preserve">
+    <value>Add an action item part.</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPartHint" xml:space="preserve">
+    <value>Add Action Item Part</value>
+  </data>
+  <data name="Action_AddCompoundActionItemPartConfirmationMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Action_AddCompoundActionItemPartConfirmationDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Ribbon_ComponentResolutionHint_b7136e2f55674623b6c0c74fe02ef367" xml:space="preserve">
+    <value>Switch Between Simple And Compound Action Item</value>
+  </data>
+  <data name="Ribbon_JobView_c9dcdcf936c84f5497df507451eb02d7" xml:space="preserve">
+    <value>JobView</value>
+  </data>
+  <data name="Ribbon_StateToggleButton_b7136e2f55674623b6c0c74fe02ef367" xml:space="preserve">
+    <value>StateToggleButton</value>
+  </data>
+  <data name="Ribbon_ComponentResolution_b7136e2f55674623b6c0c74fe02ef367" xml:space="preserve">
+    <value>Equal Assignees</value>
+  </data>
+  <data name="Ribbon_StateToggleButton_3dd6afcb001b4336ac641086b11283c0" xml:space="preserve">
+    <value>StateToggleButton</value>
+  </data>
+  <data name="Action_ChangeCompoundMode" xml:space="preserve">
+    <value>Equal Assignees</value>
+  </data>
+  <data name="Action_ChangeCompoundModeDescription" xml:space="preserve">
+    <value>Change the action item type to compound, which allows you to specify the equal assignees with individual action items and deadlines.</value>
+  </data>
+  <data name="Action_ChangeCompoundModeHint" xml:space="preserve">
+    <value>Switch Between Simple And Compound Action Item</value>
+  </data>
+  <data name="Action_ChangeCompoundModeConfirmationMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Action_ChangeCompoundModeConfirmationDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Ribbon_ComponentResolutionDescription_b7136e2f55674623b6c0c74fe02ef367" xml:space="preserve">
+    <value>Change the action item type to compound, which allows you to specify the equal assignees with individual action items and deadlines.
+
+Click again to bring the card back to the simple action mode.</value>
+  </data>
 </root>

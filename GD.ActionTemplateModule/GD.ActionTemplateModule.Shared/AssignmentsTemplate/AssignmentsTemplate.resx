@@ -76,4 +76,7 @@
   <data name="EmptyActionItemPartCoAssigneesDeadline" xml:space="preserve">
     <value>Deadline of the co-assignees in the tabular part is not filled.</value>
   </data>
+  <data name="AssigneeFinalDaysOrHours" xml:space="preserve">
+    <value>Cрок исполнителя в табличной части не может быть больше конечного срока.</value>
+  </data>
 </root>

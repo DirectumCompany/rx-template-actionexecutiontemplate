@@ -35,6 +35,9 @@
       "CanBeSearch": false,
       "Code": "Assignee",
       "EntityGuid": "b7905516-2be5-4931-961c-cb38d5677565",
+      "HandledEvents": [
+        "ChangedShared"
+      ],
       "IsRequired": true,
       "ListDataBinderTypeName": "Sungero.Presentation.CommonDataBinders.DropDownEditorToNavigationBinder",
       "PreviousPropertyGuid": "70e8543e-6c6d-496f-8d87-cbaec7a833c5"
@@ -131,6 +134,20 @@
       ],
       "ListDataBinderTypeName": "Sungero.Presentation.CommonDataBinders.DropDownEditorToEnumerationBinder",
       "PreviousPropertyGuid": "fac6e785-ea4a-418b-9c14-8f8cdca67e22"
+    },
+    {
+      "$type": "Sungero.Metadata.IntegerPropertyMetadata, Sungero.Metadata",
+      "NameGuid": "63cb5016-9a38-4286-ac1a-81029cfa0afe",
+      "Name": "Number",
+      "CanBeSearch": false,
+      "Code": "Number",
+      "HandledEvents": [
+        "ValueInputClient"
+      ],
+      "IsRequired": true,
+      "ListDataBinderTypeName": "Sungero.Presentation.CommonDataBinders.NumericEditorToIntAndDoubleBinder",
+      "PreviousPropertyGuid": "5149b735-5f58-4df2-97e5-974eddef8361",
+      "Versions": []
     }
   ],
   "PublicStructures": [],

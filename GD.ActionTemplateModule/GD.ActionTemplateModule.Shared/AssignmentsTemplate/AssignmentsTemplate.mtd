@@ -3,8 +3,40 @@
   "NameGuid": "b0934d88-8b6c-4dd1-b480-35333f7a8a49",
   "Name": "AssignmentsTemplate",
   "AccessRightsMode": "Both",
+  "Actions": [
+    {
+      "NameGuid": "36faccd1-1167-4bac-9080-e08e091640ee",
+      "Name": "AddCompoundActionItemPart",
+      "ActionArea": "ChildCollection",
+      "CollectionPropertyGuid": "f0ed81da-4b78-4bab-bd91-c6022ddf5274",
+      "GenerateHandler": true,
+      "IsEmptySelectionAllowed": true,
+      "LargeIconName": "Action_AddCompoundActionItemPart_large_36faccd111674bac9080e08e091640ee.png",
+      "SmallIconName": "Action_AddCompoundActionItemPart_small_36faccd111674bac9080e08e091640ee.png"
+    },
+    {
+      "NameGuid": "87aad80c-8333-4b72-8638-33f24ebb4e93",
+      "Name": "ChangeCompoundActionItemPart",
+      "ActionArea": "ChildCollection",
+      "CollectionPropertyGuid": "f0ed81da-4b78-4bab-bd91-c6022ddf5274",
+      "GenerateHandler": true,
+      "LargeIconName": "Action_ChangeCompoundActionItemPart_large_87aad80c83334b72863833f24ebb4e93.png",
+      "SmallIconName": "Action_ChangeCompoundActionItemPart_small_87aad80c83334b72863833f24ebb4e93.png",
+      "Versions": []
+    },
+    {
+      "NameGuid": "ada6f77b-e086-4966-b201-83c5446a8388",
+      "Name": "ChangeCompoundMode",
+      "ActionArea": "Card",
+      "GenerateHandler": true,
+      "LargeIconName": "Action_ChangeCompoundMode_large_ada6f77be0864966b20183c5446a8388.png",
+      "SmallIconName": "Action_ChangeCompoundMode_small_ada6f77be0864966b20183c5446a8388.png",
+      "Versions": []
+    }
+  ],
   "BaseGuid": "04581d26-0780-4cfd-b3cd-c2cafc5798b0",
   "CanBeNavigationPropertyType": true,
+  "CanBeSearch": true,
   "Code": "AssignTemplate",
   "CreationAreaMetadata": {
     "NameGuid": "f7766750-eee2-4fcd-8003-5c06a90d1f44",
@@ -286,7 +318,8 @@
   "OperationsClass": "",
   "Overridden": [
     "AccessRightsMode",
-    "IsStatusEnabled"
+    "IsStatusEnabled",
+    "CanBeSearch"
   ],
   "Properties": [
     {
@@ -439,6 +472,9 @@
       "Name": "IsCompoundActionItem",
       "CanBeSearch": false,
       "Code": "IsCompound",
+      "HandledEvents": [
+        "ChangedShared"
+      ],
       "ListDataBinderTypeName": "Sungero.Presentation.CommonDataBinders.BooleanEditorToBooleanBinder",
       "PreviousPropertyGuid": "886f8941-c67f-4b3f-96b3-eff9ebb4d5ea"
     },
@@ -448,6 +484,10 @@
       "Name": "ActionItemParts",
       "Code": "Parts",
       "EntityGuid": "4236e4e5-f31c-4f6c-aa50-f72eb95473f7",
+      "HandledEvents": [
+        "DeletedShared",
+        "AddedShared"
+      ],
       "IsShowedInList": false,
       "IsVisibility": false,
       "PreviousPropertyGuid": "5a26b1ab-8d5c-4b01-b6c3-bbf3a01e662e"
@@ -508,11 +548,235 @@
   ],
   "PublicFunctions": [
     {
+      "Name": "AddActionItemPart",
+      "Parameters": [
+        {
+          "Name": "assignmentsTemplate",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "assignee",
+          "ParameterType": "global::Sungero.Company.IEmployee",
+          "ParameterTypeFullName": "Sungero.Company.IEmployee, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "deadline",
+          "ParameterType": "global::System.Nullable<global::System.Int32>",
+          "ParameterTypeFullName": "System.Nullable"
+        },
+        {
+          "Name": "deadlineDaysOrHourse",
+          "ParameterType": "global::System.String",
+          "ParameterTypeFullName": "System.String"
+        },
+        {
+          "Name": "actionItemPart",
+          "ParameterType": "global::System.String",
+          "ParameterTypeFullName": "System.String"
+        },
+        {
+          "Name": "coAssignees",
+          "ParameterType": "global::System.Collections.Generic.List<global::Sungero.Company.IEmployee>",
+          "ParameterTypeFullName": "System.Collections.Generic.List"
+        },
+        {
+          "Name": "coAssigneesDeadline",
+          "ParameterType": "global::System.Nullable<global::System.Int32>",
+          "ParameterTypeFullName": "System.Nullable"
+        },
+        {
+          "Name": "coAssigneesDeadlineDaysOrHourse",
+          "ParameterType": "global::System.String",
+          "ParameterTypeFullName": "System.String"
+        },
+        {
+          "Name": "supervisor",
+          "ParameterType": "global::Sungero.Company.IEmployee",
+          "ParameterTypeFullName": "Sungero.Company.IEmployee, Sungero.Domain.Interfaces"
+        }
+      ],
+      "Placement": "Shared",
+      "ReturnType": "void",
+      "ReturnTypeFullName": "System.Void"
+    },
+    {
+      "Name": "AddPartsCoAssignees",
+      "Parameters": [
+        {
+          "Name": "assignmentsTemplate",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "actionItemPart",
+          "ParameterType": "global::Sungero.RecordManagement.IActionItemExecutionTaskActionItemParts",
+          "ParameterTypeFullName": "Sungero.RecordManagement.IActionItemExecutionTaskActionItemParts, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "coAssignees",
+          "ParameterType": "global::System.Collections.Generic.List<global::Sungero.Company.IEmployee>",
+          "ParameterTypeFullName": "System.Collections.Generic.List"
+        }
+      ],
+      "Placement": "Shared",
+      "ReturnType": "void",
+      "ReturnTypeFullName": "System.Void"
+    },
+    {
+      "Name": "AddPartsCoAssignees",
+      "Parameters": [
+        {
+          "Name": "assignmentsTemplate",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "actionItemPart",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "coAssignees",
+          "ParameterType": "global::System.Collections.Generic.List<global::Sungero.Company.IEmployee>",
+          "ParameterTypeFullName": "System.Collections.Generic.List"
+        }
+      ],
+      "Placement": "Shared",
+      "ReturnType": "void",
+      "ReturnTypeFullName": "System.Void"
+    },
+    {
+      "Name": "CanChangeActionItem",
+      "Parameters": [
+        {
+          "Name": "assignmentsTemplate",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+        }
+      ],
+      "Placement": "Client",
+      "ReturnType": "global::System.Boolean",
+      "ReturnTypeFullName": "System.Boolean"
+    },
+    {
+      "Name": "CanChangeActionItemPart",
+      "Parameters": [
+        {
+          "Name": "assignmentsTemplate",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "itemPart",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts, Sungero.Domain.Interfaces"
+        }
+      ],
+      "Placement": "Client",
+      "ReturnType": "global::System.Boolean",
+      "ReturnTypeFullName": "System.Boolean"
+    },
+    {
       "Name": "CreateTemplate",
       "IsRemote": true,
       "Placement": "Shared",
       "ReturnType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
       "ReturnTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+    },
+    {
+      "Name": "DeletePartsCoAssignees",
+      "Parameters": [
+        {
+          "Name": "assignmentsTemplate",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "actionItemPart",
+          "ParameterType": "global::Sungero.RecordManagement.IActionItemExecutionTaskActionItemParts",
+          "ParameterTypeFullName": "Sungero.RecordManagement.IActionItemExecutionTaskActionItemParts, Sungero.Domain.Interfaces"
+        }
+      ],
+      "Placement": "Shared",
+      "ReturnType": "void",
+      "ReturnTypeFullName": "System.Void"
+    },
+    {
+      "Name": "DeletePartsCoAssignees",
+      "Parameters": [
+        {
+          "Name": "assignmentsTemplate",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "actionItemPart",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts, Sungero.Domain.Interfaces"
+        }
+      ],
+      "Placement": "Shared",
+      "ReturnType": "void",
+      "ReturnTypeFullName": "System.Void"
+    },
+    {
+      "Name": "EditActionItemPart",
+      "Parameters": [
+        {
+          "Name": "assignmentsTemplate",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplate",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplate, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "actionItemPart",
+          "ParameterType": "global::GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts",
+          "ParameterTypeFullName": "GD.ActionTemplateModule.IAssignmentsTemplateActionItemParts, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "assignee",
+          "ParameterType": "global::Sungero.Company.IEmployee",
+          "ParameterTypeFullName": "Sungero.Company.IEmployee, Sungero.Domain.Interfaces"
+        },
+        {
+          "Name": "deadline",
+          "ParameterType": "global::System.Nullable<global::System.Int32>",
+          "ParameterTypeFullName": "System.Nullable"
+        },
+        {
+          "Name": "deadlineDaysOrHourse",
+          "ParameterType": "global::System.String",
+          "ParameterTypeFullName": "System.String"
+        },
+        {
+          "Name": "actionItemPartText",
+          "ParameterType": "global::System.String",
+          "ParameterTypeFullName": "System.String"
+        },
+        {
+          "Name": "coAssignees",
+          "ParameterType": "global::System.Collections.Generic.List<global::Sungero.Company.IEmployee>",
+          "ParameterTypeFullName": "System.Collections.Generic.List"
+        },
+        {
+          "Name": "coAssigneesDeadline",
+          "ParameterType": "global::System.Nullable<global::System.Int32>",
+          "ParameterTypeFullName": "System.Nullable"
+        },
+        {
+          "Name": "coAssigneesDeadlineDaysOrHourse",
+          "ParameterType": "global::System.String",
+          "ParameterTypeFullName": "System.String"
+        },
+        {
+          "Name": "supervisor",
+          "ParameterType": "global::Sungero.Company.IEmployee",
+          "ParameterTypeFullName": "Sungero.Company.IEmployee, Sungero.Domain.Interfaces"
+        }
+      ],
+      "Placement": "Shared",
+      "ReturnType": "void",
+      "ReturnTypeFullName": "System.Void"
     },
     {
       "Name": "GetAvailableTemplates",
@@ -529,14 +793,37 @@
     "EmptyActionItemPartDeadline",
     "EmptyAssigneeDaysOrHours",
     "EmptyCoAssigneesDaysOrHours",
-    "EmptyActionItemPartCoAssigneesDeadline"
+    "EmptyActionItemPartCoAssigneesDeadline",
+    "AssigneeFinalDaysOrHours"
   ],
   "RibbonCardMetadata": {
     "NameGuid": "c1887b8e-0da3-40e9-9a74-dcf486df3de0",
     "Name": "RibbonCard",
     "Categories": [],
-    "Elements": [],
-    "Groups": [],
+    "Elements": [
+      {
+        "$type": "Sungero.Metadata.RibbonStateToggleButtonMetadata, Sungero.Metadata",
+        "NameGuid": "b7136e2f-5567-4623-b6c0-c74fe02ef367",
+        "Name": "ComponentResolution",
+        "ActionGuid": "ada6f77b-e086-4966-b201-83c5446a8388",
+        "ButtonSize": "Large",
+        "Index": -1,
+        "LargeIconName": "Ribbon_ComponentResolution_large_b7136e2f55674623b6c0c74fe02ef367.png",
+        "ParentGuid": "c9dcdcf9-36c8-4f54-97df-507451eb02d7",
+        "SmallIconName": "Ribbon_ComponentResolution_small_b7136e2f55674623b6c0c74fe02ef367.png",
+        "StatePropertyGuid": "5a26b1ab-8d5c-4b01-b6c3-bbf3a01e662e"
+      }
+    ],
+    "Groups": [
+      {
+        "NameGuid": "c9dcdcf9-36c8-4f54-97df-507451eb02d7",
+        "Name": "JobView",
+        "IconName": "Ribbon_JobView_c9dcdcf936c84f5497df507451eb02d7.png",
+        "Index": 21,
+        "ParentGuid": "21a31627-5f58-4416-8c4a-90f538ee2e57",
+        "SmallIconName": "Ribbon_JobView_small_c9dcdcf936c84f5497df507451eb02d7.png"
+      }
+    ],
     "IsAncestorMetadata": true,
     "Pages": [],
     "RibbonKind": "Card"

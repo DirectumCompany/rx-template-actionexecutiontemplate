@@ -97,4 +97,7 @@
   <data name="Enum_CoAssigneesDaysOrHours_Hours" xml:space="preserve">
     <value>Часов</value>
   </data>
+  <data name="Property_Number" xml:space="preserve">
+    <value>№</value>
+  </data>
 </root>
