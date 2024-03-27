@@ -24,9 +24,6 @@ namespace GD.ActionTemplateModule
     }
   }
 
-
-
-
   partial class AssignmentsTemplateServerHandlers
   {
 
