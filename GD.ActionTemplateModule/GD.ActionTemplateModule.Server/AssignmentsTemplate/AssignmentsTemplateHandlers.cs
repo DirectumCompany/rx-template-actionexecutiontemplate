@@ -32,6 +32,21 @@ namespace GD.ActionTemplateModule
 
     public override void BeforeSave(Sungero.Domain.BeforeSaveEventArgs e)
     {
+      if (_obj.IsCompoundActionItem == true)
+      {
+        if (_obj.ActionItemParts.Any(p => p.CoAssigneesDaysOrHours == null))
+          e.AddError(AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours);
+        
+        if (_obj.ActionItemParts.Any(p => p.CoAssigneesCount == null && !string.IsNullOrEmpty(p.CoAssignees)))
+          e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyActionItemPartCoAssigneesDeadline);
+        
+        if (_obj.ActionItemParts.Any(p => p.CoAssigneesCount != null && string.IsNullOrEmpty(p.CoAssignees)))
+          e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyActionitemPartCoAssigneesdeadline);
+        
+        if (_obj.ActionItemParts.Any(p => p.Count == null || p.DaysOrHours == null))
+          e.AddError(AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours);
+      }
+      
       // Проверить корректность сроков соисполнителей для простого поручения.
       if (_obj.CoAssigneesCount != null)
       {
@@ -51,8 +66,6 @@ namespace GD.ActionTemplateModule
       {
         e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.CoAssigneesDeadlineError);
       }
-      
-      #region Простое поручение
       
       if (_obj.IsCompoundActionItem == false)
       {
@@ -78,38 +91,6 @@ namespace GD.ActionTemplateModule
           e.AddError(GD.ActionTemplateModule.AssignmentsTemplates.Resources.EmptyActionItemPartCoAssigneesDeadline);
       }
       
-      #endregion
-      
-      #region Сотсавное поручение
-      
-      if (_obj.IsCompoundActionItem == true)
-      {
-        if (_obj.ActionItemParts.Any(p => string.IsNullOrEmpty(p.CoAssignees) && p.CoAssigneesCount != null && p.CoAssigneesDaysOrHours == null))
-          e.AddError(AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours);
-        
-        if (_obj.ActionItemParts.Any(p => p.Count != null && p.DaysOrHours == null))
-          e.AddError(AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours);
-        
-        if (_obj.FinalCount != null)
-        {
-          if (_obj.ActionItemParts.Any(p => p.Assignee != null && p.DaysOrHours.Value == DaysOrHours.Days && _obj.FinalDaysOrHours.Value == DaysOrHours.Days &&
-                                       p.Count > _obj.FinalCount))
-            e.AddError(AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours);
-          
-          else if (_obj.ActionItemParts.Any(p => p.Assignee != null && p.DaysOrHours.Value == DaysOrHours.Hours && _obj.FinalDaysOrHours.Value == DaysOrHours.Days &&
-                                            p.Count * 24 > _obj.FinalCount))
-            e.AddError(AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours);
-          
-          if (_obj.ActionItemParts.Any(p => p.Assignee != null && p.DaysOrHours.Value == DaysOrHours.Hours && _obj.FinalDaysOrHours.Value == DaysOrHours.Hours &&
-                                       p.Count > _obj.FinalCount))
-            e.AddError(AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours);
-          
-          else if (_obj.ActionItemParts.Any(p => p.Assignee != null && p.DaysOrHours.Value == DaysOrHours.Days && _obj.FinalDaysOrHours.Value == DaysOrHours.Hours &&
-                                            p.Count * 24 > _obj.FinalCount))
-            e.AddError(AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours);
-        }
-      }
-      #endregion
     }
 
     public override void Created(Sungero.Domain.CreatedEventArgs e)

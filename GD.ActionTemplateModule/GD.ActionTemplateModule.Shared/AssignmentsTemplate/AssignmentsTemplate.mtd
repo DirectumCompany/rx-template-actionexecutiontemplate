@@ -794,7 +794,8 @@
     "EmptyAssigneeDaysOrHours",
     "EmptyCoAssigneesDaysOrHours",
     "EmptyActionItemPartCoAssigneesDeadline",
-    "AssigneeFinalDaysOrHours"
+    "AssigneeFinalDaysOrHours",
+    "EmptyActionitemPartCoAssigneesdeadline"
   ],
   "RibbonCardMetadata": {
     "NameGuid": "c1887b8e-0da3-40e9-9a74-dcf486df3de0",
