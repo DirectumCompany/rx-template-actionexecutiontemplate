@@ -546,6 +546,16 @@
       "PreviousPropertyGuid": "205f34f6-56a9-451d-9800-5847a6c816ec"
     }
   ],
+  "PublicConstants": [
+    {
+      "Name": "DayHours",
+      "ParentClasses": [
+        "AssignmentsTemplate"
+      ],
+      "TypeName": "System.Int32",
+      "Value": "24"
+    }
+  ],
   "PublicFunctions": [
     {
       "Name": "AddActionItemPart",
@@ -795,7 +805,10 @@
     "EmptyCoAssigneesDaysOrHours",
     "EmptyActionItemPartCoAssigneesDeadline",
     "AssigneeFinalDaysOrHours",
-    "EmptyActionitemPartCoAssigneesdeadline"
+    "EmptyActionitemPartCoAssigneesdeadline",
+    "CoAssigneeFinalDaysOrHours",
+    "EmptyTemplateDeadline",
+    "EmptySupervisor"
   ],
   "RibbonCardMetadata": {
     "NameGuid": "c1887b8e-0da3-40e9-9a74-dcf486df3de0",

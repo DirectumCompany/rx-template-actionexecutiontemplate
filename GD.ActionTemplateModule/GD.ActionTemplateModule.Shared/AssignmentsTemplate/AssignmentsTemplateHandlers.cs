@@ -113,7 +113,6 @@ namespace GD.ActionTemplateModule
         }
       }
       Functions.AssignmentsTemplate.SetRequiredProperties(_obj);
-      // _obj.State.Controls.Control.Refresh();
     }
 
     public virtual void CoAssigneesChanged(Sungero.Domain.Shared.CollectionPropertyChangedEventArgs e)

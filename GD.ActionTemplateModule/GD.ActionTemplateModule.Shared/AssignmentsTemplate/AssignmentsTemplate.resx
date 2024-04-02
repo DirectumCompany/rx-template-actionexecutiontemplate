@@ -82,4 +82,13 @@
   <data name="EmptyActionitemPartCoAssigneesdeadline" xml:space="preserve">
     <value>Не выбраны соисполнители в табличной части.</value>
   </data>
+  <data name="CoAssigneeFinalDaysOrHours" xml:space="preserve">
+    <value>Cрок соисполнителя в табличной части не может быть больше конечного срока.</value>
+  </data>
+  <data name="EmptyTemplateDeadline" xml:space="preserve">
+    <value>Deadline of the assignee not filled.</value>
+  </data>
+  <data name="EmptySupervisor" xml:space="preserve">
+    <value>Supervisor is empty.</value>
+  </data>
 </root>

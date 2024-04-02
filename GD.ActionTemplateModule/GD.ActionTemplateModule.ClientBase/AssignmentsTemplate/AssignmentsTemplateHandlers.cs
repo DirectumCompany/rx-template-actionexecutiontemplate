@@ -29,7 +29,8 @@ namespace GD.ActionTemplateModule
       var hasNotIndefiniteDeadline = _obj.HasIndefiniteDeadline != true;
       var isUnderControl = _obj.IsUnderControl == true;
       var anyCoAssignees = _obj.CoAssignees.Any();
-      
+      var isComponentCoAssignees = hasNotIndefiniteDeadline && isComponentResolution && _obj.ActionItemParts.Any(p => !string.IsNullOrEmpty(p.CoAssignees));
+        
       properties.Count.IsEnabled = hasNotIndefiniteDeadline;
       properties.DaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
       properties.CoAssigneesCount.IsEnabled = hasNotIndefiniteDeadline && anyCoAssignees;
@@ -53,10 +54,8 @@ namespace GD.ActionTemplateModule
       
       properties.ActionItemParts.Properties.Count.IsEnabled = hasNotIndefiniteDeadline;
       properties.ActionItemParts.Properties.DaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
-      properties.ActionItemParts.Properties.CoAssigneesCount.IsEnabled = hasNotIndefiniteDeadline && isComponentResolution && 
-        _obj.ActionItemParts.Any(p => !string.IsNullOrEmpty(p.CoAssignees));
-      properties.ActionItemParts.Properties.CoAssigneesDaysOrHours.IsEnabled = hasNotIndefiniteDeadline && isComponentResolution && 
-        _obj.ActionItemParts.Any(p => !string.IsNullOrEmpty(p.CoAssignees));
+      properties.ActionItemParts.Properties.CoAssigneesCount.IsEnabled = isComponentCoAssignees;
+      properties.ActionItemParts.Properties.CoAssigneesDaysOrHours.IsEnabled = isComponentCoAssignees;
     }
 
   }
