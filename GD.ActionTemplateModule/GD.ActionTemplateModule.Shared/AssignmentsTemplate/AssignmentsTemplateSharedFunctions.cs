@@ -325,9 +325,15 @@ namespace GD.ActionTemplateModule.Shared
       actionItemPart.ActionItemPart = actionItemPartText;
       actionItemPart.Assignee = assignee;
       actionItemPart.Count = deadline;
-      actionItemPart.DaysOrHours = deadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ? DaysOrHours.Days : DaysOrHours.Hours;
+      actionItemPart.DaysOrHours = deadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ?
+        DaysOrHours.Days : DaysOrHours.Hours;
       actionItemPart.CoAssigneesCount = coAssigneesDeadline;
-      actionItemPart.CoAssigneesDaysOrHours = coAssigneesDeadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ? DaysOrHours.Days : DaysOrHours.Hours;
+      var daysOrHours = coAssigneesDeadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ?
+        DaysOrHours.Days : DaysOrHours.Hours;
+      if (coAssignees.Any())
+        actionItemPart.CoAssigneesDaysOrHours = daysOrHours;
+      else
+        actionItemPart.CoAssigneesDaysOrHours = null;
       actionItemPart.Supervisor = supervisor;
       DeletePartsCoAssignees(actionItemPart);
       AddPartsCoAssignees(actionItemPart, coAssignees);

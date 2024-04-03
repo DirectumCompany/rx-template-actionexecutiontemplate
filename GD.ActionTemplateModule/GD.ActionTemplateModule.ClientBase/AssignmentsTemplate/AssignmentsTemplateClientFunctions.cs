@@ -30,7 +30,7 @@ namespace GD.ActionTemplateModule.Client
       var isAssigneeDaysOrHoursChanges = false;
       var isCoAssigneesDaysOrHoursChanges = false;
       var deadlineDaysOrHourseDefault = !_obj.FinalDaysOrHours.HasValue ?
-        AssignmentsTemplates.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) : 
+        AssignmentsTemplates.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) :
         _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(_obj.FinalDaysOrHours.Value);
       
       #endregion
@@ -116,7 +116,7 @@ namespace GD.ActionTemplateModule.Client
         (args) =>
         {
           if (deadline.Value.HasValue)
-            if (deadline.Value.Value <= 0)
+            if (deadline.Value.Value < 0)
               args.AddError(ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday, deadline);
           
           var assigneeDeadline = deadline.Value ?? _obj.FinalCount;
@@ -172,7 +172,10 @@ namespace GD.ActionTemplateModule.Client
           coAssigneesDeadlineDaysOrHourse.IsRequired = coAssigneesExist && _obj.HasIndefiniteDeadline != true;
           
           if (!coAssigneesExist)
+          {
             coAssigneesDeadline.Value = null;
+            coAssigneesDeadlineDaysOrHourse.Value = null;
+          }
         });
       
       // Срок соисполнителей.
@@ -235,7 +238,7 @@ namespace GD.ActionTemplateModule.Client
             {
               currentCoAssignees.Remove(employee);
             }
-
+            
             coAssignees.Value = currentCoAssignees;
           }
         });
@@ -247,98 +250,71 @@ namespace GD.ActionTemplateModule.Client
         {
           if (args.Button == fillButton)
           {
-            if (deadline.Value.HasValue && deadline.Value.Value <= 0)
-            {
-              args.AddError(ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday, deadline);
-              return;
-            }
+            var assigneeDeadline = deadline.Value ?? _obj.FinalCount;
 
-            if (coAssigneesDeadline.Value.HasValue)
-            {
-              if (coAssigneesDeadline.Value.Value <= 0)
-              {
-                args.AddError(ActionItemExecutionTasks.Resources.CoAssigneeDeadlineLessThanToday);
-                return;
-              }
-              if (deadlineDaysOrHourse.Value == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) &&
-                  coAssigneesDeadlineDaysOrHourse.Value == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours) &&
-                  coAssigneesDeadline.Value.Value > deadline.Value.Value * 24)
-              {
-                args.AddError(ActionItemExecutionTasks.Resources.CoAssigneeDeadlineLessThanToday);
-                return;
-              }
-            }
-            
-            var assigneeDeadline = deadline.Value.HasValue ? deadline.Value : _obj.FinalCount;
+            var error = Functions.AssignmentsTemplate.CheckConditionsCompoundTemplate(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
+                                                                                      deadlineDaysOrHourse.Value,
+                                                                                      coAssigneesText.Value, coAssigneesDeadline.Value,
+                                                                                      coAssigneesDeadlineDaysOrHourse.Value,
+                                                                                      null);
+          }
 
-            if (assigneeDeadline != null && coAssigneesDeadline.Value.HasValue)
-            {
-              if (deadlineDaysOrHourse.Value == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) &&
-                  coAssigneesDeadlineDaysOrHourse.Value == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours) &&
-                  coAssigneesDeadline.Value.Value > assigneeDeadline.Value * 24)
-              {
-                args.AddError(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneesDeadlineError);
-                return;
-              }
-            }
-
-            if (args.IsValid)
-            {
-              if (isAddItemPart)
-                Functions.AssignmentsTemplate.AddActionItemPart(_obj, assignee.Value,
-                                                                deadline.Value,
-                                                                deadlineDaysOrHourse.Value,
-                                                                actionItemPartText.Value,
-                                                                coAssignees.Value.ToList(),
-                                                                coAssigneesDeadline.Value,
-                                                                coAssigneesDeadlineDaysOrHourse.Value,
-                                                                supervisor.Value);
-              else
-                Functions.AssignmentsTemplate.EditActionItemPart(_obj, itemPart,
-                                                                 assignee.Value, deadline.Value,
-                                                                 deadlineDaysOrHourse.Value,
-                                                                 actionItemPartText.Value,
-                                                                 coAssignees.Value.ToList(),
-                                                                 coAssigneesDeadline.Value,
-                                                                 coAssigneesDeadlineDaysOrHourse.Value,
-                                                                 supervisor.Value);
-            }
+          if (args.IsValid)
+          {
+            if (isAddItemPart)
+              Functions.AssignmentsTemplate.AddActionItemPart(_obj, assignee.Value,
+                                                              deadline.Value,
+                                                              deadlineDaysOrHourse.Value,
+                                                              actionItemPartText.Value,
+                                                              coAssignees.Value.ToList(),
+                                                              coAssigneesDeadline.Value,
+                                                              coAssigneesDeadlineDaysOrHourse.Value,
+                                                              supervisor.Value);
+            else
+              Functions.AssignmentsTemplate.EditActionItemPart(_obj, itemPart,
+                                                               assignee.Value, deadline.Value,
+                                                               deadlineDaysOrHourse.Value,
+                                                               actionItemPartText.Value,
+                                                               coAssignees.Value.ToList(),
+                                                               coAssigneesDeadline.Value,
+                                                               coAssigneesDeadlineDaysOrHourse.Value,
+                                                               supervisor.Value);
           }
         });
 
-      dialog.Show();
-      
-      #endregion
-    }
+    dialog.Show();
     
-    /// <summary>
-    /// Проверка, что хотя бы одно доступное свойство пункта составного шаблона поручения заполнено.
-    /// </summary>
-    /// <param name="itemPart">Пункт составного поручения.</param>
-    /// <returns>True - корректировка возможна, иначе - false.</returns>
-    /// <remarks>Проверка добавлена, так как платформа при сохранении задачи удаляет пустые пункты (187563).</remarks>
-    [Public]
-    public virtual bool CanChangeActionItemPart(IAssignmentsTemplateActionItemParts itemPart)
-    {
-      return itemPart.Assignee != null || itemPart.ActionItemPart != null ||
-        itemPart.Count != null || itemPart.Supervisor != null;
-    }
-
-    /// <summary>
-    /// Проверить возможность корректировки шаблона поручения.
-    /// </summary>
-    /// <returns>True - корректировка возможна, иначе - false.</returns>
-    [Public]
-    public virtual bool CanChangeActionItem()
-    {
-      // Корректировать можно, только если есть права на изменение поручения.
-      if (!_obj.AccessRights.CanUpdate())
-        return false;
-      
-      // Корректировка недоступна в десктоп-клиенте.
-      if (ClientApplication.ApplicationType == ApplicationType.Desktop)
-        return false;
-      return true;
-    }
+    #endregion
   }
+  
+  /// <summary>
+  /// Проверка, что хотя бы одно доступное свойство пункта составного шаблона поручения заполнено.
+  /// </summary>
+  /// <param name="itemPart">Пункт составного поручения.</param>
+  /// <returns>True - корректировка возможна, иначе - false.</returns>
+  /// <remarks>Проверка добавлена, так как платформа при сохранении задачи удаляет пустые пункты (187563).</remarks>
+  [Public]
+  public virtual bool CanChangeActionItemPart(IAssignmentsTemplateActionItemParts itemPart)
+  {
+    return itemPart.Assignee != null || itemPart.ActionItemPart != null ||
+      itemPart.Count != null || itemPart.Supervisor != null;
+  }
+
+  /// <summary>
+  /// Проверить возможность корректировки шаблона поручения.
+  /// </summary>
+  /// <returns>True - корректировка возможна, иначе - false.</returns>
+  [Public]
+  public virtual bool CanChangeActionItem()
+  {
+    // Корректировать можно, только если есть права на изменение поручения.
+    if (!_obj.AccessRights.CanUpdate())
+      return false;
+    
+    // Корректировка недоступна в десктоп-клиенте.
+    if (ClientApplication.ApplicationType == ApplicationType.Desktop)
+      return false;
+    return true;
+  }
+}
 }
