@@ -130,9 +130,6 @@ namespace GD.ActionTemplateModule.Client
           if (!string.IsNullOrEmpty(error))
             args.AddError(error);
           
-          // if (assigneeDeadline != null && coAssigneesDeadline.Value.HasValue && assigneeDeadline.Value <= 0)
-          // args.AddError(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday);
-          
           fillButton.IsEnabled = isSupervisorChanges || isAssigneeChanges ||
             isDeadlineChanges || isCoAssigneesChanges ||
             isCoAssigneesDeadlineChanges || isActionItemTextChanges ||

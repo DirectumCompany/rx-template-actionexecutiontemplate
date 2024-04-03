@@ -18,9 +18,14 @@ namespace GD.ActionTemplateModule.Shared
     {
       // Проверить есть ли соисполнители в пункте поручения.
       var isCoAssigneesExist = _obj.CoAssignees.Any();
+      
       // Шаблон без срока.
       var hasIndefiniteDeadline = _obj.HasIndefiniteDeadline == true;
+      
+      // На контроле.
       var isUnderControl = _obj.IsUnderControl == true;
+      
+      // Проверить шаблон стоит на контроле.
       if (_obj.IsUnderControl == true && isUnderControl)
         return AssignmentsTemplates.Resources.EmptySupervisor;
       
@@ -57,23 +62,23 @@ namespace GD.ActionTemplateModule.Shared
                                                   string assigneeDaysOrHours, string coAssignees, Nullable<int> coAssigneesCount,
                                                   string coAssigneesDaysOrHours, IAssignmentsTemplateActionItemParts itemPart)
     {
+      // Проверить есть ли соисполнители в пункте поручения.
+      var isCoAssigneesExist = !string.IsNullOrEmpty(coAssignees);
+      
+      // Шаблон без срока.
+      var hasIndefiniteDeadline = _obj.HasIndefiniteDeadline == true;
+      
+      // Проверить шаблон стоит на контроле.
+      if (_obj.IsUnderControl == true && supervisor == null)
+        return AssignmentsTemplates.Resources.EmptySupervisor;
+      
       if (itemPart == null)
       {
-        // Проверить есть ли соисполнители в пункте поручения.
-        var isCoAssigneesExist = !string.IsNullOrEmpty(coAssignees);
-        // Шаблон без срока.
-        var hasIndefiniteDeadline = _obj.HasIndefiniteDeadline == true;
+        int? finalCount = !hasIndefiniteDeadline && _obj.FinalDaysOrHours.HasValue ?
+          Functions.AssignmentsTemplate.ConvertDaysToHours(_obj, _obj.FinalDaysOrHours.Value, _obj.FinalCount) : 1;
         
-        if (_obj.IsUnderControl == true && supervisor == null)
-          return AssignmentsTemplates.Resources.EmptySupervisor;
-        
-        int? finalCount = 0;
-        if (!hasIndefiniteDeadline && _obj.FinalDaysOrHours.HasValue)
-          finalCount = Functions.AssignmentsTemplate.ConvertDaysToHours(_obj, _obj.FinalDaysOrHours.Value, _obj.FinalCount);
-        
-        int? assigneeDeadline = 0;
-        if (!hasIndefiniteDeadline && assigneeCount.HasValue)
-          assigneeDeadline = Functions.AssignmentsTemplate.ConvertDaysToHours(_obj, assigneeDaysOrHours, assigneeCount.Value);
+        int? assigneeDeadline = !hasIndefiniteDeadline && assigneeCount.HasValue ?
+          Functions.AssignmentsTemplate.ConvertDaysToHours(_obj, assigneeDaysOrHours, assigneeCount.Value) : 1;
         
         // Проверка сроков исполнителя.
         if (!hasIndefiniteDeadline)
@@ -117,21 +122,11 @@ namespace GD.ActionTemplateModule.Shared
       }
       else
       {
-        // Проверить есть ли соисполнители в пункте поручения.
-        var isCoAssigneesExist = !string.IsNullOrEmpty(coAssignees);
-        // Шаблон без срока.
-        var hasIndefiniteDeadline = _obj.HasIndefiniteDeadline == true;
-        // Проверить шаблон стоит на контроле.
-        if (_obj.IsUnderControl == true && supervisor == null)
-          return AssignmentsTemplates.Resources.EmptySupervisor;
+        int? finalCount = !hasIndefiniteDeadline && _obj.FinalDaysOrHours.HasValue ?
+          Functions.AssignmentsTemplate.ConvertDaysToHours(_obj, _obj.FinalDaysOrHours.Value, _obj.FinalCount) : 1;
         
-        int? finalCount = 1;
-        if (!hasIndefiniteDeadline && _obj.FinalDaysOrHours.HasValue)
-          finalCount = Functions.AssignmentsTemplate.ConvertDaysToHours(_obj, _obj.FinalDaysOrHours.Value, _obj.FinalCount);
-        
-        int? assigneeDeadline = 1;
-        if (!hasIndefiniteDeadline && assigneeCount.HasValue)
-          assigneeDeadline = Functions.AssignmentsTemplate.ConvertDaysToHours(_obj, assigneeDaysOrHours, assigneeCount.Value);
+        int? assigneeDeadline = !hasIndefiniteDeadline && assigneeCount.HasValue ?
+          Functions.AssignmentsTemplate.ConvertDaysToHours(_obj, assigneeDaysOrHours, assigneeCount.Value) : 1;
         
         // Проверка сроков исполнителей.
         if (!hasIndefiniteDeadline)
