@@ -53,22 +53,17 @@ namespace GD.ActionTemplateModule
       }
       else
       {
-        var coAssigneesDefault = new List<Sungero.Company.IEmployee>();
-        
-        foreach (var coAssignees in _obj.CoAssignees)
-          coAssigneesDefault.Add(coAssignees.CoAssignee);
-
-        var employees = coAssigneesDefault.Any() ?
-          Sungero.Docflow.PublicFunctions.Module.GetCoAssigneesNames(coAssigneesDefault, false) : string.Empty;
+        var employees = _obj.CoAssignees.Any() ?
+          Sungero.Docflow.PublicFunctions.Module.GetCoAssigneesNames(_obj.CoAssignees.Select(co => co.CoAssignee).ToList(), false) : string.Empty;
         
         if (_obj.DaysOrHours.HasValue)
-          daysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(_obj.CoAssigneesDaysOrHours.Value);
+          daysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(_obj.DaysOrHours.Value);
         
         if (_obj.CoAssigneesDaysOrHours.HasValue)
-          coAssigneesDaysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(_obj.CoAssigneesDaysOrHours.Value);
+          coAssigneesDaysOrHours = _obj.Info.Properties.CoAssigneesDaysOrHours.GetLocalizedValue(_obj.CoAssigneesDaysOrHours.Value);
         
         var error = Functions.AssignmentsTemplate.CheckAssignmentTemplateConditions(_obj, _obj.Supervisor, _obj.Assignee, _obj.Count,
-                                                                                    daysOrHours, employees, _obj.CoAssigneesCount, 
+                                                                                    daysOrHours, employees, _obj.CoAssigneesCount,
                                                                                     coAssigneesDaysOrHours, null);
         if (!string.IsNullOrEmpty(error))
           e.AddError(error);
