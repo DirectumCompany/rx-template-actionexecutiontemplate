@@ -36,20 +36,20 @@ namespace GD.ActionTemplateModule
           var coAssigneesCount = !itemPart.CoAssigneesCount.HasValue ? null : itemPart.CoAssigneesCount;
           var coAssigneesDaysOrHours = string.Empty;
           if (itemPart.CoAssigneesDaysOrHours.HasValue)
-            coAssigneesDaysOrHours = itemPart.CoAssigneesDaysOrHours.Value.Value;
+            coAssigneesDaysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.CoAssigneesDaysOrHours.Value);
           var daysOrHours = string.Empty;
           if (itemPart.DaysOrHours.HasValue)
-            daysOrHours = itemPart.DaysOrHours.Value.Value;
-          var error = Functions.AssignmentsTemplate.CheckConditionsCompoundTemplate(_obj, itemPart.Supervisor, itemPart.Assignee, itemPart.Count,
+            daysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.DaysOrHours.Value);
+          var error = Functions.AssignmentsTemplate.CheckConditionsAssignmentsTenplate(_obj, itemPart.Supervisor, itemPart.Assignee, itemPart.Count,
                                                                                     daysOrHours, itemPart.CoAssignees,
-                                                                                    coAssigneesCount, coAssigneesDaysOrHours, itemPart);
+                                                                                    coAssigneesCount, coAssigneesDaysOrHours);
           if (!string.IsNullOrEmpty(error))
             e.AddError(error);
         }
       }
       else
       {
-        var error = Functions.AssignmentsTemplate.CheckConditionSimpleTemplate(_obj);
+        var error = Functions.AssignmentsTemplate.CheckConditionsAssignmentsTenplate(_obj);
         if (!string.IsNullOrEmpty(error))
           e.AddError(error);
       }

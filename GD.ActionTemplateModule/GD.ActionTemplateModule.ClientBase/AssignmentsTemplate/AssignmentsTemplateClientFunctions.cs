@@ -121,11 +121,10 @@ namespace GD.ActionTemplateModule.Client
           
           var assigneeDeadline = deadline.Value ?? _obj.FinalCount;
 
-          var error = Functions.AssignmentsTemplate.CheckConditionsCompoundTemplate(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
+          var error = Functions.AssignmentsTemplate.CheckConditionsAssignmentsTenplate(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
                                                                                     deadlineDaysOrHourse.Value,
                                                                                     coAssigneesText.Value, coAssigneesDeadline.Value,
-                                                                                    coAssigneesDeadlineDaysOrHourse.Value,
-                                                                                    null);
+                                                                                    coAssigneesDeadlineDaysOrHourse.Value);
           
           if (!string.IsNullOrEmpty(error))
             args.AddError(error);
@@ -135,7 +134,7 @@ namespace GD.ActionTemplateModule.Client
             isCoAssigneesDeadlineChanges || isActionItemTextChanges ||
             isCoAssigneesDaysOrHoursChanges || isAssigneeDaysOrHoursChanges;
         });
-      
+
       // Контролер.
       supervisor.SetOnValueChanged(
         (args) =>
@@ -252,11 +251,10 @@ namespace GD.ActionTemplateModule.Client
           {
             var assigneeDeadline = deadline.Value ?? _obj.FinalCount;
 
-            var error = Functions.AssignmentsTemplate.CheckConditionsCompoundTemplate(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
+            var error = Functions.AssignmentsTemplate.CheckConditionsAssignmentsTenplate(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
                                                                                       deadlineDaysOrHourse.Value,
                                                                                       coAssigneesText.Value, coAssigneesDeadline.Value,
-                                                                                      coAssigneesDeadlineDaysOrHourse.Value,
-                                                                                      null);
+                                                                                      coAssigneesDeadlineDaysOrHourse.Value);
           }
 
           if (args.IsValid)

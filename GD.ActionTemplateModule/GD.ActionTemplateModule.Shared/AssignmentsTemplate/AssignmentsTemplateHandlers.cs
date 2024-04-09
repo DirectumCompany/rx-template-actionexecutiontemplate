@@ -60,7 +60,7 @@ namespace GD.ActionTemplateModule
           // Из простого в составное.
           _obj.ActionItemParts.Clear();
           _obj.FinalCount = _obj.Count;
-          // Закомментировал т.к. хочу сделать чтоб в табличную часть заносились помимо Дней/Часов еще и сроки. 
+          // Закомментировал т.к. хочу сделать чтоб в табличную часть заносились помимо Дней/Часов еще и сроки.
           // Можем обсудить нужно ли это делать или нет. По идее думаю, что так будет лучше для пользователя ибо потенциально меньше кликов надо делать.
           // _obj.CoAssigneesCount = null;
           
@@ -107,7 +107,7 @@ namespace GD.ActionTemplateModule
           {
             if (job.Assignee != null && !_obj.CoAssignees.Select(z => z.CoAssignee).Contains(job.Assignee))
               _obj.CoAssignees.AddNew().CoAssignee = job.Assignee;
-         
+            
             if (_obj.CoAssignees != null)
             {
               _obj.CoAssigneesDaysOrHours = actionItemPart.DaysOrHours;
@@ -147,12 +147,19 @@ namespace GD.ActionTemplateModule
 
     public virtual void CoAssigneesCountChanged(Sungero.Domain.Shared.IntegerPropertyChangedEventArgs e)
     {
-      _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = e.NewValue != null;
+      // Почему тут было сделано все следующим образом?
+      // _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = e.NewValue != null;
+      var isRequired = _obj.CoAssignees.Any();
+      _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = isRequired;
+      _obj.State.Properties.CoAssigneesCount.IsRequired = isRequired;
     }
 
     public virtual void CountChanged(Sungero.Domain.Shared.IntegerPropertyChangedEventArgs e)
     {
-      _obj.State.Properties.DaysOrHours.IsRequired = e.NewValue != null;
+      // _obj.State.Properties.DaysOrHours.IsRequired = e.NewValue != null;
+      var isRequired = _obj.CoAssignees.Any();
+      _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = isRequired;
+      _obj.State.Properties.CoAssigneesCount.IsRequired = isRequired;
     }
 
     public virtual void IsUnderControlChanged(Sungero.Domain.Shared.BooleanPropertyChangedEventArgs e)
