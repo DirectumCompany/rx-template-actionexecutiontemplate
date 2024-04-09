@@ -121,10 +121,10 @@ namespace GD.ActionTemplateModule.Client
           
           var assigneeDeadline = deadline.Value ?? _obj.FinalCount;
 
-          var error = Functions.AssignmentsTemplate.CheckConditionsAssignmentsTenplate(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
+          var error = Functions.AssignmentsTemplate.CheckAssignmentTemplateConditions(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
                                                                                     deadlineDaysOrHourse.Value,
                                                                                     coAssigneesText.Value, coAssigneesDeadline.Value,
-                                                                                    coAssigneesDeadlineDaysOrHourse.Value);
+                                                                                    coAssigneesDeadlineDaysOrHourse.Value, null);
           
           if (!string.IsNullOrEmpty(error))
             args.AddError(error);
@@ -251,10 +251,10 @@ namespace GD.ActionTemplateModule.Client
           {
             var assigneeDeadline = deadline.Value ?? _obj.FinalCount;
 
-            var error = Functions.AssignmentsTemplate.CheckConditionsAssignmentsTenplate(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
+            var error = Functions.AssignmentsTemplate.CheckAssignmentTemplateConditions(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
                                                                                       deadlineDaysOrHourse.Value,
                                                                                       coAssigneesText.Value, coAssigneesDeadline.Value,
-                                                                                      coAssigneesDeadlineDaysOrHourse.Value);
+                                                                                      coAssigneesDeadlineDaysOrHourse.Value, null);
           }
 
           if (args.IsValid)

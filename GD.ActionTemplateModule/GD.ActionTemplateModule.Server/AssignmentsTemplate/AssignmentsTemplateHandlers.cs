@@ -29,27 +29,47 @@ namespace GD.ActionTemplateModule
 
     public override void BeforeSave(Sungero.Domain.BeforeSaveEventArgs e)
     {
+      var daysOrHours = string.Empty;
+      var coAssigneesDaysOrHours = string.Empty;
+      
       if (_obj.IsCompoundActionItem == true)
       {
         foreach (var itemPart in _obj.ActionItemParts)
         {
           var coAssigneesCount = !itemPart.CoAssigneesCount.HasValue ? null : itemPart.CoAssigneesCount;
-          var coAssigneesDaysOrHours = string.Empty;
+          
           if (itemPart.CoAssigneesDaysOrHours.HasValue)
             coAssigneesDaysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.CoAssigneesDaysOrHours.Value);
-          var daysOrHours = string.Empty;
+          
           if (itemPart.DaysOrHours.HasValue)
             daysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.DaysOrHours.Value);
-          var error = Functions.AssignmentsTemplate.CheckConditionsAssignmentsTenplate(_obj, itemPart.Supervisor, itemPart.Assignee, itemPart.Count,
-                                                                                    daysOrHours, itemPart.CoAssignees,
-                                                                                    coAssigneesCount, coAssigneesDaysOrHours);
+          
+          var error = Functions.AssignmentsTemplate.CheckAssignmentTemplateConditions(_obj, itemPart.Supervisor, itemPart.Assignee, itemPart.Count,
+                                                                                      daysOrHours, itemPart.CoAssignees,
+                                                                                      coAssigneesCount, coAssigneesDaysOrHours, itemPart);
           if (!string.IsNullOrEmpty(error))
             e.AddError(error);
         }
       }
       else
       {
-        var error = Functions.AssignmentsTemplate.CheckConditionsAssignmentsTenplate(_obj);
+        var coAssigneesDefault = new List<Sungero.Company.IEmployee>();
+        
+        foreach (var coAssignees in _obj.CoAssignees)
+          coAssigneesDefault.Add(coAssignees.CoAssignee);
+
+        var employees = coAssigneesDefault.Any() ?
+          Sungero.Docflow.PublicFunctions.Module.GetCoAssigneesNames(coAssigneesDefault, false) : string.Empty;
+        
+        if (_obj.DaysOrHours.HasValue)
+          daysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(_obj.CoAssigneesDaysOrHours.Value);
+        
+        if (_obj.CoAssigneesDaysOrHours.HasValue)
+          coAssigneesDaysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(_obj.CoAssigneesDaysOrHours.Value);
+        
+        var error = Functions.AssignmentsTemplate.CheckAssignmentTemplateConditions(_obj, _obj.Supervisor, _obj.Assignee, _obj.Count,
+                                                                                    daysOrHours, employees, _obj.CoAssigneesCount, 
+                                                                                    coAssigneesDaysOrHours, null);
         if (!string.IsNullOrEmpty(error))
           e.AddError(error);
       }

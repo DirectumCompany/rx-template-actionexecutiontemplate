@@ -9,126 +9,123 @@ namespace GD.ActionTemplateModule.Shared
 {
   partial class AssignmentsTemplateFunctions
   {
-    
-    public string CheckAssigneeConditionsAssignmentTemplate(Nullable<int> assigneeCount, Nullable<int> assigneeDeadline, string assigneeDaysOrHours, Nullable<int> finalCount)
-    {
-      if (assigneeCount.Value <= 0)
-        return Sungero.RecordManagement.ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday;
-      
-      if (!assigneeCount.HasValue)
-        return AssignmentsTemplates.Resources.EmptyActionItemPartDeadline;
-      
-      if (finalCount != null && assigneeDeadline > finalCount)
-        return AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours;
-      
-      if (string.IsNullOrEmpty(assigneeDaysOrHours))
-        return AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours;
-      
-      return null;
-    }
-    
-    public string CheckCoAssigneeConditionsAssignmentTemplate(Nullable<int> coAssigneesCount, string coAssigneesDaysOrHours, Nullable<int> assigneeCount, string assigneeDaysOrHours,
-                                                              Nullable<int> assigneeDeadline, Nullable<int> coAssigneesDeadline, Nullable<int> finalCount)
-    {
-      if (string.IsNullOrEmpty(coAssigneesDaysOrHours))
-        return AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours;
-      
-      if (!coAssigneesCount.HasValue)
-        return AssignmentsTemplates.Resources.EmptyActionItemPartCoAssigneesDeadline;
-      
-      if (coAssigneesCount.Value <= 0)
-        return Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneeDeadlineLessThanToday;
-      
-      if (coAssigneesDeadline > assigneeDeadline)
-        return AssignmentsTemplates.Resources.CoAssigneesDeadlineError;
-      
-      if (finalCount != null && coAssigneesDeadline > finalCount)
-        return AssignmentsTemplates.Resources.CoAssigneeFinalDaysOrHours;
-      
-      return null;
-    }
-    
     /// <summary>
-    /// Проверить условия для сохранения карточки шаблона поручения.
+    /// Проверка условий для сохранения шаблона поручений.
     /// </summary>
-    public string CheckConditionsAssignmentsTenplate(Sungero.Company.IEmployee supervisor, Sungero.Company.IEmployee assignee, Nullable<int> assigneeCount,
-                                                     string assigneeDaysOrHours, string coAssignees, Nullable<int> coAssigneesCount, string coAssigneesDaysOrHours)
+    /// <param name="supervisor">Контролер.</param>
+    /// <param name="assignee">Исполнитель.</param>
+    /// <param name="assigneeCount">Срок исполнителя</param>
+    /// <param name="assigneeDaysOrHours">Дней/Часов исполнителя.</param>
+    /// <param name="coAssignees">Соисполнители.</param>
+    /// <param name="coAssigneesCount">Срок соисполнителей.</param>
+    /// <param name="coAssigneesDaysOrHours">Дней/Часов соисполнителей.</param>
+    /// <param name="itemPart">Пункт поручения.</param>
+    /// <returns></returns>
+    public string CheckAssignmentTemplateConditions(Sungero.Company.IEmployee supervisor = null, Sungero.Company.IEmployee assignee = null, 
+                                                    Nullable<int> assigneeCount = null,string assigneeDaysOrHours = null, 
+                                                    string coAssignees = null, Nullable<int> coAssigneesCount = null,
+                                                    string coAssigneesDaysOrHours = null, IAssignmentsTemplateActionItemParts itemPart = null)
     {
       // Проверить есть ли соисполнители в пункте поручения.
       var isCoAssigneesExist = !string.IsNullOrEmpty(coAssignees);
-      
+
       // Шаблон без срока.
       var hasIndefiniteDeadline = _obj.HasIndefiniteDeadline == true;
-      
+
       // Проверить шаблон стоит на контроле.
       if (_obj.IsUnderControl == true && supervisor == null)
         return AssignmentsTemplates.Resources.EmptySupervisor;
-      
+
       // Проверка сроков исполнителя.
-      if (hasIndefiniteDeadline)
-        return null;
-      
-      var error = string.Empty;
-      
-      var finalCount = ConvertDaysToHours(_obj.FinalDaysOrHours.Value, _obj.FinalCount);
-      var assigneeDeadline = ConvertDaysToHours(assigneeDaysOrHours, assigneeCount.Value);
-      
-      
-      error = CheckAssigneeConditionsAssignmentTemplate(assigneeCount, assigneeDeadline, assigneeDaysOrHours, finalCount);
-      if (!string.IsNullOrEmpty(error))
-        return error;
-      
-      if (isCoAssigneesExist)
+      if (!hasIndefiniteDeadline)
       {
-        var coAssigneesDeadline = ConvertDaysToHours(coAssigneesDaysOrHours, coAssigneesCount.Value);
-        error = CheckCoAssigneeConditionsAssignmentTemplate(coAssigneesCount, coAssigneesDaysOrHours, assigneeCount, assigneeDaysOrHours,
-                                                            assigneeDeadline, coAssigneesDeadline, finalCount);
+        var finalCount = _obj.IsCompoundActionItem == true && _obj.FinalDaysOrHours.HasValue ? ConvertToHours(_obj.FinalDaysOrHours.Value, _obj.FinalCount) : null;
+        var assigneeDeadline = assigneeCount.HasValue ? ConvertToHours(assigneeDaysOrHours, assigneeCount.Value) : null;
+
+        var error = CheckAssigneeConditionsAssignmentTemplate(assigneeCount, assigneeDeadline, assigneeDaysOrHours, finalCount);
+        if (!string.IsNullOrEmpty(error))
+          return error;
+
+        if (isCoAssigneesExist)
+        {
+          var coAssigneesDeadline = coAssigneesCount.HasValue ? ConvertToHours(coAssigneesDaysOrHours, coAssigneesCount.Value) : null;
+          error = CheckCoAssigneeConditionsAssignmentTemplate(coAssigneesCount, coAssigneesDaysOrHours, assigneeCount, assigneeDaysOrHours,
+                                                              assigneeDeadline, coAssigneesDeadline, finalCount);
+          if (!string.IsNullOrEmpty(error))
+            return error;
+        }
       }
-      
-      return error;
+
+      return null;
     }
-    
-    public string CheckConditionsAssignmentsTenplate()
+
+    /// <summary>
+    /// Проверка условий исполнителя для сохранения шаблона получения.
+    /// </summary>
+    /// <param name="assigneeCount">Срок исполнителя.</param>
+    /// <param name="assigneeDeadline">Срок исполнителя в часах.</param>
+    /// <param name="assigneeDaysOrHours">Дней/Часов исполнителя.</param>
+    /// <param name="finalCount">Общий срок в часах.</param>
+    /// <returns></returns>
+    private string CheckAssigneeConditionsAssignmentTemplate(Nullable<int> assigneeCount, Nullable<int> assigneeDeadline, 
+                                                             string assigneeDaysOrHours, Nullable<int> finalCount)
     {
-      // Проверить есть ли соисполнители в пункте поручения.
-      var isCoAssigneesExist = _obj.CoAssignees.Any();
-      
-      // Шаблон без срока.
-      var hasIndefiniteDeadline = _obj.HasIndefiniteDeadline == true;
-      
-      // Проверить шаблон стоит на контроле.
-      if (_obj.IsUnderControl == true && _obj.Supervisor == null)
-        return AssignmentsTemplates.Resources.EmptySupervisor;
-      
-      // Проверка сроков исполнителя.
-      if (hasIndefiniteDeadline)
-        return null;
-      
-      var error = string.Empty;
-      
-      var assigneeDeadline = ConvertDaysToHours(_obj.DaysOrHours.Value, _obj.Count.Value);
-      
-      
-      error = CheckAssigneeConditionsAssignmentTemplate(_obj.Count, assigneeDeadline, _obj.DaysOrHours.Value.Value, null);
-      if (!string.IsNullOrEmpty(error))
-        return error;
-      
-      if (isCoAssigneesExist)
-      {
-        var coAssigneesDeadline = ConvertDaysToHours(_obj.CoAssigneesDaysOrHours.Value, _obj.CoAssigneesCount.Value);
-        error = CheckCoAssigneeConditionsAssignmentTemplate(_obj.CoAssigneesCount, _obj.CoAssigneesDaysOrHours.Value.Value, _obj.Count, _obj.DaysOrHours.Value.Value,
-                                                            assigneeDeadline, coAssigneesDeadline, null);
-      }
-      
-      return error;
+      if (assigneeCount.HasValue && assigneeCount.Value <= 0)
+        return Sungero.RecordManagement.ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday;
+
+      if (!assigneeCount.HasValue)
+        return AssignmentsTemplates.Resources.EmptyActionItemPartDeadline;
+
+      if (finalCount.HasValue && assigneeDeadline > finalCount)
+        return AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours;
+
+      if (string.IsNullOrEmpty(assigneeDaysOrHours))
+        return AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours;
+
+      return null;
     }
+
+    /// <summary>
+    /// Проверка условий соисполнителя для сохранения шаблона получения
+    /// </summary>
+    /// <param name="coAssigneesCount">Срок соисполнителя.</param>
+    /// <param name="coAssigneesDaysOrHours">Дней/Часов соисполнетеля.</param>
+    /// <param name="assigneeCount">Срок соисполнителя в часах.</param>
+    /// <param name="assigneeDaysOrHours">Дней/Часов исполнителя.</param>
+    /// <param name="assigneeDeadline">Срок исполнителя.</param>
+    /// <param name="coAssigneesDeadline">Срок соисполнителя в часах.</param>
+    /// <param name="finalCount">Общий срок в часах.</param>
+    /// <returns></returns>
+    private string CheckCoAssigneeConditionsAssignmentTemplate(Nullable<int> coAssigneesCount, string coAssigneesDaysOrHours, 
+                                                               Nullable<int> assigneeCount, string assigneeDaysOrHours, 
+                                                               Nullable<int> assigneeDeadline, Nullable<int> coAssigneesDeadline, 
+                                                               Nullable<int> finalCount)
+    {
+      if (string.IsNullOrEmpty(coAssigneesDaysOrHours))
+        return AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours;
+
+      if (!coAssigneesCount.HasValue)
+        return AssignmentsTemplates.Resources.EmptyActionItemPartCoAssigneesDeadline;
+
+      if (coAssigneesCount.HasValue && coAssigneesCount.Value <= 0)
+        return Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneeDeadlineLessThanToday;
+
+      if (coAssigneesDeadline.HasValue && coAssigneesDeadline > assigneeDeadline)
+        return AssignmentsTemplates.Resources.CoAssigneesDeadlineError;
+
+      if (finalCount.HasValue && coAssigneesDeadline > finalCount)
+        return AssignmentsTemplates.Resources.CoAssigneeFinalDaysOrHours;
+
+      return null;
+    }
+
     
     /// <summary>
     /// Преобразовать дни в часы.
     /// </summary>
     /// <param name="daysOrHours">Тип времени</param>
     /// <param name="count">Количество дней.</param>
-    public int? ConvertDaysToHours(Enumeration daysOrHours, int? count)
+    public int? ConvertToHours(Enumeration daysOrHours, int? count)
     {
       if (!count.HasValue)
         count = 1;
@@ -143,7 +140,7 @@ namespace GD.ActionTemplateModule.Shared
     /// </summary>
     /// <param name="daysOrHours">Локализованнаое значение свойства Дни/Часы.</param>
     /// <param name="count">Количество дней.</param>
-    public int? ConvertDaysToHours(string daysOrHours, int? count)
+    public int? ConvertToHours(string daysOrHours, int? count)
     {
       if (!count.HasValue)
         count = 1;

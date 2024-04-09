@@ -148,7 +148,7 @@ namespace GD.ActionTemplateModule
     public virtual void CoAssigneesCountChanged(Sungero.Domain.Shared.IntegerPropertyChangedEventArgs e)
     {
       // Почему тут было сделано все следующим образом?
-      // _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = e.NewValue != null;
+      // _obj.State.Properties.CoAssigneesDaysOr.Hours.IsRequired = e.NewValue != null;
       var isRequired = _obj.CoAssignees.Any();
       _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = isRequired;
       _obj.State.Properties.CoAssigneesCount.IsRequired = isRequired;
@@ -157,9 +157,12 @@ namespace GD.ActionTemplateModule
     public virtual void CountChanged(Sungero.Domain.Shared.IntegerPropertyChangedEventArgs e)
     {
       // _obj.State.Properties.DaysOrHours.IsRequired = e.NewValue != null;
-      var isRequired = _obj.CoAssignees.Any();
-      _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = isRequired;
-      _obj.State.Properties.CoAssigneesCount.IsRequired = isRequired;
+      if (Equals(e.NewValue, e.OldValue))
+      {
+        var isRequired = _obj.CoAssignees.Any();
+        _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = isRequired;
+        _obj.State.Properties.CoAssigneesCount.IsRequired = isRequired;
+      }
     }
 
     public virtual void IsUnderControlChanged(Sungero.Domain.Shared.BooleanPropertyChangedEventArgs e)
