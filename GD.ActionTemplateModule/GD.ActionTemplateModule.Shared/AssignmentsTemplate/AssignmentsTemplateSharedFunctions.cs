@@ -20,11 +20,11 @@ namespace GD.ActionTemplateModule.Shared
     /// <param name="coAssigneesCount">Срок соисполнителей.</param>
     /// <param name="coAssigneesDaysOrHours">Дней/Часов соисполнителей.</param>
     /// <param name="itemPart">Пункт поручения.</param>
-    /// <returns></returns>
-    public string CheckAssignmentTemplateConditions(Sungero.Company.IEmployee supervisor = null, Sungero.Company.IEmployee assignee = null, 
-                                                    Nullable<int> assigneeCount = null,string assigneeDaysOrHours = null, 
-                                                    string coAssignees = null, Nullable<int> coAssigneesCount = null,
-                                                    string coAssigneesDaysOrHours = null, IAssignmentsTemplateActionItemParts itemPart = null)
+    /// <returns>Строка с ошибкой.</returns>
+    public string CheckAssignmentTemplateConditions(Sungero.Company.IEmployee supervisor, Sungero.Company.IEmployee assignee, 
+                                                    Nullable<int> assigneeCount,string assigneeDaysOrHours, 
+                                                    string coAssignees, Nullable<int> coAssigneesCount,
+                                                    string coAssigneesDaysOrHours, IAssignmentsTemplateActionItemParts itemPart)
     {
       // Проверить есть ли соисполнители в пункте поручения.
       var isCoAssigneesExist = !string.IsNullOrEmpty(coAssignees);
@@ -66,7 +66,7 @@ namespace GD.ActionTemplateModule.Shared
     /// <param name="assigneeDeadline">Срок исполнителя в часах.</param>
     /// <param name="assigneeDaysOrHours">Дней/Часов исполнителя.</param>
     /// <param name="finalCount">Общий срок в часах.</param>
-    /// <returns></returns>
+    /// <returns>Строка с ошибкой.</returns>
     private string CheckAssigneeConditionsAssignmentTemplate(Nullable<int> assigneeCount, Nullable<int> assigneeDeadline, 
                                                              string assigneeDaysOrHours, Nullable<int> finalCount)
     {
@@ -95,7 +95,7 @@ namespace GD.ActionTemplateModule.Shared
     /// <param name="assigneeDeadline">Срок исполнителя.</param>
     /// <param name="coAssigneesDeadline">Срок соисполнителя в часах.</param>
     /// <param name="finalCount">Общий срок в часах.</param>
-    /// <returns></returns>
+    /// <returns>Строка с ошибкой.</returns>
     private string CheckCoAssigneeConditionsAssignmentTemplate(Nullable<int> coAssigneesCount, string coAssigneesDaysOrHours, 
                                                                Nullable<int> assigneeCount, string assigneeDaysOrHours, 
                                                                Nullable<int> assigneeDeadline, Nullable<int> coAssigneesDeadline, 
