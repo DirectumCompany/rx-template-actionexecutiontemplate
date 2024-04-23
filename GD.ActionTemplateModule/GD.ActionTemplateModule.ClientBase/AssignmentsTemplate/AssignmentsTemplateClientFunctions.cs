@@ -196,14 +196,14 @@ namespace GD.ActionTemplateModule.Client
       deadlineDaysOrHourse.SetOnValueChanged(
         (args) =>
         {
-          isAssigneeDaysOrHoursChanges = !Equals(args.NewValue, deadlineDaysOrHourse.Value);
+          isAssigneeDaysOrHoursChanges = !Equals(args.NewValue, args.OldValue);
         });
       
       // Дней/Часов соисполнителей в диалоговом окне.
       coAssigneesDeadlineDaysOrHourse.SetOnValueChanged(
         (args) =>
         {
-          isCoAssigneesDaysOrHoursChanges = !Equals(args.NewValue, coAssigneesDeadlineDaysOrHourse.Value);
+          isCoAssigneesDaysOrHoursChanges = !Equals(args.NewValue, args.OldValue);
         });
       
       #region Гиперссылки на добавление и удаление соисполнителей

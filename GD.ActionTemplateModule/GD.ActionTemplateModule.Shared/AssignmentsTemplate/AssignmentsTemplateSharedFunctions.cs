@@ -13,7 +13,6 @@ namespace GD.ActionTemplateModule.Shared
     /// Проверка условий для сохранения шаблона поручений.
     /// </summary>
     /// <param name="supervisor">Контролер.</param>
-    /// <param name="assignee">Исполнитель.</param>
     /// <param name="assigneeCount">Срок исполнителя</param>
     /// <param name="assigneeDaysOrHours">Дней/Часов исполнителя.</param>
     /// <param name="isCoAssignees">Существуют соисполнители.</param>
@@ -59,8 +58,7 @@ namespace GD.ActionTemplateModule.Shared
     /// <summary>
     /// Проверка условий исполнителя для сохранения шаблона получения.
     /// </summary>
-    /// <param name="assigneeCount">Срок исполнителя.</param>
-    /// <param name="assigneeDeadline">Срок исполнителя в часах.</param>
+    /// <param name="assigneeDeadline">Срок исполнителя.</param>
     /// <param name="assigneeDaysOrHours">Дней/Часов исполнителя.</param>
     /// <param name="finalCount">Общий срок в часах.</param>
     /// <returns>Строка с ошибкой.</returns>
@@ -84,12 +82,10 @@ namespace GD.ActionTemplateModule.Shared
     /// <summary>
     /// Проверка условий соисполнителя для сохранения шаблона получения
     /// </summary>
-    /// <param name="coAssigneesCount">Срок соисполнителя.</param>
+    /// <param name="coAssigneesDeadline">Срок соисполнителя.</param>
     /// <param name="coAssigneesDaysOrHours">Дней/Часов соисполнетеля.</param>
-    /// <param name="assigneeCount">Срок соисполнителя в часах.</param>
+    /// <param name="assigneeDeadline">Срок соисполнителя в часах.</param>
     /// <param name="assigneeDaysOrHours">Дней/Часов исполнителя.</param>
-    /// <param name="assigneeDeadline">Срок исполнителя.</param>
-    /// <param name="coAssigneesDeadline">Срок соисполнителя в часах.</param>
     /// <param name="finalCount">Общий срок в часах.</param>
     /// <returns>Строка с ошибкой.</returns>
     private string CheckCoAssigneeConditions(int? coAssigneesDeadline, string coAssigneesDaysOrHours,
@@ -192,9 +188,12 @@ namespace GD.ActionTemplateModule.Shared
       actionItem.Count = deadline.Value;
       actionItem.DaysOrHours = deadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ? DaysOrHours.Days :
         DaysOrHours.Hours;
-      actionItem.CoAssigneesCount = coAssigneesDeadline;
-      actionItem.CoAssigneesDaysOrHours = coAssigneesDeadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ?
-        DaysOrHours.Days : DaysOrHours.Hours;
+      if (coAssignees.Any())
+      {
+        actionItem.CoAssigneesCount = coAssigneesDeadline;
+        actionItem.CoAssigneesDaysOrHours = coAssigneesDeadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ?
+          DaysOrHours.Days : DaysOrHours.Hours;
+      }
       actionItem.Supervisor = supervisor;
       AddPartsCoAssignees(actionItem, coAssignees);
     }
