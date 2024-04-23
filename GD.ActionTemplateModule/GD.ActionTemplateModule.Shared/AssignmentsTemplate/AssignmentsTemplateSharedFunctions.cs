@@ -16,19 +16,16 @@ namespace GD.ActionTemplateModule.Shared
     /// <param name="assignee">Исполнитель.</param>
     /// <param name="assigneeCount">Срок исполнителя</param>
     /// <param name="assigneeDaysOrHours">Дней/Часов исполнителя.</param>
-    /// <param name="coAssignees">Соисполнители.</param>
+    /// <param name="isCoAssignees">Существуют соисполнители.</param>
     /// <param name="coAssigneesCount">Срок соисполнителей.</param>
     /// <param name="coAssigneesDaysOrHours">Дней/Часов соисполнителей.</param>
     /// <param name="itemPart">Пункт поручения.</param>
     /// <returns>Строка с ошибкой.</returns>
-    public string CheckAssignmentTemplateConditions(Sungero.Company.IEmployee supervisor, Sungero.Company.IEmployee assignee, 
-                                                    Nullable<int> assigneeCount,string assigneeDaysOrHours, 
-                                                    string coAssignees, Nullable<int> coAssigneesCount,
-                                                    string coAssigneesDaysOrHours, IAssignmentsTemplateActionItemParts itemPart)
+    public string CheckConditions(Sungero.Company.IEmployee supervisor,
+                                  int? assigneeCount, string assigneeDaysOrHours,
+                                  bool isCoAssignees, int? coAssigneesCount,
+                                  string coAssigneesDaysOrHours, IAssignmentsTemplateActionItemParts itemPart)
     {
-      // Проверить есть ли соисполнители в пункте поручения.
-      var isCoAssigneesExist = !string.IsNullOrEmpty(coAssignees);
-
       // Шаблон без срока.
       var hasIndefiniteDeadline = _obj.HasIndefiniteDeadline == true;
 
@@ -39,18 +36,18 @@ namespace GD.ActionTemplateModule.Shared
       // Проверка сроков исполнителя.
       if (!hasIndefiniteDeadline)
       {
-        var finalCount = _obj.IsCompoundActionItem == true && _obj.FinalDaysOrHours.HasValue ? ConvertToHours(_obj.FinalDaysOrHours.Value, _obj.FinalCount) : null;
-        var assigneeDeadline = assigneeCount.HasValue ? ConvertToHours(assigneeDaysOrHours, assigneeCount.Value) : null;
+        var finalCount = _obj.IsCompoundActionItem == true && _obj.FinalDaysOrHours.HasValue ?
+          ConvertToHours(_obj.FinalDaysOrHours.Value, _obj.FinalCount) : null;
+        var assigneeDeadline = ConvertToHours(assigneeDaysOrHours, assigneeCount.Value);
 
-        var error = CheckAssigneeConditionsAssignmentTemplate(assigneeCount, assigneeDeadline, assigneeDaysOrHours, finalCount);
+        var error = CheckAssigneeConditions(assigneeDeadline, assigneeDaysOrHours, finalCount);
         if (!string.IsNullOrEmpty(error))
           return error;
 
-        if (isCoAssigneesExist)
+        if (isCoAssignees)
         {
-          var coAssigneesDeadline = coAssigneesCount.HasValue ? ConvertToHours(coAssigneesDaysOrHours, coAssigneesCount.Value) : null;
-          error = CheckCoAssigneeConditionsAssignmentTemplate(coAssigneesCount, coAssigneesDaysOrHours, assigneeCount, assigneeDaysOrHours,
-                                                              assigneeDeadline, coAssigneesDeadline, finalCount);
+          var coAssigneesDeadline = ConvertToHours(coAssigneesDaysOrHours, coAssigneesCount);
+          error = CheckCoAssigneeConditions(coAssigneesDeadline, coAssigneesDaysOrHours, assigneeDeadline, assigneeDaysOrHours, finalCount);
           if (!string.IsNullOrEmpty(error))
             return error;
         }
@@ -67,14 +64,13 @@ namespace GD.ActionTemplateModule.Shared
     /// <param name="assigneeDaysOrHours">Дней/Часов исполнителя.</param>
     /// <param name="finalCount">Общий срок в часах.</param>
     /// <returns>Строка с ошибкой.</returns>
-    private string CheckAssigneeConditionsAssignmentTemplate(Nullable<int> assigneeCount, Nullable<int> assigneeDeadline, 
-                                                             string assigneeDaysOrHours, Nullable<int> finalCount)
+    private string CheckAssigneeConditions(int? assigneeDeadline, string assigneeDaysOrHours, int? finalCount)
     {
-      if (assigneeCount.HasValue && assigneeCount.Value <= 0)
-        return Sungero.RecordManagement.ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday;
-
-      if (!assigneeCount.HasValue)
+      if (!assigneeDeadline.HasValue)
         return AssignmentsTemplates.Resources.EmptyActionItemPartDeadline;
+      
+      if (assigneeDeadline.HasValue && assigneeDeadline.Value <= 0)
+        return Sungero.RecordManagement.ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday;
 
       if (finalCount.HasValue && assigneeDeadline > finalCount)
         return AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours;
@@ -96,18 +92,16 @@ namespace GD.ActionTemplateModule.Shared
     /// <param name="coAssigneesDeadline">Срок соисполнителя в часах.</param>
     /// <param name="finalCount">Общий срок в часах.</param>
     /// <returns>Строка с ошибкой.</returns>
-    private string CheckCoAssigneeConditionsAssignmentTemplate(Nullable<int> coAssigneesCount, string coAssigneesDaysOrHours, 
-                                                               Nullable<int> assigneeCount, string assigneeDaysOrHours, 
-                                                               Nullable<int> assigneeDeadline, Nullable<int> coAssigneesDeadline, 
-                                                               Nullable<int> finalCount)
+    private string CheckCoAssigneeConditions(int? coAssigneesDeadline, string coAssigneesDaysOrHours,
+                                             int? assigneeDeadline, string assigneeDaysOrHours, int? finalCount)
     {
+      if (!coAssigneesDeadline.HasValue)
+        return AssignmentsTemplates.Resources.EmptyActionItemPartCoAssigneesDeadline;
+      
       if (string.IsNullOrEmpty(coAssigneesDaysOrHours))
         return AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours;
 
-      if (!coAssigneesCount.HasValue)
-        return AssignmentsTemplates.Resources.EmptyActionItemPartCoAssigneesDeadline;
-
-      if (coAssigneesCount.HasValue && coAssigneesCount.Value <= 0)
+      if (coAssigneesDeadline.HasValue && coAssigneesDeadline.Value <= 0)
         return Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneeDeadlineLessThanToday;
 
       if (coAssigneesDeadline.HasValue && coAssigneesDeadline > assigneeDeadline)
@@ -127,8 +121,6 @@ namespace GD.ActionTemplateModule.Shared
     /// <param name="count">Количество дней.</param>
     public int? ConvertToHours(Enumeration daysOrHours, int? count)
     {
-      if (!count.HasValue)
-        count = 1;
       if (daysOrHours.Value == DaysOrHours.Days.Value)
         count *= PublicConstants.AssignmentsTemplate.DayHours;
       
@@ -142,9 +134,6 @@ namespace GD.ActionTemplateModule.Shared
     /// <param name="count">Количество дней.</param>
     public int? ConvertToHours(string daysOrHours, int? count)
     {
-      if (!count.HasValue)
-        count = 1;
-      
       if (daysOrHours == _obj.Info.Properties.DaysOrHours.GetLocalizedValue(DaysOrHours.Days))
         count *= PublicConstants.AssignmentsTemplate.DayHours;
 

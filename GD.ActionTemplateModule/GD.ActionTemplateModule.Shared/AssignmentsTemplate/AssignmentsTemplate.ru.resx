@@ -65,7 +65,7 @@
     <value>Заполните общий срок или срок в табличной части.</value>
   </data>
   <data name="EmptyActionItemPartDeadline" xml:space="preserve">
-    <value>Не заполнен срок исполнителя в табличной части.</value>
+    <value>Не заполнен срок исполнителя.</value>
   </data>
   <data name="EmptyAssigneeDaysOrHours" xml:space="preserve">
     <value>Не заполнено поле "Дней/Часов" у срока исполнителей.</value>
@@ -74,16 +74,16 @@
     <value>Не заполнено поле "Дней/Часов" у срока соисполнителей</value>
   </data>
   <data name="EmptyActionItemPartCoAssigneesDeadline" xml:space="preserve">
-    <value>Не заполнен срок соисполнителей в табличной части.</value>
+    <value>Не заполнен срок соисполнителей.</value>
   </data>
   <data name="AssigneeFinalDaysOrHours" xml:space="preserve">
-    <value>Cрок исполнителя в табличной части не может быть больше конечного срока.</value>
+    <value>Cрок исполнителя не может быть больше конечного срока.</value>
   </data>
   <data name="EmptyActionitemPartCoAssigneesdeadline" xml:space="preserve">
     <value>Не выбраны соисполнители в табличной части.</value>
   </data>
   <data name="CoAssigneeFinalDaysOrHours" xml:space="preserve">
-    <value>Cрок соисполнителя в табличной части не может быть больше конечного срока.</value>
+    <value>Cрок соисполнителя не может быть больше конечного срока.</value>
   </data>
   <data name="EmptyTemplateDeadline" xml:space="preserve">
     <value>Не заполнен срок исполнителя.</value>

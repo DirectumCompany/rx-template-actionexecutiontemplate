@@ -65,7 +65,7 @@
     <value>Fill in the final deadline or deadline in the table.</value>
   </data>
   <data name="EmptyActionItemPartDeadline" xml:space="preserve">
-    <value>Deadline of the assignee in the tabular part is not filled.</value>
+    <value>Deadline of the assignee is not filled.</value>
   </data>
   <data name="EmptyAssigneeDaysOrHours" xml:space="preserve">
     <value>The type of deadline for assignees (Days/Hours) is not filled</value>
@@ -74,16 +74,16 @@
     <value>The type of deadline for co-assignees (Days/Hours) is not filled</value>
   </data>
   <data name="EmptyActionItemPartCoAssigneesDeadline" xml:space="preserve">
-    <value>Deadline of the co-assignees in the tabular part is not filled.</value>
+    <value>Deadline of the co-assignees is not filled.</value>
   </data>
   <data name="AssigneeFinalDaysOrHours" xml:space="preserve">
-    <value>Cрок исполнителя в табличной части не может быть больше конечного срока.</value>
+    <value>The assignee deadline cannot be greater than the final deadline.</value>
   </data>
   <data name="EmptyActionitemPartCoAssigneesdeadline" xml:space="preserve">
     <value>Не выбраны соисполнители в табличной части.</value>
   </data>
   <data name="CoAssigneeFinalDaysOrHours" xml:space="preserve">
-    <value>Cрок соисполнителя в табличной части не может быть больше конечного срока.</value>
+    <value>The coassginee deadline cannot be greater than the final deadline.</value>
   </data>
   <data name="EmptyTemplateDeadline" xml:space="preserve">
     <value>Deadline of the assignee not filled.</value>

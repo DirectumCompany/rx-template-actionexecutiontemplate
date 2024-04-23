@@ -121,10 +121,11 @@ namespace GD.ActionTemplateModule.Client
           
           var assigneeDeadline = deadline.Value ?? _obj.FinalCount;
 
-          var error = Functions.AssignmentsTemplate.CheckAssignmentTemplateConditions(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
-                                                                                    deadlineDaysOrHourse.Value,
-                                                                                    coAssigneesText.Value, coAssigneesDeadline.Value,
-                                                                                    coAssigneesDeadlineDaysOrHourse.Value, null);
+          var error = Functions.AssignmentsTemplate.CheckConditions(_obj, supervisor.Value, assigneeDeadline,
+                                                                    deadlineDaysOrHourse.Value,
+                                                                    !string.IsNullOrEmpty(coAssigneesText.Value),
+                                                                    coAssigneesDeadline.Value,
+                                                                    coAssigneesDeadlineDaysOrHourse.Value, null);
           
           if (!string.IsNullOrEmpty(error))
             args.AddError(error);
@@ -251,10 +252,13 @@ namespace GD.ActionTemplateModule.Client
           {
             var assigneeDeadline = deadline.Value ?? _obj.FinalCount;
 
-            var error = Functions.AssignmentsTemplate.CheckAssignmentTemplateConditions(_obj, supervisor.Value, assignee.Value, assigneeDeadline,
-                                                                                      deadlineDaysOrHourse.Value,
-                                                                                      coAssigneesText.Value, coAssigneesDeadline.Value,
-                                                                                      coAssigneesDeadlineDaysOrHourse.Value, null);
+            var error = Functions.AssignmentsTemplate.CheckConditions(_obj, supervisor.Value, assigneeDeadline,
+                                                                      deadlineDaysOrHourse.Value,
+                                                                      !string.IsNullOrEmpty(coAssigneesText.Value),
+                                                                      coAssigneesDeadline.Value,
+                                                                      coAssigneesDeadlineDaysOrHourse.Value, null);
+            if (!string.IsNullOrEmpty(error))
+              args.AddError(error);
           }
 
           if (args.IsValid)
@@ -280,39 +284,39 @@ namespace GD.ActionTemplateModule.Client
           }
         });
 
-    dialog.Show();
+      dialog.Show();
+      
+      #endregion
+    }
     
-    #endregion
-  }
-  
-  /// <summary>
-  /// Проверка, что хотя бы одно доступное свойство пункта составного шаблона поручения заполнено.
-  /// </summary>
-  /// <param name="itemPart">Пункт составного поручения.</param>
-  /// <returns>True - корректировка возможна, иначе - false.</returns>
-  /// <remarks>Проверка добавлена, так как платформа при сохранении задачи удаляет пустые пункты (187563).</remarks>
-  [Public]
-  public virtual bool CanChangeActionItemPart(IAssignmentsTemplateActionItemParts itemPart)
-  {
-    return itemPart.Assignee != null || itemPart.ActionItemPart != null ||
-      itemPart.Count != null || itemPart.Supervisor != null;
-  }
+    /// <summary>
+    /// Проверка, что хотя бы одно доступное свойство пункта составного шаблона поручения заполнено.
+    /// </summary>
+    /// <param name="itemPart">Пункт составного поручения.</param>
+    /// <returns>True - корректировка возможна, иначе - false.</returns>
+    /// <remarks>Проверка добавлена, так как платформа при сохранении задачи удаляет пустые пункты (187563).</remarks>
+    [Public]
+    public virtual bool CanChangeActionItemPart(IAssignmentsTemplateActionItemParts itemPart)
+    {
+      return itemPart.Assignee != null || itemPart.ActionItemPart != null ||
+        itemPart.Count != null || itemPart.Supervisor != null;
+    }
 
-  /// <summary>
-  /// Проверить возможность корректировки шаблона поручения.
-  /// </summary>
-  /// <returns>True - корректировка возможна, иначе - false.</returns>
-  [Public]
-  public virtual bool CanChangeActionItem()
-  {
-    // Корректировать можно, только если есть права на изменение поручения.
-    if (!_obj.AccessRights.CanUpdate())
-      return false;
-    
-    // Корректировка недоступна в десктоп-клиенте.
-    if (ClientApplication.ApplicationType == ApplicationType.Desktop)
-      return false;
-    return true;
+    /// <summary>
+    /// Проверить возможность корректировки шаблона поручения.
+    /// </summary>
+    /// <returns>True - корректировка возможна, иначе - false.</returns>
+    [Public]
+    public virtual bool CanChangeActionItem()
+    {
+      // Корректировать можно, только если есть права на изменение поручения.
+      if (!_obj.AccessRights.CanUpdate())
+        return false;
+      
+      // Корректировка недоступна в десктоп-клиенте.
+      if (ClientApplication.ApplicationType == ApplicationType.Desktop)
+        return false;
+      return true;
+    }
   }
-}
 }
