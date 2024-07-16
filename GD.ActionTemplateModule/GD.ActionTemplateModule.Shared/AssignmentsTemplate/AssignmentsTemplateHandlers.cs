@@ -93,7 +93,7 @@ namespace GD.ActionTemplateModule
           else
             _obj.Count = null;
           
-          if (actionItemPart.DaysOrHours.HasValue)
+          if (actionItemPart != null && actionItemPart.DaysOrHours.HasValue)
             _obj.DaysOrHours = actionItemPart.DaysOrHours;
           
           if (actionItemPart != null)
@@ -110,8 +110,8 @@ namespace GD.ActionTemplateModule
             
             if (_obj.CoAssignees != null)
             {
-              _obj.CoAssigneesDaysOrHours = actionItemPart.DaysOrHours;
-              _obj.CoAssigneesCount = actionItemPart.Count;
+              _obj.CoAssigneesDaysOrHours = actionItemPart?.DaysOrHours;
+              _obj.CoAssigneesCount = actionItemPart?.Count;
             }
           }
           

@@ -35,9 +35,8 @@ namespace GD.ActionTemplateModule.Shared
       // Проверка сроков исполнителя.
       if (!hasIndefiniteDeadline)
       {
-        var finalCount = _obj.IsCompoundActionItem == true && _obj.FinalDaysOrHours.HasValue ?
-          ConvertToHours(_obj.FinalDaysOrHours.Value, _obj.FinalCount) : null;
-        var assigneeDeadline = ConvertToHours(assigneeDaysOrHours, assigneeCount.Value);
+        var finalCount = ConvertToHours(_obj.FinalDaysOrHours.Value, _obj.FinalCount);
+        var assigneeDeadline = ConvertToHours(assigneeDaysOrHours, assigneeCount);
 
         var error = CheckAssigneeConditions(assigneeDeadline, assigneeDaysOrHours, finalCount);
         if (!string.IsNullOrEmpty(error))
@@ -64,7 +63,7 @@ namespace GD.ActionTemplateModule.Shared
     /// <returns>Строка с ошибкой.</returns>
     private string CheckAssigneeConditions(int? assigneeDeadline, string assigneeDaysOrHours, int? finalCount)
     {
-      if (!assigneeDeadline.HasValue)
+      if (!assigneeDeadline.HasValue && assigneeDeadline != null)
         return AssignmentsTemplates.Resources.EmptyActionItemPartDeadline;
       
       if (assigneeDeadline.HasValue && assigneeDeadline.Value <= 0)
@@ -117,7 +116,7 @@ namespace GD.ActionTemplateModule.Shared
     /// <param name="count">Количество дней.</param>
     public int? ConvertToHours(Enumeration daysOrHours, int? count)
     {
-      if (daysOrHours.Value == DaysOrHours.Days.Value)
+      if (count.HasValue && daysOrHours.Value == DaysOrHours.Days.Value)
         count *= PublicConstants.AssignmentsTemplate.DayHours;
       
       return count;
@@ -130,9 +129,9 @@ namespace GD.ActionTemplateModule.Shared
     /// <param name="count">Количество дней.</param>
     public int? ConvertToHours(string daysOrHours, int? count)
     {
-      if (daysOrHours == _obj.Info.Properties.DaysOrHours.GetLocalizedValue(DaysOrHours.Days))
+      if (count.HasValue && daysOrHours == _obj.Info.Properties.DaysOrHours.GetLocalizedValue(DaysOrHours.Days))
         count *= PublicConstants.AssignmentsTemplate.DayHours;
-
+      
       return count;
     }
 

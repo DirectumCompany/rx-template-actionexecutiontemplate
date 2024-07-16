@@ -115,25 +115,24 @@ namespace GD.ActionTemplateModule.Client
       dialog.SetOnRefresh(
         (args) =>
         {
-          if (deadline.Value.HasValue)
-            if (deadline.Value.Value < 0)
-              args.AddError(ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday, deadline);
-          
-          var assigneeDeadline = deadline.Value ?? _obj.FinalCount;
-
-          var error = Functions.AssignmentsTemplate.CheckConditions(_obj, supervisor.Value, assigneeDeadline,
-                                                                    deadlineDaysOrHourse.Value,
-                                                                    !string.IsNullOrEmpty(coAssigneesText.Value),
-                                                                    coAssigneesDeadline.Value,
-                                                                    coAssigneesDeadlineDaysOrHourse.Value, null);
-          
-          if (!string.IsNullOrEmpty(error))
-            args.AddError(error);
-          
-          fillButton.IsEnabled = isSupervisorChanges || isAssigneeChanges ||
+          var isAnyChanged = isSupervisorChanges || isAssigneeChanges ||
             isDeadlineChanges || isCoAssigneesChanges ||
             isCoAssigneesDeadlineChanges || isActionItemTextChanges ||
             isCoAssigneesDaysOrHoursChanges || isAssigneeDaysOrHoursChanges;
+          
+          fillButton.IsEnabled = isAnyChanged;
+
+          if (isAnyChanged)
+          {
+            var error = Functions.AssignmentsTemplate.CheckConditions(_obj, supervisor.Value, deadline.Value,
+                                                                      deadlineDaysOrHourse.Value,
+                                                                      !string.IsNullOrEmpty(coAssigneesText.Value),
+                                                                      coAssigneesDeadline.Value,
+                                                                      coAssigneesDeadlineDaysOrHourse.Value, null);
+            
+            if (!string.IsNullOrEmpty(error))
+              args.AddError(error);
+          }
         });
 
       // Контролер.
@@ -250,9 +249,7 @@ namespace GD.ActionTemplateModule.Client
         {
           if (args.Button == fillButton)
           {
-            var assigneeDeadline = deadline.Value ?? _obj.FinalCount;
-
-            var error = Functions.AssignmentsTemplate.CheckConditions(_obj, supervisor.Value, assigneeDeadline,
+            var error = Functions.AssignmentsTemplate.CheckConditions(_obj, supervisor.Value, deadline.Value,
                                                                       deadlineDaysOrHourse.Value,
                                                                       !string.IsNullOrEmpty(coAssigneesText.Value),
                                                                       coAssigneesDeadline.Value,
