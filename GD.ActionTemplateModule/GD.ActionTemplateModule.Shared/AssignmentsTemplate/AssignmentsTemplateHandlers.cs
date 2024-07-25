@@ -123,6 +123,7 @@ namespace GD.ActionTemplateModule
         _obj.CoAssigneesCount = null;
         _obj.CoAssigneesDaysOrHours = null;
       }
+      Functions.AssignmentsTemplate.SetRequiredProperties(_obj);
     }
 
     public virtual void FinalCountChanged(Sungero.Domain.Shared.IntegerPropertyChangedEventArgs e)
@@ -168,6 +169,7 @@ namespace GD.ActionTemplateModule
           actionItemPart.CoAssigneesDaysOrHours = null;
         }
       }
+      Functions.AssignmentsTemplate.SetRequiredProperties(_obj);
     }
 
   }
