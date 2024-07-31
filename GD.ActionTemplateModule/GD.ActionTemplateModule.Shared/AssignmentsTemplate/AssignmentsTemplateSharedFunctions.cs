@@ -63,9 +63,6 @@ namespace GD.ActionTemplateModule.Shared
     /// <returns>Строка с ошибкой.</returns>
     private string CheckAssigneeConditions(int? assigneeDeadline, string assigneeDaysOrHours, int? finalCount)
     {
-      if (!assigneeDeadline.HasValue && assigneeDeadline != null)
-        return AssignmentsTemplates.Resources.EmptyActionItemPartDeadline;
-      
       if (assigneeDeadline.HasValue && assigneeDeadline.Value <= 0)
         return Sungero.RecordManagement.ActionItemExecutionTasks.Resources.AssigneeDeadlineLessThanToday;
 
