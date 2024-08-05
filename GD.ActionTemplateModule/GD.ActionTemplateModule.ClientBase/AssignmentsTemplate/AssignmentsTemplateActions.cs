@@ -13,7 +13,7 @@ namespace GD.ActionTemplateModule.Client
     public static bool CanAddCompoundActionItemPart(Sungero.Domain.Client.CanExecuteChildCollectionActionArgs e)
     {
       var assignmentTemplate = AssignmentsTemplates.As(e.Entity);
-      return (assignmentTemplate.State.IsInserted || Locks.GetLockInfo(assignmentTemplate).IsLockedByMe) && assignmentTemplate != null;
+      return assignmentTemplate != null && (assignmentTemplate.State.IsInserted || Locks.GetLockInfo(assignmentTemplate).IsLockedByMe);
     }
 
     public static void AddCompoundActionItemPart(Sungero.Domain.Client.ExecuteChildCollectionActionArgs e)
@@ -55,9 +55,6 @@ namespace GD.ActionTemplateModule.Client
     }
 
   }
-
-
-
 
   partial class AssignmentsTemplateActionItemPartsActions
   {

@@ -57,27 +57,31 @@ namespace GD.ActionTemplateModule
         // Заполнить данные из составного поручения в обычное и наоборот.
         if (e.NewValue.Value)
         {
-          // Составное поручение.
+          // Из простого в составное.
           _obj.ActionItemParts.Clear();
           _obj.FinalCount = _obj.Count;
-          _obj.CoAssigneesCount = null;
           
           if (_obj.Assignee != null)
           {
             var newJob = _obj.ActionItemParts.AddNew();
             newJob.Assignee = _obj.Assignee;
+            newJob.Count = _obj.Count;
+            newJob.DaysOrHours = _obj.DaysOrHours;
           }
           
           foreach (var job in _obj.CoAssignees)
           {
             var newJob = _obj.ActionItemParts.AddNew();
             newJob.Assignee = job.CoAssignee;
+            newJob.Count = _obj.CoAssigneesCount;
+            newJob.DaysOrHours = _obj.CoAssigneesDaysOrHours;
           }
+          
           _obj.CoAssignees.Clear();
         }
         else
         {
-          // Не составное поручение.
+          // Из составного поручения в простое.
           var actionItemPart = _obj.ActionItemParts.OrderBy(x => x.Number).FirstOrDefault();
           if (_obj.FinalCount != null)
             _obj.Count = _obj.FinalCount;
@@ -85,6 +89,9 @@ namespace GD.ActionTemplateModule
             _obj.Count = actionItemPart.Count;
           else
             _obj.Count = null;
+          
+          if (actionItemPart != null && actionItemPart.DaysOrHours.HasValue)
+            _obj.DaysOrHours = actionItemPart.DaysOrHours;
           
           if (actionItemPart != null)
             _obj.Assignee = actionItemPart.Assignee;
@@ -97,6 +104,12 @@ namespace GD.ActionTemplateModule
           {
             if (job.Assignee != null && !_obj.CoAssignees.Select(z => z.CoAssignee).Contains(job.Assignee))
               _obj.CoAssignees.AddNew().CoAssignee = job.Assignee;
+            
+            if (_obj.CoAssignees != null)
+            {
+              _obj.CoAssigneesDaysOrHours = actionItemPart?.DaysOrHours;
+              _obj.CoAssigneesCount = actionItemPart?.Count;
+            }
           }
           
           if (string.IsNullOrEmpty(_obj.Text) && actionItemPart != null)
@@ -104,7 +117,7 @@ namespace GD.ActionTemplateModule
             _obj.Text = actionItemPart.ActionItemPart;
             Functions.AssignmentsTemplate.SynchronizeActiveText(_obj);
           }
-
+          
           if (actionItemPart != null && _obj.Supervisor == null)
             _obj.Supervisor = actionItemPart.Supervisor;
           
@@ -113,7 +126,6 @@ namespace GD.ActionTemplateModule
         }
       }
       Functions.AssignmentsTemplate.SetRequiredProperties(_obj);
-      // _obj.State.Controls.Control.Refresh();
     }
 
     public virtual void CoAssigneesChanged(Sungero.Domain.Shared.CollectionPropertyChangedEventArgs e)
@@ -133,12 +145,22 @@ namespace GD.ActionTemplateModule
 
     public virtual void CoAssigneesCountChanged(Sungero.Domain.Shared.IntegerPropertyChangedEventArgs e)
     {
-      _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = e.NewValue != null;
+      // Почему тут было сделано все следующим образом?
+      // _obj.State.Properties.CoAssigneesDaysOr.Hours.IsRequired = e.NewValue != null;
+      var isRequired = _obj.CoAssignees.Any();
+      _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = isRequired;
+      _obj.State.Properties.CoAssigneesCount.IsRequired = isRequired;
     }
 
     public virtual void CountChanged(Sungero.Domain.Shared.IntegerPropertyChangedEventArgs e)
     {
-      _obj.State.Properties.DaysOrHours.IsRequired = e.NewValue != null;
+      // _obj.State.Properties.DaysOrHours.IsRequired = e.NewValue != null;
+      if (Equals(e.NewValue, e.OldValue))
+      {
+        var isRequired = _obj.CoAssignees.Any();
+        _obj.State.Properties.CoAssigneesDaysOrHours.IsRequired = isRequired;
+        _obj.State.Properties.CoAssigneesCount.IsRequired = isRequired;
+      }
     }
 
     public virtual void IsUnderControlChanged(Sungero.Domain.Shared.BooleanPropertyChangedEventArgs e)
