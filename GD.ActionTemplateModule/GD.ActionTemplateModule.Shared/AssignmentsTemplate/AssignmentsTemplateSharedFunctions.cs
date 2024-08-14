@@ -31,11 +31,14 @@ namespace GD.ActionTemplateModule.Shared
       // Проверить шаблон стоит на контроле.
       if (_obj.IsUnderControl == true && supervisor == null)
         return AssignmentsTemplates.Resources.EmptySupervisor;
-
+      
       // Проверка сроков исполнителя.
       if (!hasIndefiniteDeadline)
       {
-        var finalCount = ConvertToHours(_obj.FinalDaysOrHours.Value, _obj.FinalCount);
+        int? finalCount = null;
+        if (_obj.FinalDaysOrHours != null && _obj.FinalDaysOrHours.HasValue)
+          finalCount = ConvertToHours(_obj.FinalDaysOrHours, _obj.FinalCount);
+        
         var assigneeDeadline = ConvertToHours(assigneeDaysOrHours, assigneeCount);
 
         var error = CheckAssigneeConditions(assigneeDeadline, assigneeDaysOrHours, finalCount);
@@ -69,7 +72,7 @@ namespace GD.ActionTemplateModule.Shared
       if (finalCount.HasValue && assigneeDeadline > finalCount)
         return AssignmentsTemplates.Resources.AssigneeFinalDaysOrHours;
 
-      if (string.IsNullOrEmpty(assigneeDaysOrHours))
+      if (string.IsNullOrEmpty(assigneeDaysOrHours) && assigneeDeadline != null && assigneeDeadline.HasValue)
         return AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours;
 
       return null;
@@ -87,10 +90,7 @@ namespace GD.ActionTemplateModule.Shared
     private string CheckCoAssigneeConditions(int? coAssigneesDeadline, string coAssigneesDaysOrHours,
                                              int? assigneeDeadline, string assigneeDaysOrHours, int? finalCount)
     {
-      if (!coAssigneesDeadline.HasValue)
-        return AssignmentsTemplates.Resources.EmptyActionItemPartCoAssigneesDeadline;
-      
-      if (string.IsNullOrEmpty(coAssigneesDaysOrHours))
+      if (string.IsNullOrEmpty(coAssigneesDaysOrHours) && coAssigneesDeadline != null && coAssigneesDeadline.HasValue)
         return AssignmentsTemplates.Resources.EmptyCoAssigneesDaysOrHours;
 
       if (coAssigneesDeadline.HasValue && coAssigneesDeadline.Value <= 0)
@@ -101,7 +101,7 @@ namespace GD.ActionTemplateModule.Shared
 
       if (finalCount.HasValue && coAssigneesDeadline > finalCount)
         return AssignmentsTemplates.Resources.CoAssigneeFinalDaysOrHours;
-
+      
       return null;
     }
 
@@ -111,9 +111,9 @@ namespace GD.ActionTemplateModule.Shared
     /// </summary>
     /// <param name="daysOrHours">Тип времени</param>
     /// <param name="count">Количество дней.</param>
-    public int? ConvertToHours(Enumeration daysOrHours, int? count)
+    public int? ConvertToHours(Enumeration? daysOrHours, int? count)
     {
-      if (count.HasValue && daysOrHours.Value == DaysOrHours.Days.Value)
+      if (count.HasValue && daysOrHours.Value.Value == DaysOrHours.Days.Value)
         count *= PublicConstants.AssignmentsTemplate.DayHours;
       
       return count;
@@ -181,7 +181,10 @@ namespace GD.ActionTemplateModule.Shared
       var actionItem = _obj.ActionItemParts.AddNew();
       actionItem.ActionItemPart = actionItemPart;
       actionItem.Assignee = assignee;
-      actionItem.Count = deadline.Value;
+      if (deadline != null && deadline.HasValue)
+        actionItem.Count = deadline.Value;
+      else
+        actionItem.Count = null;
       actionItem.DaysOrHours = deadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ? DaysOrHours.Days :
         DaysOrHours.Hours;
       if (coAssignees.Any())
@@ -250,7 +253,10 @@ namespace GD.ActionTemplateModule.Shared
     {
       actionItemPart.ActionItemPart = actionItemPartText;
       actionItemPart.Assignee = assignee;
-      actionItemPart.Count = deadline;
+      if (deadline != null && deadline.HasValue)
+        actionItemPart.Count = deadline.Value;
+      else
+        actionItemPart.Count = null;
       actionItemPart.DaysOrHours = deadlineDaysOrHourse == _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days) ?
         DaysOrHours.Days : DaysOrHours.Hours;
       actionItemPart.CoAssigneesCount = coAssigneesDeadline;
