@@ -115,7 +115,8 @@ namespace GD.ActionTemplateModule
           if (string.IsNullOrEmpty(_obj.Text) && actionItemPart != null)
           {
             _obj.Text = actionItemPart.ActionItemPart;
-            Functions.AssignmentsTemplate.SynchronizeActiveText(_obj);
+            if (!string.IsNullOrWhiteSpace(_obj.Text))
+              Functions.AssignmentsTemplate.SynchronizeActiveText(_obj);
           }
           
           if (actionItemPart != null && _obj.Supervisor == null)

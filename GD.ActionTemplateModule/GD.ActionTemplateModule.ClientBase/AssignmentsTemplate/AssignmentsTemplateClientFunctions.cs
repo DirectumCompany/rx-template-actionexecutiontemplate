@@ -67,8 +67,6 @@ namespace GD.ActionTemplateModule.Client
       
       var deadline = dialog.AddInteger(_obj.Info.Properties.Count.LocalizedName, false, deadlineDefault);
       deadline.IsEnabled = _obj.HasIndefiniteDeadline != true;
-      deadline.IsRequired = deadline.IsEnabled;
-      
       
       var deadlineDaysOrHourse = dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false,
                                                   deadlineDaysOrHourseDefault)
@@ -77,8 +75,7 @@ namespace GD.ActionTemplateModule.Client
       if (itemPart != null && itemPart.DaysOrHours.HasValue)
         deadlineDaysOrHourse.Value = itemPart.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.DaysOrHours.Value);
       deadlineDaysOrHourse.IsEnabled = deadline.IsEnabled;
-      deadlineDaysOrHourse.IsRequired = deadline.IsRequired;
-      
+      deadlineDaysOrHourse.IsRequired = deadline.Value.HasValue;
       
       var coAssignees = dialog.AddSelectMany(_obj.Info.Properties.CoAssignees.LocalizedName, false, coAssigneesDefault.ToArray());
       coAssignees.IsEnabled = false;
@@ -94,16 +91,14 @@ namespace GD.ActionTemplateModule.Client
       var coAssigneesDeadline = dialog.AddInteger(Sungero.RecordManagement.ActionItemExecutionTasks.Resources.CoAssigneesDeadlineDialog,
                                                   false, coAssigneesDeadlineDefault);
       coAssigneesDeadline.IsEnabled = coAssignees.Value.Any();
-      coAssigneesDeadline.IsRequired = coAssignees.Value.Any() && _obj.HasIndefiniteDeadline != true;
       
       var coAssigneesDeadlineDaysOrHourse = dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false, null)
         .From(_obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days),
               _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours));
       if (itemPart != null && itemPart.CoAssigneesDaysOrHours.HasValue)
         coAssigneesDeadlineDaysOrHourse.Value = itemPart.Info.Properties.CoAssigneesDaysOrHours.GetLocalizedValue(itemPart.CoAssigneesDaysOrHours.Value);
-      
       coAssigneesDeadlineDaysOrHourse.IsEnabled = coAssigneesDeadline.IsEnabled;
-      coAssigneesDeadlineDaysOrHourse.IsRequired = coAssigneesDeadline.IsRequired;
+      
       
       var actionItemPartText = dialog
         .AddMultilineString(_obj.Info.Properties.ActionItemParts.Properties.ActionItemPart.LocalizedName, false, itemPartDefault)
@@ -121,9 +116,11 @@ namespace GD.ActionTemplateModule.Client
             isCoAssigneesDaysOrHoursChanges || isAssigneeDaysOrHoursChanges;
           
           fillButton.IsEnabled = isAnyChanged;
-
+        
           if (isAnyChanged)
           {
+            deadlineDaysOrHourse.IsRequired = deadline.Value.HasValue;
+            coAssigneesDeadlineDaysOrHourse.IsRequired = coAssigneesDeadline.Value.HasValue;
             var error = Functions.AssignmentsTemplate.CheckConditions(_obj, supervisor.Value, deadline.Value,
                                                                       deadlineDaysOrHourse.Value,
                                                                       !string.IsNullOrEmpty(coAssigneesText.Value),
@@ -164,7 +161,6 @@ namespace GD.ActionTemplateModule.Client
           isCoAssigneesChanges = !coAssigneesDefault.SequenceEqual(coAssignees.Value.ToList());
 
           var coAssigneesExist = coAssignees.Value.Any();
-          coAssigneesDeadline.IsRequired = coAssigneesExist && _obj.HasIndefiniteDeadline != true;
           coAssigneesDeadline.IsEnabled = coAssigneesExist;
           
           coAssigneesDeadlineDaysOrHourse.IsEnabled = coAssigneesExist;

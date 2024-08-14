@@ -36,13 +36,13 @@ namespace GD.ActionTemplateModule
       {
         foreach (var itemPart in _obj.ActionItemParts)
         {
-          if (itemPart.CoAssigneesDaysOrHours.HasValue)
+          if (itemPart.CoAssigneesDaysOrHours != null && itemPart.CoAssigneesDaysOrHours.HasValue)
             coAssigneesDaysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.CoAssigneesDaysOrHours.Value);
           
-          if (itemPart.DaysOrHours.HasValue)
+          if (itemPart.DaysOrHours != null && itemPart.DaysOrHours.HasValue)
             daysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.DaysOrHours.Value);
           
-          var error = Functions.AssignmentsTemplate.CheckConditions(_obj, itemPart.Supervisor, itemPart.Count,
+          var error = Functions.AssignmentsTemplate.CheckConditions(_obj, itemPart.Supervisor ?? _obj.Supervisor, itemPart.Count,
                                                                     daysOrHours, !string.IsNullOrEmpty(itemPart.CoAssignees),
                                                                     itemPart.CoAssigneesCount, coAssigneesDaysOrHours, itemPart);
           if (!string.IsNullOrEmpty(error))
@@ -51,10 +51,10 @@ namespace GD.ActionTemplateModule
       }
       else
       {
-        if (_obj.DaysOrHours.HasValue)
+        if (_obj.DaysOrHours != null && _obj.DaysOrHours.HasValue)
           daysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(_obj.DaysOrHours.Value);
         
-        if (_obj.CoAssigneesDaysOrHours.HasValue)
+        if (_obj.CoAssigneesDaysOrHours != null && _obj.CoAssigneesDaysOrHours.HasValue)
           coAssigneesDaysOrHours = _obj.Info.Properties.CoAssigneesDaysOrHours.GetLocalizedValue(_obj.CoAssigneesDaysOrHours.Value);
         
         var error = Functions.AssignmentsTemplate.CheckConditions(_obj, _obj.Supervisor, _obj.Count,
