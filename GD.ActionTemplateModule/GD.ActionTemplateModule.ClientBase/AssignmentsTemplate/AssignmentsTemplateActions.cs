@@ -25,6 +25,25 @@ namespace GD.ActionTemplateModule.Client
 
   partial class AssignmentsTemplateActions
   {
+    public virtual void ChangeImportance(Sungero.Domain.Client.ExecuteActionArgs e)
+    {
+      if (_obj.Importance == Importance.High)
+      {
+        _obj.IsHighImportance = false;
+        _obj.Importance = Importance.Normal;
+      }
+      else
+      {
+        _obj.IsHighImportance = true;
+        _obj.Importance = Importance.High;
+      }
+    }
+
+    public virtual bool CanChangeImportance(Sungero.Domain.Client.CanExecuteActionArgs e)
+    {
+      return true;
+    }
+
 
     public virtual void ChangeCompoundMode(Sungero.Domain.Client.ExecuteActionArgs e)
     {

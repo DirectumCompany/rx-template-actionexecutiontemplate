@@ -32,6 +32,14 @@
       "LargeIconName": "Action_ChangeCompoundMode_large_ada6f77be0864966b20183c5446a8388.png",
       "SmallIconName": "Action_ChangeCompoundMode_small_ada6f77be0864966b20183c5446a8388.png",
       "Versions": []
+    },
+    {
+      "NameGuid": "8d65b230-4b05-4c24-aefd-5caa3451eb24",
+      "Name": "ChangeImportance",
+      "ActionArea": "Card",
+      "GenerateHandler": true,
+      "LargeIconName": "Action_ChangeImportance_large_8d65b2304b054c24aefd5caa3451eb24.png",
+      "SmallIconName": "Action_ChangeImportance_small_8d65b2304b054c24aefd5caa3451eb24.png"
     }
   ],
   "BaseGuid": "04581d26-0780-4cfd-b3cd-c2cafc5798b0",
@@ -544,6 +552,39 @@
       ],
       "ListDataBinderTypeName": "Sungero.Presentation.CommonDataBinders.DropDownEditorToEnumerationBinder",
       "PreviousPropertyGuid": "205f34f6-56a9-451d-9800-5847a6c816ec"
+    },
+    {
+      "$type": "Sungero.Metadata.EnumPropertyMetadata, Sungero.Metadata",
+      "NameGuid": "ad491cc5-d480-47b8-ba8b-668cdd2366b9",
+      "Name": "Importance",
+      "Code": "Importance",
+      "DirectValues": [
+        {
+          "NameGuid": "4fe64003-707c-40fc-a44c-0601446fc521",
+          "Name": "High",
+          "Code": "High"
+        },
+        {
+          "NameGuid": "7d6afc21-4936-45c6-bd82-cc4208ba3e50",
+          "Name": "Normal",
+          "Code": "Normal"
+        },
+        {
+          "NameGuid": "59c51b70-6708-41aa-ab28-0cdba7e0a6a8",
+          "Name": "Low",
+          "Code": "Low"
+        }
+      ],
+      "ListDataBinderTypeName": "Sungero.Presentation.CommonDataBinders.DropDownEditorToEnumerationBinder",
+      "PreviousPropertyGuid": "492413f3-bcdb-4ec3-a47e-4c7c918516fe"
+    },
+    {
+      "$type": "Sungero.Metadata.BooleanPropertyMetadata, Sungero.Metadata",
+      "NameGuid": "22defb1d-3f94-4854-a772-10bf5f1c5985",
+      "Name": "IsHighImportance",
+      "Code": "IsHighImportan",
+      "ListDataBinderTypeName": "Sungero.Presentation.CommonDataBinders.BooleanEditorToBooleanBinder",
+      "PreviousPropertyGuid": "ad491cc5-d480-47b8-ba8b-668cdd2366b9"
     }
   ],
   "PublicConstants": [
@@ -826,6 +867,18 @@
         "ParentGuid": "c9dcdcf9-36c8-4f54-97df-507451eb02d7",
         "SmallIconName": "Ribbon_ComponentResolution_small_b7136e2f55674623b6c0c74fe02ef367.png",
         "StatePropertyGuid": "5a26b1ab-8d5c-4b01-b6c3-bbf3a01e662e"
+      },
+      {
+        "$type": "Sungero.Metadata.RibbonStateToggleButtonMetadata, Sungero.Metadata",
+        "NameGuid": "baf63b87-c78d-4e59-818c-de4d11c1690a",
+        "Name": "IsHighImportance",
+        "ActionGuid": "8d65b230-4b05-4c24-aefd-5caa3451eb24",
+        "ButtonSize": "Large",
+        "Index": 0,
+        "LargeIconName": "Ribbon_StateToggleButton_large_baf63b87c78d4e59818cde4d11c1690a.png",
+        "ParentGuid": "c9dcdcf9-36c8-4f54-97df-507451eb02d7",
+        "SmallIconName": "Ribbon_StateToggleButton_small_baf63b87c78d4e59818cde4d11c1690a.png",
+        "StatePropertyGuid": "22defb1d-3f94-4854-a772-10bf5f1c5985"
       }
     ],
     "Groups": [
