@@ -186,4 +186,46 @@
 
 Повторное нажатие вернет карточку в режим простого поручения.</value>
   </data>
+  <data name="Property_Importance" xml:space="preserve">
+    <value>Важность</value>
+  </data>
+  <data name="Enum_Importance_High" xml:space="preserve">
+    <value>Высокая</value>
+  </data>
+  <data name="Enum_Importance_Normal" xml:space="preserve">
+    <value>Обычная</value>
+  </data>
+  <data name="Enum_Importance_Low" xml:space="preserve">
+    <value>Низкая</value>
+  </data>
+  <data name="Action_ChangeImportance" xml:space="preserve">
+    <value>Высокая важность</value>
+  </data>
+  <data name="Action_ChangeImportanceHint" xml:space="preserve">
+    <value>Высокая важность</value>
+  </data>
+  <data name="Action_ChangeImportanceDescription" xml:space="preserve">
+    <value>Установить для задачи высокую важность</value>
+  </data>
+  <data name="Property_IsHighImportance" xml:space="preserve">
+    <value>Высокая важность</value>
+  </data>
+  <data name="Ribbon_StateToggleButton_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>Высокая важность</value>
+  </data>
+  <data name="Ribbon_StateToggleButtonHint_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>Высокая важность</value>
+  </data>
+  <data name="Ribbon_StateToggleButtonDescription_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>Установить для задачи высокую важность</value>
+  </data>
+  <data name="Ribbon_IsHighImportance_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>Высокая важность</value>
+  </data>
+  <data name="Ribbon_IsHighImportanceHint_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>Высокая важность</value>
+  </data>
+  <data name="Ribbon_IsHighImportanceDescription_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>Установить для шаблона высокую важность</value>
+  </data>
 </root>

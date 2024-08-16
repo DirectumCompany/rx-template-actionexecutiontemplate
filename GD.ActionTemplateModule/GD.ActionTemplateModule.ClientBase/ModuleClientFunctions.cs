@@ -24,6 +24,8 @@ namespace GD.ActionTemplateModule.Client
       template.IsUnderControl = task.IsUnderControl;
       template.Supervisor = task.Supervisor;
       template.HasIndefiniteDeadline = task.HasIndefiniteDeadline;
+      template.Importance = task.Importance;
+      template.IsHighImportance = task.Importance.Value == AssignmentsTemplate.Importance.High;
       
       if (task.IsCompoundActionItem == true)
       {
@@ -67,6 +69,7 @@ namespace GD.ActionTemplateModule.Client
         task.IsUnderControl = template.IsUnderControl;
         task.Supervisor = template.Supervisor;
         task.HasIndefiniteDeadline = template.HasIndefiniteDeadline;
+        task.Importance = template.Importance;
         
         if (template.IsCompoundActionItem == true)
           FillCompoundActionItemProperties(task, template);

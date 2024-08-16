@@ -201,4 +201,55 @@
 
 Click again to bring the card back to the simple action mode.</value>
   </data>
+  <data name="Property_Importance" xml:space="preserve">
+    <value>Importance</value>
+  </data>
+  <data name="Enum_Importance_High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Enum_Importance_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Enum_Importance_Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Action_ChangeImportance" xml:space="preserve">
+    <value>High importance</value>
+  </data>
+  <data name="Action_ChangeImportanceDescription" xml:space="preserve">
+    <value>Set high importance for the task</value>
+  </data>
+  <data name="Action_ChangeImportanceHint" xml:space="preserve">
+    <value>High importance</value>
+  </data>
+  <data name="Action_ChangeImportanceConfirmationMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Action_ChangeImportanceConfirmationDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Ribbon_StateToggleButton_f14bdb8fc1d245dfa42c947e6407c938" xml:space="preserve">
+    <value>StateToggleButton</value>
+  </data>
+  <data name="Ribbon_StateToggleButton_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>High importance</value>
+  </data>
+  <data name="Property_IsHighImportance" xml:space="preserve">
+    <value>High importance</value>
+  </data>
+  <data name="Ribbon_StateToggleButtonHint_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>High importance</value>
+  </data>
+  <data name="Ribbon_StateToggleButtonDescription_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>Set high importance for the task</value>
+  </data>
+  <data name="Ribbon_IsHighImportance_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>High importance</value>
+  </data>
+  <data name="Ribbon_IsHighImportanceHint_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>High importance</value>
+  </data>
+  <data name="Ribbon_IsHighImportanceDescription_baf63b87c78d4e59818cde4d11c1690a" xml:space="preserve">
+    <value>Set high importance for the template</value>
+  </data>
 </root>
