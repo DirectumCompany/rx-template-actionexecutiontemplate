@@ -68,7 +68,6 @@ namespace GD.ActionTemplateModule.Client
       var deadline = dialog.AddInteger(_obj.Info.Properties.Count.LocalizedName, false, deadlineDefault);
       deadline.IsEnabled = _obj.HasIndefiniteDeadline != true;
       
-      //deadlineDaysOrHourseDefault
       var deadlineDaysOrHourse = dialog.AddSelect(_obj.Info.Properties.FinalDaysOrHours.LocalizedName, false, null)
         .From(_obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Days),
               _obj.Info.Properties.FinalDaysOrHours.GetLocalizedValue(DaysOrHours.Hours));
