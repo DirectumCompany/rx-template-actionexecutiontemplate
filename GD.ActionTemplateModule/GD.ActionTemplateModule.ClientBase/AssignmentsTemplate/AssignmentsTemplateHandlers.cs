@@ -30,11 +30,15 @@ namespace GD.ActionTemplateModule
       var isUnderControl = _obj.IsUnderControl == true;
       var anyCoAssignees = _obj.CoAssignees.Any();
       var isComponentCoAssignees = hasNotIndefiniteDeadline && isComponentResolution && _obj.ActionItemParts.Any(p => !string.IsNullOrEmpty(p.CoAssignees));
-        
+      
       properties.Count.IsEnabled = hasNotIndefiniteDeadline;
+      properties.Count.IsRequired = hasNotIndefiniteDeadline && !isComponentResolution;
       properties.DaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
+      properties.DaysOrHours.IsRequired = hasNotIndefiniteDeadline && !isComponentResolution;
       properties.CoAssigneesCount.IsEnabled = hasNotIndefiniteDeadline && anyCoAssignees;
+      properties.CoAssigneesCount.IsRequired = hasNotIndefiniteDeadline && !isComponentResolution;
       properties.CoAssigneesDaysOrHours.IsEnabled = hasNotIndefiniteDeadline && anyCoAssignees;
+      properties.CoAssigneesDaysOrHours.IsRequired = hasNotIndefiniteDeadline && !isComponentResolution;
       
       properties.ActionItemParts.IsVisible = isComponentResolution;
       properties.FinalCount.IsVisible = isComponentResolution;
