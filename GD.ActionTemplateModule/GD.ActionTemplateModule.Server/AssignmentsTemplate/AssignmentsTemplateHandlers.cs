@@ -30,14 +30,13 @@ namespace GD.ActionTemplateModule
 
     public override void BeforeSave(Sungero.Domain.BeforeSaveEventArgs e)
     {
-      var daysOrHours = string.Empty;
+      var daysOrHours = _obj.FinalDaysOrHours?.Value;
       var coAssigneesDaysOrHours = string.Empty;
       
       if (_obj.IsCompoundActionItem == true)
       {
         foreach (var itemPart in _obj.ActionItemParts)
         {
-          daysOrHours = string.Empty;
           if (itemPart.CoAssigneesDaysOrHours != null && itemPart.CoAssigneesDaysOrHours.HasValue)
             coAssigneesDaysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.CoAssigneesDaysOrHours.Value);
           
