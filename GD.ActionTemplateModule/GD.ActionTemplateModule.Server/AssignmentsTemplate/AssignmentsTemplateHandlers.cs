@@ -7,6 +7,7 @@ using GD.ActionTemplateModule.AssignmentsTemplate;
 
 namespace GD.ActionTemplateModule
 {
+
   partial class AssignmentsTemplateFilteringServerHandler<T>
   {
 
@@ -36,6 +37,7 @@ namespace GD.ActionTemplateModule
       {
         foreach (var itemPart in _obj.ActionItemParts)
         {
+          daysOrHours = string.Empty;
           if (itemPart.CoAssigneesDaysOrHours != null && itemPart.CoAssigneesDaysOrHours.HasValue)
             coAssigneesDaysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.CoAssigneesDaysOrHours.Value);
           
@@ -67,13 +69,15 @@ namespace GD.ActionTemplateModule
 
     public override void Created(Sungero.Domain.CreatedEventArgs e)
     {
-      _obj.IsUnderControl = false;
-      _obj.HasIndefiniteDeadline = false;
-      _obj.IsCompoundActionItem = false;
+      if (!_obj.State.IsCopied)
+      {
+        _obj.IsUnderControl = false;
+        _obj.HasIndefiniteDeadline = false;
+        _obj.IsCompoundActionItem = false;
+      }
       _obj.DaysOrHours = AssignmentsTemplate.DaysOrHours.Days;
       _obj.CoAssigneesDaysOrHours = AssignmentsTemplate.CoAssigneesDaysOrHours.Days;
       _obj.FinalDaysOrHours = AssignmentsTemplate.FinalDaysOrHours.Days;
     }
   }
-
 }
