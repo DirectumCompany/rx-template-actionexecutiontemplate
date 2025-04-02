@@ -73,6 +73,8 @@ namespace GD.ActionTemplateModule
         _obj.IsUnderControl = false;
         _obj.HasIndefiniteDeadline = false;
         _obj.IsCompoundActionItem = false;
+        _obj.Importance = AssignmentsTemplate.Importance.Normal;
+        _obj.IsHighImportance = false;
       }
       _obj.DaysOrHours = AssignmentsTemplate.DaysOrHours.Days;
       _obj.CoAssigneesDaysOrHours = AssignmentsTemplate.CoAssigneesDaysOrHours.Days;
