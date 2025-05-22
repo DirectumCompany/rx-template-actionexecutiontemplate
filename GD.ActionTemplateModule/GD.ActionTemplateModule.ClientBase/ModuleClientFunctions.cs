@@ -69,7 +69,7 @@ namespace GD.ActionTemplateModule.Client
         task.IsUnderControl = template.IsUnderControl;
         task.Supervisor = template.Supervisor;
         task.HasIndefiniteDeadline = template.HasIndefiniteDeadline;
-        task.Importance = template.Importance;
+        task.Importance = template.Importance.HasValue ? template.Importance : Sungero.RecordManagement.ActionItemExecutionTask.Importance.Normal;
         
         if (template.IsCompoundActionItem == true)
           FillCompoundActionItemProperties(task, template);
