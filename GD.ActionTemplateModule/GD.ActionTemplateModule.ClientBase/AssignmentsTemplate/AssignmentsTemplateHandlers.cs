@@ -39,12 +39,13 @@ namespace GD.ActionTemplateModule
       properties.CoAssigneesCount.IsRequired = hasNotIndefiniteDeadline && !isComponentResolution && anyCoAssignees;
       properties.CoAssigneesDaysOrHours.IsEnabled = hasNotIndefiniteDeadline && anyCoAssignees;
       properties.CoAssigneesDaysOrHours.IsRequired = hasNotIndefiniteDeadline && !isComponentResolution && anyCoAssignees;
-      properties.FinalCount.IsEnabled = hasNotIndefiniteDeadline;
       
       properties.ActionItemParts.IsVisible = isComponentResolution;
       properties.FinalCount.IsVisible = isComponentResolution;
+      properties.FinalCount.IsEnabled = hasNotIndefiniteDeadline;
       properties.FinalDaysOrHours.IsVisible = isComponentResolution;
-      
+      properties.FinalDaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
+            
       properties.Assignee.IsVisible = !isComponentResolution;
       properties.Count.IsVisible = !isComponentResolution;
       properties.DaysOrHours.IsVisible = !isComponentResolution;
