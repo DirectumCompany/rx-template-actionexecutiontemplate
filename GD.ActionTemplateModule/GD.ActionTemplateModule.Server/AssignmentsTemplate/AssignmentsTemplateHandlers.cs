@@ -32,7 +32,6 @@ namespace GD.ActionTemplateModule
     {
       var daysOrHours = string.Empty;
       var coAssigneesDaysOrHours = string.Empty;
-      var error = string.Empty;
       
       if (_obj.IsCompoundActionItem == true)
       {
@@ -41,9 +40,9 @@ namespace GD.ActionTemplateModule
           coAssigneesDaysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.CoAssigneesDaysOrHours);
           daysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(itemPart.DaysOrHours);
           
-          error = Functions.AssignmentsTemplate.CheckConditions(_obj, itemPart.Supervisor ?? _obj.Supervisor, itemPart.Count,
-                                                                daysOrHours, !string.IsNullOrEmpty(itemPart.CoAssignees),
-                                                                itemPart.CoAssigneesCount, coAssigneesDaysOrHours, itemPart);
+          var error = Functions.AssignmentsTemplate.CheckConditions(_obj, itemPart.Supervisor ?? _obj.Supervisor, itemPart.Count,
+                                                                    daysOrHours, !string.IsNullOrEmpty(itemPart.CoAssignees),
+                                                                    itemPart.CoAssigneesCount, coAssigneesDaysOrHours, itemPart);
           if (!string.IsNullOrEmpty(error))
             e.AddError(error);
         }
@@ -53,9 +52,9 @@ namespace GD.ActionTemplateModule
         daysOrHours = _obj.Info.Properties.DaysOrHours.GetLocalizedValue(_obj.DaysOrHours);
         coAssigneesDaysOrHours = _obj.Info.Properties.CoAssigneesDaysOrHours.GetLocalizedValue(_obj.CoAssigneesDaysOrHours);
         
-        error = Functions.AssignmentsTemplate.CheckConditions(_obj, _obj.Supervisor, _obj.Count,
-                                                              daysOrHours, _obj.CoAssignees.Any(), _obj.CoAssigneesCount,
-                                                              coAssigneesDaysOrHours, null);
+        var error = Functions.AssignmentsTemplate.CheckConditions(_obj, _obj.Supervisor, _obj.Count,
+                                                                  daysOrHours, _obj.CoAssignees.Any(), _obj.CoAssigneesCount,
+                                                                  coAssigneesDaysOrHours, null);
         if (!string.IsNullOrEmpty(error))
           e.AddError(error);
       }
