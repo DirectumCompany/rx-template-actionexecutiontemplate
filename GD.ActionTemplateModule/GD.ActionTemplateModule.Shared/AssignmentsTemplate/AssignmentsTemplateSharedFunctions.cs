@@ -75,6 +75,9 @@ namespace GD.ActionTemplateModule.Shared
       if (string.IsNullOrEmpty(assigneeDaysOrHours) && assigneeDeadline != null && assigneeDeadline.HasValue)
         return AssignmentsTemplates.Resources.EmptyAssigneeDaysOrHours;
 
+      if (_obj.HasIndefiniteDeadline != true && !finalCount.HasValue && !assigneeDeadline.HasValue)
+        return AssignmentsTemplates.Resources.EmptyFinalDeadline;
+      
       return null;
     }
 
