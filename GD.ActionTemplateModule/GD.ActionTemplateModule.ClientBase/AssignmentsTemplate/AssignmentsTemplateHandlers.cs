@@ -42,8 +42,10 @@ namespace GD.ActionTemplateModule
       
       properties.ActionItemParts.IsVisible = isComponentResolution;
       properties.FinalCount.IsVisible = isComponentResolution;
+      properties.FinalCount.IsEnabled = hasNotIndefiniteDeadline;
       properties.FinalDaysOrHours.IsVisible = isComponentResolution;
-      
+      properties.FinalDaysOrHours.IsEnabled = hasNotIndefiniteDeadline;
+            
       properties.Assignee.IsVisible = !isComponentResolution;
       properties.Count.IsVisible = !isComponentResolution;
       properties.DaysOrHours.IsVisible = !isComponentResolution;
