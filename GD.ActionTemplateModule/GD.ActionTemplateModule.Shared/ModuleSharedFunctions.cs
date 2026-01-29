@@ -6,7 +6,7 @@ using Sungero.CoreEntities;
 
 namespace GD.ActionTemplateModule.Shared
 {
-  public class ModuleFunctions
+  public partial class ModuleFunctions
   {
 
   }

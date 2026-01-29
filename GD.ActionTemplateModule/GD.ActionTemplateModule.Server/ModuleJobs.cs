@@ -6,7 +6,7 @@ using Sungero.CoreEntities;
 
 namespace GD.ActionTemplateModule.Server
 {
-  public class ModuleJobs
+  public partial class ModuleJobs
   {
 
   }

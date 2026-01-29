@@ -9,7 +9,7 @@ using Sungero.Workflow;
 
 namespace GD.ActionTemplateModule.Client
 {
-  public class ModuleFunctions
+  public partial class ModuleFunctions
   {
     /// <summary>
     /// Сохранить данные поручения в шаблон.
