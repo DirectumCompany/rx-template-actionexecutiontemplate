@@ -315,6 +315,7 @@
       ]
     }
   ],
+  "FormViewUuid": "5a203909-269b-444f-86c8-beb53a10e16c",
   "HandledEvents": [
     "CreatedServer",
     "BeforeSaveServer",
@@ -323,6 +324,7 @@
   ],
   "IconResourcesKeys": [],
   "IsStatusEnabled": true,
+  "ListViewUuid": "d42e6269-741b-4d3a-8e0b-607cdeefffb0",
   "OperationsClass": "",
   "Overridden": [
     "AccessRightsMode",
